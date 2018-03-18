@@ -1,0 +1,18 @@
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Entity.pdb
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Entity.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Entity\obj\Debug\KKCAR.Entity.pdb

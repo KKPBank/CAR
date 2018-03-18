@@ -1,0 +1,16 @@
+CAR Activity
+WS CreateActivityLog
+- แก้ไขฟิล SubscriptionTypeId โดย Validate กับ Table CAS_SUBSCRIPTION_CARDTYPE แทน
+- แก้ไข Field SubscriptionTypeId ที่เก็บลง Table CAS_SEARCH_XX และ CAS_ACTIVITY_DETAIL, CAS_ACTIIVY_HEADER
+
+InquiryActivity ทั้ง 2 ตัว
+- แก้ไขฟิลที่ดึงไปแสดงโดยใช้ Table CAS_SUBSCRIPTION_CARDTYPE แทน
+
+UI
+- ตอนรับค่าผ่าน post เปลี่ยน Table Map เป็น CAS_SUBSCRIPTION_CARDTYPE แทน
+- ตอนดึงข้อมูลไปแสดงที่หน้าจอเปลี่ยน Table Map เป็น CAS_SUBSCRIPTION_CARDTYPE แทน
+- ตอนดึงข้อมูลไปแสดงในตาราง เปลี่ยน Table Map เป็น CAS_SUBSCRIPTION_CARDTYPE แทน
+
+CARStatus
+InsertBatchStatusText
+- กรณี REFFApp เป็นค่าว่าง ให้ลงข้อมูลเหมือนไม่มี REF App, REFF System และเป็น success

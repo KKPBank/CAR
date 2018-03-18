@@ -1,0 +1,22 @@
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Service.pdb
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\Newtonsoft.Json.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\Newtonsoft.Json.xml
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\SLM\Source Code\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Service.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\Newtonsoft.Json.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\Newtonsoft.Json.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Service\obj\Debug\KKCAR.Service.pdb

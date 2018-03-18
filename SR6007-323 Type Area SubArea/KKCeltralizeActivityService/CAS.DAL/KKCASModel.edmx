@@ -1,0 +1,1124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="12.1" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CAR_BATCH">
+          <Key>
+            <PropertyRef Name="BATCH_ID" />
+          </Key>
+          <Property Name="BATCH_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BATCH_CODE" Type="varchar2" MaxLength="50" />
+          <Property Name="BATCH_NAME" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="START_TIME" Type="date" />
+          <Property Name="END_TIME" Type="date" />
+          <Property Name="STATUS" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="IS_DELETE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="IS_RERUN" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="MAIN_URL" Type="varchar2" MaxLength="200" />
+          <Property Name="MAIN_RERUN_URL" Type="varchar2" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="CAR_BATCH_LOG">
+          <Key>
+            <PropertyRef Name="BATCH_LOG_ID" />
+          </Key>
+          <Property Name="BATCH_LOG_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BATCH_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BATCH_DATE" Type="varchar2" MaxLength="50" />
+          <Property Name="BATCH_ROUND" Type="number" Precision="38" Scale="0" />
+          <Property Name="SYSTEM_CODE" Type="varchar2" MaxLength="50" />
+          <Property Name="SERVICE_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="REFERENCE_CODE" Type="varchar2" MaxLength="50" />
+          <Property Name="TRANSACTION_DATE" Type="date" />
+          <Property Name="FILE_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="START_TIME" Type="date" Nullable="false" />
+          <Property Name="END_TIME" Type="date" />
+          <Property Name="TOTAL_HEADER" Type="number" Precision="38" Scale="0" />
+          <Property Name="TOTAL_DETAIL" Type="number" Precision="38" Scale="0" />
+          <Property Name="TOTAL_COMPLETE" Type="number" Precision="38" Scale="0" />
+          <Property Name="TOTAL_FAIL" Type="number" Precision="38" Scale="0" />
+          <Property Name="STATUS" Type="varchar2" MaxLength="50" />
+          <Property Name="ERROR_DETAIL" Type="varchar2" MaxLength="4000" />
+          <Property Name="RERUN_PATH" Type="varchar2" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="CAR_BATCH_LOG_DETAIL">
+          <Key>
+            <PropertyRef Name="BATCH_LOG_DETAIL_ID" />
+          </Key>
+          <Property Name="BATCH_LOG_DETAIL_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="BATCH_LOG_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="REFERENCE_NO" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="CHANNEL_ID" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="RESPONSE_CODE" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="RESPONSE_MESSAGE" Type="varchar2" MaxLength="4000" />
+        </EntityType>
+        <EntityType Name="CAR_BATCH_SYSTEM_MAPPING">
+          <Key>
+            <PropertyRef Name="MAPPING_ID" />
+          </Key>
+          <Property Name="MAPPING_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="SYSTEM_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="BATCH_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="RESPONSE_URL" Type="varchar2" MaxLength="100" />
+          <Property Name="IS_BATCH_RESULT" Type="number" Precision="1" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAR_SEARCH_REFAPP">
+          <Key>
+            <PropertyRef Name="REFERENCE_APP_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="REFERENCE_APP_ID" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_ACTIVITY_DETAIL">
+          <Key>
+            <PropertyRef Name="ACTIVITY_ID" />
+          </Key>
+          <Property Name="ACTIVITY_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="JSON_OFFICER" Type="clob" />
+          <Property Name="JSON_CONTRACT" Type="clob" />
+          <Property Name="JSON_CUSTOMER" Type="clob" />
+          <Property Name="JSON_PRODUCT" Type="clob" />
+          <Property Name="JSON_ACTIVITY_INFO" Type="clob" />
+        </EntityType>
+        <EntityType Name="CAS_ACTIVITY_HEADER">
+          <Key>
+            <PropertyRef Name="ACTIVITY_ID" />
+          </Key>
+          <Property Name="ACTIVITY_ID" Type="number" Precision="38" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ACTIVITY_TIME" Type="timestamp" Precision="6" />
+          <Property Name="ACTIVITY_REQUEST_TIME" Type="timestamp" Precision="6" />
+          <Property Name="ACTIVITY_RESPONSE_TIME" Type="timestamp" Precision="6" />
+          <Property Name="PRODUCT_GROUP_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="PRODUCT_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="CAMPAIGN_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="TYPE_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="AREA_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="SUBAREA_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="CHANNEL_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="LEAD_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="TICKET_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="SR_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="CONTRACT_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="SYSTEM_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="CISID" Type="varchar2" MaxLength="25" />
+          <Property Name="KKCISID" Type="varchar2" MaxLength="25" />
+          <Property Name="TRX_SEQ_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="NON_CUSTOMER_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="STATUS" Type="varchar2" MaxLength="500" />
+          <Property Name="SUB_STATUS" Type="varchar2" MaxLength="500" />
+          <Property Name="REFERENCE_NO" Type="varchar2" MaxLength="50" />
+          <Property Name="ACTIVITY_TYPE_ID" Type="number" Precision="38" Scale="0" />
+          <Property Name="PDM_PRODUCT_GROUP_ID" Type="varchar2" MaxLength="100" />
+          <Property Name="PDM_PRODUCT_SUB_GROUP_ID" Type="varchar2" MaxLength="100" />
+          <Property Name="PDM_PRODUCT_ID" Type="varchar2" MaxLength="100" />
+          <Property Name="PDM_CAMPAIGN_ID" Type="varchar2" MaxLength="100" />
+          <Property Name="REFERENCE_APP_ID" Type="varchar2" MaxLength="100" />
+          <Property Name="TYPE_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="AREA_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="SUBAREA_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="ACTIVITY_TYPE_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_ACTIVITY_TYPE">
+          <Key>
+            <PropertyRef Name="ACTIVITY_TYPE_ID" />
+          </Key>
+          <Property Name="ACTIVITY_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ACTIVITY_TYPE_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_AREA">
+          <Key>
+            <PropertyRef Name="AREA_ID" />
+          </Key>
+          <Property Name="AREA_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="AREA_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_CAMPAIGN">
+          <Key>
+            <PropertyRef Name="CAMPAIGN_ID" />
+          </Key>
+          <Property Name="CAMPAIGN_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="CAMPAIGN_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_CHANNEL">
+          <Key>
+            <PropertyRef Name="CHANNEL_ID" />
+          </Key>
+          <Property Name="CHANNEL_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="CHANNEL_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="PRODUCT_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_PRODUCT_GROUP">
+          <Key>
+            <PropertyRef Name="PRODUCT_GROUP_ID" />
+          </Key>
+          <Property Name="PRODUCT_GROUP_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="PRODUCT_GROUP_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="SYSTEM_ID" Type="varchar2" MaxLength="25" />
+          <Property Name="CAS_SERVICE" Type="varchar2" MaxLength="25" />
+          <Property Name="CAS_SCOPE" Type="varchar2" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_CONTRACT">
+          <Key>
+            <PropertyRef Name="CONTRACT_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="CONTRACT_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_LEAD">
+          <Key>
+            <PropertyRef Name="LEAD_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="LEAD_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_NON_CUSTOMER">
+          <Key>
+            <PropertyRef Name="NON_CUSTOMER_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="NON_CUSTOMER_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_SR">
+          <Key>
+            <PropertyRef Name="SR_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SR_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_SUBSCRIPTION">
+          <Key>
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="KKCISID" Type="varchar2" MaxLength="25" />
+          <Property Name="CISID" Type="varchar2" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_TICKET">
+          <Key>
+            <PropertyRef Name="TICKET_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="TICKET_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAS_SERVICE_ACTIVITYLOG">
+          <Key>
+            <PropertyRef Name="ACTIVITYLOG_ID" />
+          </Key>
+          <Property Name="ACTIVITYLOG_ID" Type="number" Precision="38" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SERVICE_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="SYSTEM_CODE" Type="varchar2" MaxLength="100" />
+          <Property Name="RESPONSE_CODE" Type="varchar2" MaxLength="10" />
+          <Property Name="RESPONSE_MESSAGE" Type="varchar2" MaxLength="4000" />
+          <Property Name="REQUEST_URL" Type="varchar2" MaxLength="255" />
+          <Property Name="REQUEST_DATETIME" Type="timestamp" Precision="6" />
+          <Property Name="REQUEST_IPADDRESS" Type="varchar2" MaxLength="50" />
+          <Property Name="REFERENCE_NO" Type="varchar2" MaxLength="50" />
+          <Property Name="XML_REQUEST" Type="clob" />
+          <Property Name="XML_RESPONSE" Type="clob" />
+        </EntityType>
+        <EntityType Name="CAS_SUBAREA">
+          <Key>
+            <PropertyRef Name="SUBAREA_ID" />
+          </Key>
+          <Property Name="SUBAREA_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="SUBAREA_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_SUBSCRIPTION_TYPE">
+          <Key>
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="SUBSCRIPTION_TYPE_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="CAS_SYSTEM">
+          <Key>
+            <PropertyRef Name="SYSTEM_ID" />
+          </Key>
+          <Property Name="SYSTEM_ID" Type="varchar2" MaxLength="25" Nullable="false" />
+          <Property Name="SYSTEM_NAME" Type="varchar2" MaxLength="100" />
+          <Property Name="SYSTEM_SECURITY_KEY" Type="varchar2" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="CAS_TYPE">
+          <Key>
+            <PropertyRef Name="TYPE_ID" />
+          </Key>
+          <Property Name="TYPE_ID" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="TYPE_NAME" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <Association Name="CAR_BATCH_LOG_DETAIL_FK">
+          <End Role="CAR_BATCH_LOG" Type="Self.CAR_BATCH_LOG" Multiplicity="1" />
+          <End Role="CAR_BATCH_LOG_DETAIL" Type="Self.CAR_BATCH_LOG_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH_LOG">
+              <PropertyRef Name="BATCH_LOG_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_LOG_DETAIL">
+              <PropertyRef Name="BATCH_LOG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_BATCH_LOG_FK">
+          <End Role="CAR_BATCH" Type="Self.CAR_BATCH" Multiplicity="1" />
+          <End Role="CAR_BATCH_LOG" Type="Self.CAR_BATCH_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH">
+              <PropertyRef Name="BATCH_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_LOG">
+              <PropertyRef Name="BATCH_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK1">
+          <End Role="CAS_SYSTEM" Type="Self.CAS_SYSTEM" Multiplicity="1" />
+          <End Role="CAR_BATCH_SYSTEM_MAPPING" Type="Self.CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAS_SYSTEM">
+              <PropertyRef Name="SYSTEM_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+              <PropertyRef Name="SYSTEM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK2">
+          <End Role="CAR_BATCH" Type="Self.CAR_BATCH" Multiplicity="1" />
+          <End Role="CAR_BATCH_SYSTEM_MAPPING" Type="Self.CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH">
+              <PropertyRef Name="BATCH_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+              <PropertyRef Name="BATCH_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_SEARCH_REFAPP_FK">
+          <End Role="CAS_SEARCH_SUBSCRIPTION" Type="Self.CAS_SEARCH_SUBSCRIPTION" Multiplicity="1" />
+          <End Role="CAR_SEARCH_REFAPP" Type="Self.CAR_SEARCH_REFAPP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAS_SEARCH_SUBSCRIPTION">
+              <PropertyRef Name="SUBSCRIPTION_ID" />
+              <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+            </Principal>
+            <Dependent Role="CAR_SEARCH_REFAPP">
+              <PropertyRef Name="SUBSCRIPTION_ID" />
+              <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_SEQ_CAR_BATCH_LOG_DETAIL_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CAR">
+          <Parameter Name="OUTSEQ" Type="number" Mode="Out" />
+        </Function>
+        <Function Name="SP_SEQ_CAR_BATCH_LOG_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CAR">
+          <Parameter Name="OUTSEQ" Type="number" Mode="Out" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="CAR_BATCH" EntityType="Self.CAR_BATCH" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAR_BATCH_LOG" EntityType="Self.CAR_BATCH_LOG" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAR_BATCH_LOG_DETAIL" EntityType="Self.CAR_BATCH_LOG_DETAIL" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAR_BATCH_SYSTEM_MAPPING" EntityType="Self.CAR_BATCH_SYSTEM_MAPPING" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAR_SEARCH_REFAPP" EntityType="Self.CAR_SEARCH_REFAPP" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_ACTIVITY_DETAIL" EntityType="Self.CAS_ACTIVITY_DETAIL" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_ACTIVITY_HEADER" EntityType="Self.CAS_ACTIVITY_HEADER" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_ACTIVITY_TYPE" EntityType="Self.CAS_ACTIVITY_TYPE" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_AREA" EntityType="Self.CAS_AREA" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_CAMPAIGN" EntityType="Self.CAS_CAMPAIGN" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_CHANNEL" EntityType="Self.CAS_CHANNEL" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_PRODUCT" EntityType="Self.CAS_PRODUCT" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_PRODUCT_GROUP" EntityType="Self.CAS_PRODUCT_GROUP" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_ROLE" EntityType="Self.CAS_ROLE" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_CONTRACT" EntityType="Self.CAS_SEARCH_CONTRACT" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_LEAD" EntityType="Self.CAS_SEARCH_LEAD" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_NON_CUSTOMER" EntityType="Self.CAS_SEARCH_NON_CUSTOMER" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_SR" EntityType="Self.CAS_SEARCH_SR" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_SUBSCRIPTION" EntityType="Self.CAS_SEARCH_SUBSCRIPTION" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SEARCH_TICKET" EntityType="Self.CAS_SEARCH_TICKET" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SERVICE_ACTIVITYLOG" EntityType="Self.CAS_SERVICE_ACTIVITYLOG" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SUBAREA" EntityType="Self.CAS_SUBAREA" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SUBSCRIPTION_TYPE" EntityType="Self.CAS_SUBSCRIPTION_TYPE" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_SYSTEM" EntityType="Self.CAS_SYSTEM" Schema="CAR" store:Type="Tables" />
+          <EntitySet Name="CAS_TYPE" EntityType="Self.CAS_TYPE" Schema="CAR" store:Type="Tables" />
+          <AssociationSet Name="CAR_BATCH_LOG_DETAIL_FK" Association="Self.CAR_BATCH_LOG_DETAIL_FK">
+            <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+            <End Role="CAR_BATCH_LOG_DETAIL" EntitySet="CAR_BATCH_LOG_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_BATCH_LOG_FK" Association="Self.CAR_BATCH_LOG_FK">
+            <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+            <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK1" Association="Self.CAR_BATCH_SYSTEM_MAPPING_FK1">
+            <End Role="CAS_SYSTEM" EntitySet="CAS_SYSTEM" />
+            <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK2" Association="Self.CAR_BATCH_SYSTEM_MAPPING_FK2">
+            <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+            <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_SEARCH_REFAPP_FK" Association="Self.CAR_SEARCH_REFAPP_FK">
+            <End Role="CAS_SEARCH_SUBSCRIPTION" EntitySet="CAS_SEARCH_SUBSCRIPTION" />
+            <End Role="CAR_SEARCH_REFAPP" EntitySet="CAR_SEARCH_REFAPP" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="KKCASModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CAS_ACTIVITY_DETAIL" EntityType="Model.CAS_ACTIVITY_DETAIL" />
+          <EntitySet Name="CAS_ACTIVITY_HEADER" EntityType="Model.CAS_ACTIVITY_HEADER" />
+          <EntitySet Name="CAS_ACTIVITY_TYPE" EntityType="Model.CAS_ACTIVITY_TYPE" />
+          <EntitySet Name="CAS_AREA" EntityType="Model.CAS_AREA" />
+          <EntitySet Name="CAS_CAMPAIGN" EntityType="Model.CAS_CAMPAIGN" />
+          <EntitySet Name="CAS_CHANNEL" EntityType="Model.CAS_CHANNEL" />
+          <EntitySet Name="CAS_PRODUCT" EntityType="Model.CAS_PRODUCT" />
+          <EntitySet Name="CAS_PRODUCT_GROUP" EntityType="Model.CAS_PRODUCT_GROUP" />
+          <EntitySet Name="CAS_ROLE" EntityType="Model.CAS_ROLE" />
+          <EntitySet Name="CAS_SEARCH_CONTRACT" EntityType="Model.CAS_SEARCH_CONTRACT" />
+          <EntitySet Name="CAS_SEARCH_LEAD" EntityType="Model.CAS_SEARCH_LEAD" />
+          <EntitySet Name="CAS_SEARCH_NON_CUSTOMER" EntityType="Model.CAS_SEARCH_NON_CUSTOMER" />
+          <EntitySet Name="CAS_SEARCH_SR" EntityType="Model.CAS_SEARCH_SR" />
+          <EntitySet Name="CAS_SEARCH_TICKET" EntityType="Model.CAS_SEARCH_TICKET" />
+          <EntitySet Name="CAS_SERVICE_ACTIVITYLOG" EntityType="Model.CAS_SERVICE_ACTIVITYLOG" />
+          <EntitySet Name="CAS_SUBAREA" EntityType="Model.CAS_SUBAREA" />
+          <EntitySet Name="CAS_SUBSCRIPTION_TYPE" EntityType="Model.CAS_SUBSCRIPTION_TYPE" />
+          <EntitySet Name="CAS_TYPE" EntityType="Model.CAS_TYPE" />
+          <FunctionImport Name="SP_SEQ_CAR_BATCH_LOG_ID">
+          <Parameter Name="OUTSEQ" Mode="Out" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="SP_SEQ_CAR_BATCH_LOG_DETAIL_ID">
+          <Parameter Name="OUTSEQ" Mode="Out" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="CAR_BATCH_LOG_DETAIL" EntityType="Model.CAR_BATCH_LOG_DETAIL" />
+          <EntitySet Name="CAS_SYSTEM" EntityType="Model.CAS_SYSTEM" />
+          <EntitySet Name="CAR_BATCH" EntityType="Model.CAR_BATCH" />
+          <EntitySet Name="CAR_SEARCH_REFAPP" EntityType="Model.CAR_SEARCH_REFAPP" />
+          <EntitySet Name="CAS_SEARCH_SUBSCRIPTION" EntityType="Model.CAS_SEARCH_SUBSCRIPTION" />
+          <AssociationSet Name="CAR_SEARCH_REFAPP_FK" Association="Model.CAR_SEARCH_REFAPP_FK">
+            <End Role="CAS_SEARCH_SUBSCRIPTION" EntitySet="CAS_SEARCH_SUBSCRIPTION" />
+            <End Role="CAR_SEARCH_REFAPP" EntitySet="CAR_SEARCH_REFAPP" />
+          </AssociationSet>
+          <EntitySet Name="CAR_BATCH_SYSTEM_MAPPING" EntityType="Model.CAR_BATCH_SYSTEM_MAPPING" />
+          <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK2" Association="Model.CAR_BATCH_SYSTEM_MAPPING_FK2">
+            <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+            <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK1" Association="Model.CAR_BATCH_SYSTEM_MAPPING_FK1">
+            <End Role="CAS_SYSTEM" EntitySet="CAS_SYSTEM" />
+            <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+          </AssociationSet>
+          <EntitySet Name="CAR_BATCH_LOG" EntityType="Model.CAR_BATCH_LOG" />
+          <AssociationSet Name="CAR_BATCH_LOG_FK" Association="Model.CAR_BATCH_LOG_FK">
+            <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+            <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="CAR_BATCH_LOG_DETAIL_FK" Association="Model.CAR_BATCH_LOG_DETAIL_FK">
+            <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+            <End Role="CAR_BATCH_LOG_DETAIL" EntitySet="CAR_BATCH_LOG_DETAIL" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="CAS_ACTIVITY_DETAIL">
+          <Key>
+            <PropertyRef Name="ACTIVITY_ID" />
+          </Key>
+          <Property Name="ACTIVITY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="JSON_OFFICER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JSON_CONTRACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JSON_CUSTOMER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JSON_PRODUCT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="JSON_ACTIVITY_INFO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_ACTIVITY_HEADER">
+          <Key>
+            <PropertyRef Name="ACTIVITY_ID" />
+          </Key>
+          <Property Name="ACTIVITY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACTIVITY_TIME" Type="DateTime" Precision="6" />
+          <Property Name="ACTIVITY_REQUEST_TIME" Type="DateTime" Precision="6" />
+          <Property Name="ACTIVITY_RESPONSE_TIME" Type="DateTime" Precision="6" />
+          <Property Name="PRODUCT_GROUP_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCT_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CAMPAIGN_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="AREA_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="SUBAREA_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="CHANNEL_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="LEAD_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TICKET_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SR_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRACT_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SYSTEM_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="KKCISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="TRX_SEQ_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="NON_CUSTOMER_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SUB_STATUS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="REFERENCE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVITY_TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="PDM_PRODUCT_GROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PDM_PRODUCT_SUB_GROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PDM_PRODUCT_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PDM_CAMPAIGN_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REFERENCE_APP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SUBAREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVITY_TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_ACTIVITY_TYPE">
+          <Key>
+            <PropertyRef Name="ACTIVITY_TYPE_ID" />
+          </Key>
+          <Property Name="ACTIVITY_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ACTIVITY_TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_AREA">
+          <Key>
+            <PropertyRef Name="AREA_ID" />
+          </Key>
+          <Property Name="AREA_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="AREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_CAMPAIGN">
+          <Key>
+            <PropertyRef Name="CAMPAIGN_ID" />
+          </Key>
+          <Property Name="CAMPAIGN_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CAMPAIGN_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_CHANNEL">
+          <Key>
+            <PropertyRef Name="CHANNEL_ID" />
+          </Key>
+          <Property Name="CHANNEL_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CHANNEL_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_PRODUCT">
+          <Key>
+            <PropertyRef Name="PRODUCT_ID" />
+          </Key>
+          <Property Name="PRODUCT_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCT_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_PRODUCT_GROUP">
+          <Key>
+            <PropertyRef Name="PRODUCT_GROUP_ID" />
+          </Key>
+          <Property Name="PRODUCT_GROUP_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCT_GROUP_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_ROLE">
+          <Key>
+            <PropertyRef Name="ROLE_ID" />
+          </Key>
+          <Property Name="ROLE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SYSTEM_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CAS_SERVICE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CAS_SCOPE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_CONTRACT">
+          <Key>
+            <PropertyRef Name="CONTRACT_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="CONTRACT_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_LEAD">
+          <Key>
+            <PropertyRef Name="LEAD_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="LEAD_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_NON_CUSTOMER">
+          <Key>
+            <PropertyRef Name="NON_CUSTOMER_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="NON_CUSTOMER_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_SR">
+          <Key>
+            <PropertyRef Name="SR_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SR_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_TICKET">
+          <Key>
+            <PropertyRef Name="TICKET_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="TICKET_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+        </EntityType>
+        <EntityType Name="CAS_SERVICE_ACTIVITYLOG">
+          <Key>
+            <PropertyRef Name="ACTIVITYLOG_ID" />
+          </Key>
+          <Property Name="ACTIVITYLOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SERVICE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SYSTEM_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RESPONSE_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RESPONSE_MESSAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REQUEST_URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="REQUEST_DATETIME" Type="DateTime" Precision="6" />
+          <Property Name="REQUEST_IPADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="REFERENCE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="XML_REQUEST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="XML_RESPONSE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_SUBAREA">
+          <Key>
+            <PropertyRef Name="SUBAREA_ID" />
+          </Key>
+          <Property Name="SUBAREA_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SUBAREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_SUBSCRIPTION_TYPE">
+          <Key>
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SUBSCRIPTION_TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAS_TYPE">
+          <Key>
+            <PropertyRef Name="TYPE_ID" />
+          </Key>
+          <Property Name="TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CAR_BATCH_LOG_DETAIL">
+          <Key>
+            <PropertyRef Name="BATCH_LOG_DETAIL_ID" />
+          </Key>
+          <Property Name="BATCH_LOG_DETAIL_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BATCH_LOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="REFERENCE_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CHANNEL_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RESPONSE_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RESPONSE_MESSAGE" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAR_BATCH_LOG" Relationship="Model.CAR_BATCH_LOG_DETAIL_FK" FromRole="CAR_BATCH_LOG_DETAIL" ToRole="CAR_BATCH_LOG" />
+        </EntityType>
+        <EntityType Name="CAS_SYSTEM">
+          <Key>
+            <PropertyRef Name="SYSTEM_ID" />
+          </Key>
+          <Property Name="SYSTEM_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SYSTEM_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SYSTEM_SECURITY_KEY" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAR_BATCH_SYSTEM_MAPPING" Relationship="Model.CAR_BATCH_SYSTEM_MAPPING_FK1" FromRole="CAS_SYSTEM" ToRole="CAR_BATCH_SYSTEM_MAPPING" />
+        </EntityType>
+        <EntityType Name="CAR_BATCH">
+          <Key>
+            <PropertyRef Name="BATCH_ID" />
+          </Key>
+          <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BATCH_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BATCH_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="START_TIME" Type="DateTime" />
+          <Property Name="END_TIME" Type="DateTime" />
+          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IS_DELETE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="IS_RERUN" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="MAIN_URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MAIN_RERUN_URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAR_BATCH_SYSTEM_MAPPING" Relationship="Model.CAR_BATCH_SYSTEM_MAPPING_FK2" FromRole="CAR_BATCH" ToRole="CAR_BATCH_SYSTEM_MAPPING" />
+          <NavigationProperty Name="CAR_BATCH_LOG" Relationship="Model.CAR_BATCH_LOG_FK" FromRole="CAR_BATCH" ToRole="CAR_BATCH_LOG" />
+        </EntityType>
+        <EntityType Name="CAR_SEARCH_REFAPP">
+          <Key>
+            <PropertyRef Name="REFERENCE_APP_ID" />
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="REFERENCE_APP_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="CAS_SEARCH_SUBSCRIPTION" Relationship="Model.CAR_SEARCH_REFAPP_FK" FromRole="CAR_SEARCH_REFAPP" ToRole="CAS_SEARCH_SUBSCRIPTION" />
+        </EntityType>
+        <EntityType Name="CAS_SEARCH_SUBSCRIPTION">
+          <Key>
+            <PropertyRef Name="SUBSCRIPTION_ID" />
+            <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+          </Key>
+          <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="KKCISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAR_SEARCH_REFAPP" Relationship="Model.CAR_SEARCH_REFAPP_FK" FromRole="CAS_SEARCH_SUBSCRIPTION" ToRole="CAR_SEARCH_REFAPP" />
+        </EntityType>
+        <Association Name="CAR_SEARCH_REFAPP_FK">
+          <End Type="Model.CAS_SEARCH_SUBSCRIPTION" Role="CAS_SEARCH_SUBSCRIPTION" Multiplicity="1" />
+          <End Type="Model.CAR_SEARCH_REFAPP" Role="CAR_SEARCH_REFAPP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAS_SEARCH_SUBSCRIPTION">
+              <PropertyRef Name="SUBSCRIPTION_ID" />
+              <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+            </Principal>
+            <Dependent Role="CAR_SEARCH_REFAPP">
+              <PropertyRef Name="SUBSCRIPTION_ID" />
+              <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CAR_BATCH_SYSTEM_MAPPING">
+          <Key>
+            <PropertyRef Name="MAPPING_ID" />
+          </Key>
+          <Property Name="MAPPING_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="SYSTEM_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="RESPONSE_URL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IS_BATCH_RESULT" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CAR_BATCH" Relationship="Model.CAR_BATCH_SYSTEM_MAPPING_FK2" FromRole="CAR_BATCH_SYSTEM_MAPPING" ToRole="CAR_BATCH" />
+          <NavigationProperty Name="CAS_SYSTEM" Relationship="Model.CAR_BATCH_SYSTEM_MAPPING_FK1" FromRole="CAR_BATCH_SYSTEM_MAPPING" ToRole="CAS_SYSTEM" />
+        </EntityType>
+        <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK2">
+          <End Type="Model.CAR_BATCH" Role="CAR_BATCH" Multiplicity="1" />
+          <End Type="Model.CAR_BATCH_SYSTEM_MAPPING" Role="CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH">
+              <PropertyRef Name="BATCH_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+              <PropertyRef Name="BATCH_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK1">
+          <End Type="Model.CAS_SYSTEM" Role="CAS_SYSTEM" Multiplicity="1" />
+          <End Type="Model.CAR_BATCH_SYSTEM_MAPPING" Role="CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAS_SYSTEM">
+              <PropertyRef Name="SYSTEM_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+              <PropertyRef Name="SYSTEM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CAR_BATCH_LOG">
+          <Key>
+            <PropertyRef Name="BATCH_LOG_ID" />
+          </Key>
+          <Property Name="BATCH_LOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="BATCH_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BATCH_ROUND" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="SYSTEM_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SERVICE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REFERENCE_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TRANSACTION_DATE" Type="DateTime" />
+          <Property Name="FILE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="START_TIME" Type="DateTime" Nullable="false" />
+          <Property Name="END_TIME" Type="DateTime" />
+          <Property Name="TOTAL_HEADER" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TOTAL_DETAIL" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TOTAL_COMPLETE" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="TOTAL_FAIL" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ERROR_DETAIL" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="RERUN_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAR_BATCH" Relationship="Model.CAR_BATCH_LOG_FK" FromRole="CAR_BATCH_LOG" ToRole="CAR_BATCH" />
+          <NavigationProperty Name="CAR_BATCH_LOG_DETAIL" Relationship="Model.CAR_BATCH_LOG_DETAIL_FK" FromRole="CAR_BATCH_LOG" ToRole="CAR_BATCH_LOG_DETAIL" />
+        </EntityType>
+        <Association Name="CAR_BATCH_LOG_FK">
+          <End Type="Model.CAR_BATCH" Role="CAR_BATCH" Multiplicity="1" />
+          <End Type="Model.CAR_BATCH_LOG" Role="CAR_BATCH_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH">
+              <PropertyRef Name="BATCH_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_LOG">
+              <PropertyRef Name="BATCH_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CAR_BATCH_LOG_DETAIL_FK">
+          <End Type="Model.CAR_BATCH_LOG" Role="CAR_BATCH_LOG" Multiplicity="1" />
+          <End Type="Model.CAR_BATCH_LOG_DETAIL" Role="CAR_BATCH_LOG_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAR_BATCH_LOG">
+              <PropertyRef Name="BATCH_LOG_ID" />
+            </Principal>
+            <Dependent Role="CAR_BATCH_LOG_DETAIL">
+              <PropertyRef Name="BATCH_LOG_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="KKCASModel">
+          <EntitySetMapping Name="CAS_ACTIVITY_DETAIL">
+            <EntityTypeMapping TypeName="Model.CAS_ACTIVITY_DETAIL">
+              <MappingFragment StoreEntitySet="CAS_ACTIVITY_DETAIL">
+                <ScalarProperty Name="JSON_ACTIVITY_INFO" ColumnName="JSON_ACTIVITY_INFO" />
+                <ScalarProperty Name="JSON_PRODUCT" ColumnName="JSON_PRODUCT" />
+                <ScalarProperty Name="JSON_CUSTOMER" ColumnName="JSON_CUSTOMER" />
+                <ScalarProperty Name="JSON_CONTRACT" ColumnName="JSON_CONTRACT" />
+                <ScalarProperty Name="JSON_OFFICER" ColumnName="JSON_OFFICER" />
+                <ScalarProperty Name="ACTIVITY_ID" ColumnName="ACTIVITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_ACTIVITY_HEADER">
+            <EntityTypeMapping TypeName="Model.CAS_ACTIVITY_HEADER">
+              <MappingFragment StoreEntitySet="CAS_ACTIVITY_HEADER">
+                <ScalarProperty Name="ACTIVITY_TYPE_NAME" ColumnName="ACTIVITY_TYPE_NAME" />
+                <ScalarProperty Name="SUBAREA_NAME" ColumnName="SUBAREA_NAME" />
+                <ScalarProperty Name="AREA_NAME" ColumnName="AREA_NAME" />
+                <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+                <ScalarProperty Name="REFERENCE_APP_ID" ColumnName="REFERENCE_APP_ID" />
+                <ScalarProperty Name="PDM_CAMPAIGN_ID" ColumnName="PDM_CAMPAIGN_ID" />
+                <ScalarProperty Name="PDM_PRODUCT_ID" ColumnName="PDM_PRODUCT_ID" />
+                <ScalarProperty Name="PDM_PRODUCT_SUB_GROUP_ID" ColumnName="PDM_PRODUCT_SUB_GROUP_ID" />
+                <ScalarProperty Name="PDM_PRODUCT_GROUP_ID" ColumnName="PDM_PRODUCT_GROUP_ID" />
+                <ScalarProperty Name="ACTIVITY_TYPE_ID" ColumnName="ACTIVITY_TYPE_ID" />
+                <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+                <ScalarProperty Name="SUB_STATUS" ColumnName="SUB_STATUS" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="NON_CUSTOMER_ID" ColumnName="NON_CUSTOMER_ID" />
+                <ScalarProperty Name="TRX_SEQ_ID" ColumnName="TRX_SEQ_ID" />
+                <ScalarProperty Name="KKCISID" ColumnName="KKCISID" />
+                <ScalarProperty Name="CISID" ColumnName="CISID" />
+                <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+                <ScalarProperty Name="CONTRACT_ID" ColumnName="CONTRACT_ID" />
+                <ScalarProperty Name="SR_ID" ColumnName="SR_ID" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+                <ScalarProperty Name="LEAD_ID" ColumnName="LEAD_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+                <ScalarProperty Name="SUBAREA_ID" ColumnName="SUBAREA_ID" />
+                <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+                <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+                <ScalarProperty Name="CAMPAIGN_ID" ColumnName="CAMPAIGN_ID" />
+                <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+                <ScalarProperty Name="PRODUCT_GROUP_ID" ColumnName="PRODUCT_GROUP_ID" />
+                <ScalarProperty Name="ACTIVITY_RESPONSE_TIME" ColumnName="ACTIVITY_RESPONSE_TIME" />
+                <ScalarProperty Name="ACTIVITY_REQUEST_TIME" ColumnName="ACTIVITY_REQUEST_TIME" />
+                <ScalarProperty Name="ACTIVITY_TIME" ColumnName="ACTIVITY_TIME" />
+                <ScalarProperty Name="ACTIVITY_ID" ColumnName="ACTIVITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_ACTIVITY_TYPE">
+            <EntityTypeMapping TypeName="Model.CAS_ACTIVITY_TYPE">
+              <MappingFragment StoreEntitySet="CAS_ACTIVITY_TYPE">
+                <ScalarProperty Name="ACTIVITY_TYPE_NAME" ColumnName="ACTIVITY_TYPE_NAME" />
+                <ScalarProperty Name="ACTIVITY_TYPE_ID" ColumnName="ACTIVITY_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_AREA">
+            <EntityTypeMapping TypeName="Model.CAS_AREA">
+              <MappingFragment StoreEntitySet="CAS_AREA">
+                <ScalarProperty Name="AREA_NAME" ColumnName="AREA_NAME" />
+                <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_CAMPAIGN">
+            <EntityTypeMapping TypeName="Model.CAS_CAMPAIGN">
+              <MappingFragment StoreEntitySet="CAS_CAMPAIGN">
+                <ScalarProperty Name="CAMPAIGN_NAME" ColumnName="CAMPAIGN_NAME" />
+                <ScalarProperty Name="CAMPAIGN_ID" ColumnName="CAMPAIGN_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_CHANNEL">
+            <EntityTypeMapping TypeName="Model.CAS_CHANNEL">
+              <MappingFragment StoreEntitySet="CAS_CHANNEL">
+                <ScalarProperty Name="CHANNEL_NAME" ColumnName="CHANNEL_NAME" />
+                <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_PRODUCT">
+            <EntityTypeMapping TypeName="Model.CAS_PRODUCT">
+              <MappingFragment StoreEntitySet="CAS_PRODUCT">
+                <ScalarProperty Name="PRODUCT_NAME" ColumnName="PRODUCT_NAME" />
+                <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_PRODUCT_GROUP">
+            <EntityTypeMapping TypeName="Model.CAS_PRODUCT_GROUP">
+              <MappingFragment StoreEntitySet="CAS_PRODUCT_GROUP">
+                <ScalarProperty Name="PRODUCT_GROUP_NAME" ColumnName="PRODUCT_GROUP_NAME" />
+                <ScalarProperty Name="PRODUCT_GROUP_ID" ColumnName="PRODUCT_GROUP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_ROLE">
+            <EntityTypeMapping TypeName="Model.CAS_ROLE">
+              <MappingFragment StoreEntitySet="CAS_ROLE">
+                <ScalarProperty Name="CAS_SCOPE" ColumnName="CAS_SCOPE" />
+                <ScalarProperty Name="CAS_SERVICE" ColumnName="CAS_SERVICE" />
+                <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_CONTRACT">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_CONTRACT">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_CONTRACT">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="CONTRACT_ID" ColumnName="CONTRACT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_LEAD">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_LEAD">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_LEAD">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="LEAD_ID" ColumnName="LEAD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_NON_CUSTOMER">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_NON_CUSTOMER">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_NON_CUSTOMER">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="NON_CUSTOMER_ID" ColumnName="NON_CUSTOMER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_SR">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_SR">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_SR">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="SR_ID" ColumnName="SR_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_TICKET">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_TICKET">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_TICKET">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SERVICE_ACTIVITYLOG">
+            <EntityTypeMapping TypeName="Model.CAS_SERVICE_ACTIVITYLOG">
+              <MappingFragment StoreEntitySet="CAS_SERVICE_ACTIVITYLOG">
+                <ScalarProperty Name="XML_RESPONSE" ColumnName="XML_RESPONSE" />
+                <ScalarProperty Name="XML_REQUEST" ColumnName="XML_REQUEST" />
+                <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+                <ScalarProperty Name="REQUEST_IPADDRESS" ColumnName="REQUEST_IPADDRESS" />
+                <ScalarProperty Name="REQUEST_DATETIME" ColumnName="REQUEST_DATETIME" />
+                <ScalarProperty Name="REQUEST_URL" ColumnName="REQUEST_URL" />
+                <ScalarProperty Name="RESPONSE_MESSAGE" ColumnName="RESPONSE_MESSAGE" />
+                <ScalarProperty Name="RESPONSE_CODE" ColumnName="RESPONSE_CODE" />
+                <ScalarProperty Name="SYSTEM_CODE" ColumnName="SYSTEM_CODE" />
+                <ScalarProperty Name="SERVICE_NAME" ColumnName="SERVICE_NAME" />
+                <ScalarProperty Name="ACTIVITYLOG_ID" ColumnName="ACTIVITYLOG_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SUBAREA">
+            <EntityTypeMapping TypeName="Model.CAS_SUBAREA">
+              <MappingFragment StoreEntitySet="CAS_SUBAREA">
+                <ScalarProperty Name="SUBAREA_NAME" ColumnName="SUBAREA_NAME" />
+                <ScalarProperty Name="SUBAREA_ID" ColumnName="SUBAREA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SUBSCRIPTION_TYPE">
+            <EntityTypeMapping TypeName="Model.CAS_SUBSCRIPTION_TYPE">
+              <MappingFragment StoreEntitySet="CAS_SUBSCRIPTION_TYPE">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_NAME" ColumnName="SUBSCRIPTION_TYPE_NAME" />
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_TYPE">
+            <EntityTypeMapping TypeName="Model.CAS_TYPE">
+              <MappingFragment StoreEntitySet="CAS_TYPE">
+                <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+                <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SEQ_CAR_BATCH_LOG_ID" FunctionName="Model.Store.SP_SEQ_CAR_BATCH_LOG_ID" />
+          <FunctionImportMapping FunctionImportName="SP_SEQ_CAR_BATCH_LOG_DETAIL_ID" FunctionName="Model.Store.SP_SEQ_CAR_BATCH_LOG_DETAIL_ID" />
+          <EntitySetMapping Name="CAR_BATCH_LOG_DETAIL">
+            <EntityTypeMapping TypeName="Model.CAR_BATCH_LOG_DETAIL">
+              <MappingFragment StoreEntitySet="CAR_BATCH_LOG_DETAIL">
+                <ScalarProperty Name="RESPONSE_MESSAGE" ColumnName="RESPONSE_MESSAGE" />
+                <ScalarProperty Name="RESPONSE_CODE" ColumnName="RESPONSE_CODE" />
+                <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+                <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+                <ScalarProperty Name="BATCH_LOG_ID" ColumnName="BATCH_LOG_ID" />
+                <ScalarProperty Name="BATCH_LOG_DETAIL_ID" ColumnName="BATCH_LOG_DETAIL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SYSTEM">
+            <EntityTypeMapping TypeName="Model.CAS_SYSTEM">
+              <MappingFragment StoreEntitySet="CAS_SYSTEM">
+                <ScalarProperty Name="SYSTEM_SECURITY_KEY" ColumnName="SYSTEM_SECURITY_KEY" />
+                <ScalarProperty Name="SYSTEM_NAME" ColumnName="SYSTEM_NAME" />
+                <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAR_BATCH">
+            <EntityTypeMapping TypeName="Model.CAR_BATCH">
+              <MappingFragment StoreEntitySet="CAR_BATCH">
+                <ScalarProperty Name="MAIN_RERUN_URL" ColumnName="MAIN_RERUN_URL" />
+                <ScalarProperty Name="MAIN_URL" ColumnName="MAIN_URL" />
+                <ScalarProperty Name="IS_RERUN" ColumnName="IS_RERUN" />
+                <ScalarProperty Name="IS_DELETE" ColumnName="IS_DELETE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+                <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+                <ScalarProperty Name="BATCH_NAME" ColumnName="BATCH_NAME" />
+                <ScalarProperty Name="BATCH_CODE" ColumnName="BATCH_CODE" />
+                <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAR_SEARCH_REFAPP">
+            <EntityTypeMapping TypeName="Model.CAR_SEARCH_REFAPP">
+              <MappingFragment StoreEntitySet="CAR_SEARCH_REFAPP">
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+                <ScalarProperty Name="REFERENCE_APP_ID" ColumnName="REFERENCE_APP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAS_SEARCH_SUBSCRIPTION">
+            <EntityTypeMapping TypeName="Model.CAS_SEARCH_SUBSCRIPTION">
+              <MappingFragment StoreEntitySet="CAS_SEARCH_SUBSCRIPTION">
+                <ScalarProperty Name="CISID" ColumnName="CISID" />
+                <ScalarProperty Name="KKCISID" ColumnName="KKCISID" />
+                <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+                <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAR_BATCH_SYSTEM_MAPPING">
+            <EntityTypeMapping TypeName="Model.CAR_BATCH_SYSTEM_MAPPING">
+              <MappingFragment StoreEntitySet="CAR_BATCH_SYSTEM_MAPPING">
+                <ScalarProperty Name="IS_BATCH_RESULT" ColumnName="IS_BATCH_RESULT" />
+                <ScalarProperty Name="RESPONSE_URL" ColumnName="RESPONSE_URL" />
+                <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+                <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+                <ScalarProperty Name="MAPPING_ID" ColumnName="MAPPING_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAR_BATCH_LOG">
+            <EntityTypeMapping TypeName="Model.CAR_BATCH_LOG">
+              <MappingFragment StoreEntitySet="CAR_BATCH_LOG">
+                <ScalarProperty Name="RERUN_PATH" ColumnName="RERUN_PATH" />
+                <ScalarProperty Name="ERROR_DETAIL" ColumnName="ERROR_DETAIL" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="TOTAL_FAIL" ColumnName="TOTAL_FAIL" />
+                <ScalarProperty Name="TOTAL_COMPLETE" ColumnName="TOTAL_COMPLETE" />
+                <ScalarProperty Name="TOTAL_DETAIL" ColumnName="TOTAL_DETAIL" />
+                <ScalarProperty Name="TOTAL_HEADER" ColumnName="TOTAL_HEADER" />
+                <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+                <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+                <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+                <ScalarProperty Name="TRANSACTION_DATE" ColumnName="TRANSACTION_DATE" />
+                <ScalarProperty Name="REFERENCE_CODE" ColumnName="REFERENCE_CODE" />
+                <ScalarProperty Name="SERVICE_NAME" ColumnName="SERVICE_NAME" />
+                <ScalarProperty Name="SYSTEM_CODE" ColumnName="SYSTEM_CODE" />
+                <ScalarProperty Name="BATCH_ROUND" ColumnName="BATCH_ROUND" />
+                <ScalarProperty Name="BATCH_DATE" ColumnName="BATCH_DATE" />
+                <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+                <ScalarProperty Name="BATCH_LOG_ID" ColumnName="BATCH_LOG_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="CAR" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

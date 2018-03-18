@@ -1,0 +1,6 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\bin\Debug\Cas.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\bin\Debug\Cas.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\obj\Debug\Cas.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCeltralizeActivityService\CAS.Common\obj\Debug\Cas.Common.pdb

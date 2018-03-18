@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\0_Project\ProjectPublish\CARStatusService</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="App_Data/example_data.xlsx">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>03/16/2017 15:40:26</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>03/16/2017 15:40:26</publishTime>
+    </File>
+    <File Include="bin/EPPlus.dll">
+      <publishTime>03/16/2017 15:40:24</publishTime>
+    </File>
+    <File Include="bin/KKCAR.Business.dll">
+      <publishTime>03/16/2017 16:15:00</publishTime>
+    </File>
+    <File Include="bin/KKCAR.Common.dll">
+      <publishTime>03/16/2017 16:14:58</publishTime>
+    </File>
+    <File Include="bin/KKCAR.Data.dll">
+      <publishTime>03/16/2017 16:15:00</publishTime>
+    </File>
+    <File Include="bin/KKCAR.Entity.dll">
+      <publishTime>03/16/2017 16:15:00</publishTime>
+    </File>
+    <File Include="bin/KKCAR.Service.dll">
+      <publishTime>03/16/2017 16:15:00</publishTime>
+    </File>
+    <File Include="bin/KKCAR.WCFService.dll">
+      <publishTime>03/16/2017 16:15:00</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>03/16/2017 15:40:26</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>03/16/2017 15:40:24</publishTime>
+    </File>
+    <File Include="bin/Oracle.ManagedDataAccess.dll">
+      <publishTime>12/16/2014 05:57:12</publishTime>
+    </File>
+    <File Include="bin/Oracle.ManagedDataAccess.EntityFramework.dll">
+      <publishTime>03/16/2017 15:40:24</publishTime>
+    </File>
+    <File Include="bin/Renci.SshNet.dll">
+      <publishTime>08/02/2016 21:11:38</publishTime>
+    </File>
+    <File Include="KKCARBatchStatusService.svc">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="KKCARStatusRestService.svc">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="KKCARStatusService.svc">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="Log.config">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>03/16/2017 16:15:02</publishTime>
+    </File>
+    <File Include="Templates/Mail/MailSubjectTemplate.xml">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="Templates/Mail/NotifyBatchCreateStatusFailed.html">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="Templates/Mail/NotifyBatchCreateStatusWarned.html">
+      <publishTime>03/16/2017 15:40:30</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>03/16/2017 16:15:02</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

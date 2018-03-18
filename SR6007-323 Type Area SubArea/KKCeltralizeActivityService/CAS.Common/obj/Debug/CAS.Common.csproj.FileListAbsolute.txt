@@ -1,0 +1,6 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\bin\Debug\Cas.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\bin\Debug\Cas.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\obj\Debug\Cas.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\obj\Debug\Cas.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR6007-323 Type Area SubArea\KKCeltralizeActivityService\CAS.Common\bin\Debug\log4net.xml

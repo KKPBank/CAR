@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<templates>  
+  <template name="NotifyBatchInsertStatusFailed">
+    <subject>KKCAR fail to create status – {timestamp}</subject>
+  </template>  
+</templates>

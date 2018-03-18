@@ -1,0 +1,4 @@
+insert into CAR_SYS_CBS_FILE_MAPPING (CAR_SYS_CBS_ID, SYS_CBS, SYS_CAR)
+values (SEQ_CAR_SYS_CBS_FILE_MAPPING.nextval, 'LN','SLM');
+
+commit;

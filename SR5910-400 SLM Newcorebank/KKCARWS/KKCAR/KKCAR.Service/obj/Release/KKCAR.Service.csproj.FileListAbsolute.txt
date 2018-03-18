@@ -1,0 +1,11 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\KKCAR.Service.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\Newtonsoft.Json.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\Newtonsoft.Json.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\bin\Release\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\obj\Release\KKCAR.Service.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\obj\Release\KKCAR.Service.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Service\obj\Release\KKCAR.Service.pdb

@@ -1,0 +1,499 @@
+﻿using KKCAR.Business;
+using KKCAR.Common.Utilities;
+using KKCAR.Entity;
+using KKCAR.Service.Messages;
+using KKCAR.Service.Messages.Batch;
+using KKCAR.Service.Messages.Common;
+using log4net;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Globalization;
+using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
+
+///<summary>
+/// Class Name : KKCARBatchStatusService
+/// Purpose    : -
+/// Author     : Neda Peyrone
+///</summary>
+///<remarks>
+/// Change History:
+/// Date         Author           Description
+/// ----         ------           -----------
+///</remarks>
+namespace KKCAR.WCFService
+{
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
+    public class KKCARBatchStatusService : IKKCARBatchStatusService
+    {
+        private readonly ILog _logger;
+        private IFileFacade _fileFacade;
+        private IBatchCARInstartStatusTextFacade _batchFacade;
+        private KKCARMailSender _mailSender;
+        private IStatusFacade _statusFacade;
+        private ICommonFacade _commonFacade;
+        private LogMessageBuilder _logMsg = new LogMessageBuilder();
+
+        #region "Properties"
+
+        private long _elapsedTime;
+        private long _seqCounter;
+        private object sync = new Object();
+        private System.Diagnostics.Stopwatch _stopwatch;
+        private void IncrementSeqCounter()
+        {
+            Interlocked.Increment(ref _seqCounter);
+        }
+        #endregion
+
+        #region "Constructor"
+
+        public KKCARBatchStatusService()
+        {
+            try
+            {
+                log4net.Config.XmlConfigurator.Configure();
+
+                // Set logfile name and application name variables
+                GlobalContext.Properties["ApplicationCode"] = "KKCARWS";
+                GlobalContext.Properties["ServerName"] = Environment.MachineName;
+                _logger = LogManager.GetLogger(typeof(KKCARBatchStatusService));
+                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Exception occur:\n", ex);
+            }
+        }
+
+        #endregion
+
+        public TaskInsertStatusResponse InsertStatus_Post(string system, string fileName)
+        {
+            return this.InsertStatus(system, fileName);
+        }
+
+        public TaskInsertStatusResponse InsertStatus_Get(string system, string fileName)
+        {
+            return this.InsertStatus(system, fileName);
+        }
+
+        public TaskInsertStatusResponse InsertStatusByExcel(string username, string password)
+        {
+            ThreadContext.Properties["EventClass"] = ApplicationHelpers.GetCurrentMethod(1);
+            ThreadContext.Properties["RemoteAddress"] = ApplicationHelpers.GetClientIP();
+
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                ThreadContext.Properties["UserID"] = username.ToUpperInvariant();
+            }
+
+            var logDetail = string.Empty;
+            var logErrCode = Constants.ErrorCode.KKCAR_SUCCESS;
+            _stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            _logger.Debug("-- Start Cron Job --:--InsertStatus by Excel--");
+
+            int numOfError = 0;
+            int numOfComplete = 0;
+            DateTime schedDateTime = DateTime.Now;
+            TaskInsertStatusResponse taskResponse = new TaskInsertStatusResponse(schedDateTime);
+
+            try
+            {
+                if (!ApplicationHelpers.Authenticate(username, password))
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_ERR201;
+                    logDetail = "Username and/or Password Invalid.";
+                    _logger.DebugFormat("O:--LOGIN--:Error Message/{0}", logErrCode);
+                    goto Outer;
+                }
+
+                #region "Batch Settings"
+
+                _fileFacade = new FileFacade();
+                _statusFacade = new StatusFacade();
+
+                // Read files
+                string filePath = WebConfig.GetTestDataFile();
+                List<InsertStatusRequest> reqList = _fileFacade.GetExampleData(filePath);
+                int totalRecords = reqList.Count;
+
+                #endregion
+
+                if (reqList != null && reqList.Any())
+                {
+                    foreach (var req in reqList)
+                    {
+                        var res = _statusFacade.InsertStatus(req, true);
+
+                        if (Constants.ErrorCode.KKCAR_SUCCESS.Equals(res.ResponseStatus.ResponseCode))
+                        {
+                            numOfComplete++;
+                        }
+                        else
+                        {
+                            numOfError++;
+                        }
+                    }
+                }
+
+                if (numOfError > 0)
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_ERR103;
+                    logDetail = "Invalid Data";
+                }
+
+                TaskInsertStatusResult taskResult = new TaskInsertStatusResult();
+                taskResult.FileName = Path.GetFileName(filePath);
+                taskResult.NumOfError = numOfError;
+                taskResult.NumOfComplete = numOfComplete;
+                taskResult.TotalRecords = totalRecords;
+                taskResponse.TaskResults.Add(taskResult);
+
+            Outer:
+                _logger.DebugFormat("-- XMLResponse --\n{0}", taskResponse.SerializeObject());
+                _stopwatch.Stop();
+                _elapsedTime = _stopwatch.ElapsedMilliseconds;
+                _logger.DebugFormat("O:--Finish--:ElapsedMilliseconds/{0}", _elapsedTime);
+
+                taskResponse.ElapsedTime = _elapsedTime;
+                taskResponse.ResponseStatus = new ResponseStatus
+                {
+                    ResponseCode = logErrCode,
+                    ResponseMessage = logDetail
+                };
+
+                return taskResponse;
+            }
+            finally
+            {
+                // Send mail to system administrator
+                if (WebConfig.GetMailEnable())
+                {
+                    BatchSendMail(taskResponse);
+                }
+            }
+        }
+
+        public TaskInsertStatusResponse BatchInsertStatusByExcel(string username, string password)
+        {
+            ThreadContext.Properties["EventClass"] = ApplicationHelpers.GetCurrentMethod(1);
+            ThreadContext.Properties["RemoteAddress"] = ApplicationHelpers.GetClientIP();
+
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                ThreadContext.Properties["UserID"] = username.ToUpperInvariant();
+            }
+
+            bool skipSendMail = false;
+            var logDetail = string.Empty;
+            var logErrCode = string.Empty;
+            _stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            _logger.Debug("I:-- Start Cron Job --:--Batch InsertStatus by Excel--");
+
+            DateTime schedDateTime = DateTime.Now;
+            TaskInsertStatusResponse taskResponse = new TaskInsertStatusResponse(schedDateTime);
+
+            try
+            {
+                if (!ApplicationHelpers.Authenticate(username, password))
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_ERR201;
+                    logDetail = "Username and/or Password Invalid.";
+                    _logger.DebugFormat("O:--LOGIN--:Error Message/{0}", logErrCode);
+                    goto Outer;
+                }
+
+                // Generate json request by reading excel data.
+                _fileFacade = new FileFacade();
+                string filePath = WebConfig.GetTestDataFile();
+                bool noError = _fileFacade.GenerateJsonRequest(filePath);
+
+                if (noError)
+                {
+                    taskResponse = this.InsertStatus(null, null);
+                    skipSendMail = true;
+                    _logger.Debug("O:--Finish--");
+                    return taskResponse;
+                }
+
+                TaskInsertStatusResult taskResult = new TaskInsertStatusResult();
+                logErrCode = Constants.ErrorCode.KKCAR_ERR100;
+                logDetail = "Failed to generate files";
+
+                taskResult.FileName = Path.GetFileName(filePath);
+                taskResult.NumOfError = 0;
+                taskResult.NumOfComplete = 0;
+                taskResult.TotalRecords = 0;
+                taskResponse.TaskResults.Add(taskResult);
+
+            Outer:
+                _logger.DebugFormat("-- XMLResponse --\n{0}", taskResponse.SerializeObject());
+                _stopwatch.Stop();
+                _elapsedTime = _stopwatch.ElapsedMilliseconds;
+                _logger.DebugFormat("O:--Finish--:ElapsedMilliseconds/{0}", _elapsedTime);
+
+                taskResponse.ElapsedTime = _elapsedTime;
+                taskResponse.ResponseStatus = new ResponseStatus
+                {
+                    ResponseCode = logErrCode,
+                    ResponseMessage = logDetail
+                };
+
+                return taskResponse;
+            }
+            finally
+            {
+                // Send mail to system administrator
+                if (!skipSendMail) BatchSendMail(taskResponse);
+            }
+        }
+
+        private TaskInsertStatusResponse InsertStatus(string systemCode, string fileName)
+        {
+            ThreadContext.Properties["EventClass"] = ApplicationHelpers.GetCurrentMethod(1);
+            ThreadContext.Properties["RemoteAddress"] = ApplicationHelpers.GetClientIP();
+
+            //if (!string.IsNullOrWhiteSpace(username))
+            //{
+            //    ThreadContext.Properties["UserID"] = username.ToUpperInvariant();
+            //}
+
+            var logDetail = string.Empty;
+            var logErrCode = string.Empty;
+            bool skipSftp = WebConfig.GetSkipSFTP();
+            _stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            _logger.Debug("I:-- Start Cron Job --:--Bulk Insert Status--");
+
+            DateTime schedDateTime = DateTime.Now;
+            TaskInsertStatusResponse taskResponse = new TaskInsertStatusResponse(schedDateTime);
+
+            try
+            {
+                //if (!ApplicationHelpers.Authenticate(username, password))
+                //{
+                //    logErrCode = Constants.ErrorCode.KKCAR_ERR201;
+                //    logDetail = "Username and/or Password Invalid.";
+                //    _logger.DebugFormat("O:--LOGIN--:Error Message/{0}", logErrCode);
+                //    goto Outer;
+                //}
+
+                #region "Batch Settings"
+
+                _fileFacade = new FileFacade();
+                _statusFacade = new StatusFacade();
+
+                string dataDate = DateTime.Now.FormatDateTime("yyyyMMdd");
+                string batchFilePrefix = !string.IsNullOrWhiteSpace(fileName) ? fileName.ExtractNamePrefix() : WebConfig.GetBatchFilePrefix();
+                string batchRespFileSuffix = WebConfig.GetBatchResponseSuffix();
+                string batchPathExport = WebConfig.GetBatchPathExport();
+                string batchPathSource = WebConfig.GetBatchPathSource();
+
+                #endregion
+
+                _commonFacade = new CommonFacade();
+                ICollection<string> systems = null;
+
+                if (string.IsNullOrWhiteSpace(systemCode))
+                {
+                    systems = _commonFacade.GetActiveSystemCodeList();
+                }
+                else
+                {
+                    systems = new List<string>() { systemCode };
+                }
+
+                if (systems == null || systems.Count == 0)
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_ERR101;
+                    logDetail = "Cannot get any system code from the system";
+                    goto Outer;
+                }
+
+                foreach (string sysCode in systems)
+                {
+                    string importPath = ApplicationHelpers.GetBatchPathImport(sysCode);
+
+                    if (!skipSftp)
+                    {
+                        // Download files via Sftp
+                        if (!_fileFacade.DownloadFilesViaFTP(importPath, sysCode, batchFilePrefix))
+                        {
+                            logErrCode = Constants.ErrorCode.KKCAR_ERR101;
+                            logDetail = "Fail to download files via SFTP";
+                            goto Outer;
+                        }
+                    }
+
+                    // Read files
+                    IEnumerable<string> files = _fileFacade.GetFileList(importPath, batchFilePrefix);
+
+                    if (files != null && files.Any())
+                    {
+                        Task.Factory.StartNew(() => Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = WebConfig.GetTotalCountToProcess() },
+                                file =>
+                                {
+                                    lock (sync)
+                                    {
+                                        this.IncrementSeqCounter();
+                                        var taskResult = _statusFacade.BulkInsertStatus(file, dataDate, sysCode);
+                                        taskResponse.TaskResults.Add(taskResult);
+                                        _logger.Info(_logMsg.Clear().SetPrefixMsg("Read JsonString From File").Add("FileName", file).Add("Sequence", _seqCounter).ToInputLogString());
+                                    }
+                                })).Wait();
+                    }
+
+                    if (!skipSftp)
+                    {
+                        string exportPath = ApplicationHelpers.GetBatchPathExport(sysCode);
+
+                        // Move files via Sftp
+                        if (!_fileFacade.MoveFileViaFTP(sysCode, batchFilePrefix))
+                        {
+                            logErrCode = Constants.ErrorCode.KKCAR_ERR101;
+                            logDetail = "Fail to move files via SFTP";
+                            goto Outer;
+                        }
+
+                        // Upload files via Sftp
+                        if (!_fileFacade.UploadExportFilesViaFTP(exportPath, sysCode, batchFilePrefix, batchRespFileSuffix))
+                        {
+                            logErrCode = Constants.ErrorCode.KKCAR_ERR101;
+                            logDetail = "Fail to upload export files via SFTP";
+                            goto Outer;
+                        }
+                    }
+                }
+
+            Outer:
+
+                if(taskResponse.TaskResults.Count == 0)
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_SUCCESS;
+                    logDetail = "No files are found in SFTP";
+                }
+                if (taskResponse.TaskResults.Any(x => x.NumOfError > 0))
+                {
+                    logErrCode = Constants.ErrorCode.KKCAR_ERR103;
+                    logDetail = "Invalid Data";
+                }
+
+                _logger.DebugFormat("-- XMLResponse --\n{0}", taskResponse.SerializeObject());
+                _stopwatch.Stop();
+                _elapsedTime = _stopwatch.ElapsedMilliseconds;
+                _logger.DebugFormat("O:--Finish--:ElapsedMilliseconds/{0}", _elapsedTime);
+
+                taskResponse.ElapsedTime = _elapsedTime;
+                taskResponse.ResponseStatus = new ResponseStatus
+                {
+                    ResponseCode = logErrCode,
+                    ResponseMessage = logDetail
+                };
+
+                _logger.InfoFormat("O:--SUCCESS--:--Bulk Insert Status--");
+                return taskResponse;
+            }
+            catch (CustomException exc)
+            {
+                var statusCode = exc.Data.Keys.Cast<string>().Single();
+                var statusMessage = exc.Data[statusCode].ToString();
+
+                _logger.DebugFormat("-- XMLResponse --\n{0}", taskResponse.SerializeObject());
+                _stopwatch.Stop();
+                _elapsedTime = _stopwatch.ElapsedMilliseconds;
+                _logger.DebugFormat("O:--Finish--:ElapsedMilliseconds/{0}", _elapsedTime);
+
+                taskResponse.ElapsedTime = _elapsedTime;
+                taskResponse.ResponseStatus = new ResponseStatus
+                {
+                    ResponseCode = statusCode,
+                    ResponseMessage = statusMessage
+                };
+
+                _logger.InfoFormat("O:--FAILED--:--Bulk Insert Status--:Error Message/{0}", statusMessage);
+                _logger.Error("Exception occur:\n", exc);
+                return taskResponse;
+            }
+            catch (Exception exc)
+            {
+                taskResponse.ElapsedTime = _elapsedTime;
+                taskResponse.ResponseStatus = new ResponseStatus
+                {
+                    ResponseCode = Constants.ErrorCode.KKCAR_ERR101,
+                    ResponseMessage = "Internal Error"
+                };
+
+                _logger.InfoFormat("O:--FAILED--:--Bulk Insert Status--:Error Message/{0}", exc.Message);
+                _logger.Error("Exception occur:\n", exc);
+                return taskResponse;
+            }
+            finally
+            {
+                var logStatus = taskResponse.ResponseStatus.ResponseCode != Constants.ErrorCode.KKCAR_SUCCESS ? LogStatus.Fail : LogStatus.Success;
+                AppLog.AuditLog(Constants.BatchCode.BulkInsertStatus, schedDateTime, DateTime.Now, logStatus);
+
+                // Send mail to system administrator
+                if (WebConfig.GetMailEnable())
+                {
+                    BatchSendMail(taskResponse);
+                }
+            }
+        }
+
+        
+
+        private void BatchSendMail(TaskInsertStatusResponse result)
+        {
+            try
+            {
+                _mailSender = KKCARMailSender.GetKKCARMailSender();
+                var isError = result.TaskResults.Any(x => x.NumOfError > 0);
+
+                if (isError)
+                {
+                    _mailSender.NotifyBatchInsertStatusWarned(WebConfig.GetTaskEmailToAddress(), result);
+                }
+                if (!(isError || Constants.ErrorCode.KKCAR_SUCCESS.Equals(result.ResponseStatus.ResponseCode)))
+                {
+                    _mailSender.NotifyBatchInsertStatusFailed(WebConfig.GetTaskEmailToAddress(), result.SchedDateTime, result.ResponseStatus.ResponseMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Exception occur:\n", ex);
+            }
+        }
+
+
+        #region "IDisposable"
+        private bool _disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this._disposed)
+            {
+                if (disposing)
+                {
+                    if (_statusFacade != null)
+                    {
+                        _statusFacade.Dispose();
+                    }
+                    if (_commonFacade != null)
+                    {
+                        _commonFacade.Dispose();
+                    }                    
+                }
+            }
+            this._disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+}

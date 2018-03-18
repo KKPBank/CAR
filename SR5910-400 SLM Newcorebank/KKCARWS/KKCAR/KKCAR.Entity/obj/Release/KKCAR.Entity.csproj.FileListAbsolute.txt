@@ -1,0 +1,9 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\KKCAR.Entity.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\bin\Release\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\obj\Release\KKCAR.Entity.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\obj\Release\KKCAR.Entity.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.Entity\obj\Release\KKCAR.Entity.pdb

@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+  <Alias Key="Model" Value="KKCARContext" />
+  <Alias Key="Target" Value="KKCARContext.Store" />
+  <EntityContainerMapping CdmEntityContainer="KKCARContextContainer" StorageEntityContainer="KKCARContextStoreContainer">
+    <EntitySetMapping Name="CAR_BATCH">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_BATCH">
+        <MappingFragment StoreEntitySet="CAR_BATCH">
+          <ScalarProperty Name="MAIN_RERUN_URL" ColumnName="MAIN_RERUN_URL" />
+          <ScalarProperty Name="MAIN_URL" ColumnName="MAIN_URL" />
+          <ScalarProperty Name="IS_RERUN" ColumnName="IS_RERUN" />
+          <ScalarProperty Name="IS_DELETE" ColumnName="IS_DELETE" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+          <ScalarProperty Name="BATCH_NAME" ColumnName="BATCH_NAME" />
+          <ScalarProperty Name="BATCH_CODE" ColumnName="BATCH_CODE" />
+          <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_BATCH_LOG">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_BATCH_LOG">
+        <MappingFragment StoreEntitySet="CAR_BATCH_LOG">
+          <ScalarProperty Name="RERUN_PATH" ColumnName="RERUN_PATH" />
+          <ScalarProperty Name="ERROR_DETAIL" ColumnName="ERROR_DETAIL" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="TOTAL_FAIL" ColumnName="TOTAL_FAIL" />
+          <ScalarProperty Name="TOTAL_COMPLETE" ColumnName="TOTAL_COMPLETE" />
+          <ScalarProperty Name="TOTAL_DETAIL" ColumnName="TOTAL_DETAIL" />
+          <ScalarProperty Name="TOTAL_HEADER" ColumnName="TOTAL_HEADER" />
+          <ScalarProperty Name="END_TIME" ColumnName="END_TIME" />
+          <ScalarProperty Name="START_TIME" ColumnName="START_TIME" />
+          <ScalarProperty Name="FILE_NAME" ColumnName="FILE_NAME" />
+          <ScalarProperty Name="TRANSACTION_DATE" ColumnName="TRANSACTION_DATE" />
+          <ScalarProperty Name="REFERENCE_CODE" ColumnName="REFERENCE_CODE" />
+          <ScalarProperty Name="SERVICE_NAME" ColumnName="SERVICE_NAME" />
+          <ScalarProperty Name="SYSTEM_CODE" ColumnName="SYSTEM_CODE" />
+          <ScalarProperty Name="BATCH_ROUND" ColumnName="BATCH_ROUND" />
+          <ScalarProperty Name="BATCH_DATE" ColumnName="BATCH_DATE" />
+          <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+          <ScalarProperty Name="BATCH_LOG_ID" ColumnName="BATCH_LOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_BATCH_LOG_DETAIL">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_BATCH_LOG_DETAIL">
+        <MappingFragment StoreEntitySet="CAR_BATCH_LOG_DETAIL">
+          <ScalarProperty Name="RESPONSE_MESSAGE" ColumnName="RESPONSE_MESSAGE" />
+          <ScalarProperty Name="RESPONSE_CODE" ColumnName="RESPONSE_CODE" />
+          <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+          <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+          <ScalarProperty Name="BATCH_LOG_ID" ColumnName="BATCH_LOG_ID" />
+          <ScalarProperty Name="BATCH_LOG_DETAIL_ID" ColumnName="BATCH_LOG_DETAIL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_BATCH_SYSTEM_MAPPING">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_BATCH_SYSTEM_MAPPING">
+        <MappingFragment StoreEntitySet="CAR_BATCH_SYSTEM_MAPPING">
+          <ScalarProperty Name="IS_BATCH_RESULT" ColumnName="IS_BATCH_RESULT" />
+          <ScalarProperty Name="RESPONSE_URL" ColumnName="RESPONSE_URL" />
+          <ScalarProperty Name="BATCH_ID" ColumnName="BATCH_ID" />
+          <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+          <ScalarProperty Name="MAPPING_ID" ColumnName="MAPPING_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_SEARCH_REFAPP">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_SEARCH_REFAPP">
+        <MappingFragment StoreEntitySet="CAR_SEARCH_REFAPP">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="REFERENCE_APP_ID" ColumnName="REFERENCE_APP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_STATUS_HISTORY">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_STATUS_HISTORY">
+        <MappingFragment StoreEntitySet="CAR_STATUS_HISTORY">
+          <ScalarProperty Name="CAR_CREATE_DATETIME" ColumnName="CAR_CREATE_DATETIME" />
+          <ScalarProperty Name="CAR_STATUS_DATETIME" ColumnName="CAR_STATUS_DATETIME" />
+          <ScalarProperty Name="CAR_REMARK" ColumnName="CAR_REMARK" />
+          <ScalarProperty Name="CAR_UPDATED_POSITION" ColumnName="CAR_UPDATED_POSITION" />
+          <ScalarProperty Name="CAR_UPDATED_NAME" ColumnName="CAR_UPDATED_NAME" />
+          <ScalarProperty Name="CAR_UPDATED_ID" ColumnName="CAR_UPDATED_ID" />
+          <ScalarProperty Name="CAR_UPDATED_TEAM" ColumnName="CAR_UPDATED_TEAM" />
+          <ScalarProperty Name="CAR_UPDATED_BRANCH" ColumnName="CAR_UPDATED_BRANCH" />
+          <ScalarProperty Name="CAR_SUBSTATUS_DESC" ColumnName="CAR_SUBSTATUS_DESC" />
+          <ScalarProperty Name="CAR_SUBSTATUS_CODE" ColumnName="CAR_SUBSTATUS_CODE" />
+          <ScalarProperty Name="CAR_STATUS_DESC" ColumnName="CAR_STATUS_DESC" />
+          <ScalarProperty Name="CAR_STATUS_CODE" ColumnName="CAR_STATUS_CODE" />
+          <ScalarProperty Name="CAR_REFERENCESYSTEM_CODE" ColumnName="CAR_REFERENCESYSTEM_CODE" />
+          <ScalarProperty Name="CAR_REFERENCESYSTEM_ID" ColumnName="CAR_REFERENCESYSTEM_ID" />
+          <ScalarProperty Name="CAR_OWNERSYSTEM_CODE" ColumnName="CAR_OWNERSYSTEM_CODE" />
+          <ScalarProperty Name="CAR_OWNERSYSTEM_ID" ColumnName="CAR_OWNERSYSTEM_ID" />
+          <ScalarProperty Name="CAR_SEQ_ID" ColumnName="CAR_SEQ_ID" />
+          <ScalarProperty Name="CAR_ID" ColumnName="CAR_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_STATUS_MASTER">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_STATUS_MASTER">
+        <MappingFragment StoreEntitySet="CAR_STATUS_MASTER">
+          <ScalarProperty Name="CAR_CMT_CAMPAIGN_DESC" ColumnName="CAR_CMT_CAMPAIGN_DESC" />
+          <ScalarProperty Name="CAR_CMT_CAMPAIGN_ID" ColumnName="CAR_CMT_CAMPAIGN_ID" />
+          <ScalarProperty Name="CAR_CMT_PRODUCT_DESC" ColumnName="CAR_CMT_PRODUCT_DESC" />
+          <ScalarProperty Name="CAR_CMT_PRODUCT_ID" ColumnName="CAR_CMT_PRODUCT_ID" />
+          <ScalarProperty Name="CAR_CMT_PRODUCTGROUP_DESC" ColumnName="CAR_CMT_PRODUCTGROUP_DESC" />
+          <ScalarProperty Name="CAR_CMT_PRODUCTGROUP_ID" ColumnName="CAR_CMT_PRODUCTGROUP_ID" />
+          <ScalarProperty Name="CAR_REMARK" ColumnName="CAR_REMARK" />
+          <ScalarProperty Name="CAR_UPDATED_POSITION" ColumnName="CAR_UPDATED_POSITION" />
+          <ScalarProperty Name="CAR_UPDATED_NAME" ColumnName="CAR_UPDATED_NAME" />
+          <ScalarProperty Name="CAR_UPDATED_ID" ColumnName="CAR_UPDATED_ID" />
+          <ScalarProperty Name="CAR_UPDATED_TEAM" ColumnName="CAR_UPDATED_TEAM" />
+          <ScalarProperty Name="CAR_UPDATED_BRANCH" ColumnName="CAR_UPDATED_BRANCH" />
+          <ScalarProperty Name="CAR_SUBSTATUS_DESC" ColumnName="CAR_SUBSTATUS_DESC" />
+          <ScalarProperty Name="CAR_SUBSTATUS_CODE" ColumnName="CAR_SUBSTATUS_CODE" />
+          <ScalarProperty Name="CAR_STATUS_DESC" ColumnName="CAR_STATUS_DESC" />
+          <ScalarProperty Name="CAR_STATUS_CODE" ColumnName="CAR_STATUS_CODE" />
+          <ScalarProperty Name="CAR_PDM_CAMPAIGN_DESC" ColumnName="CAR_PDM_CAMPAIGN_DESC" />
+          <ScalarProperty Name="CAR_PDM_CAMPAIGN_ID" ColumnName="CAR_PDM_CAMPAIGN_ID" />
+          <ScalarProperty Name="CAR_PDM_PRODUCT_DESC" ColumnName="CAR_PDM_PRODUCT_DESC" />
+          <ScalarProperty Name="CAR_PDM_PRODUCT_ID" ColumnName="CAR_PDM_PRODUCT_ID" />
+          <ScalarProperty Name="CAR_PDM_PRODUCTSUBGROUP_DESC" ColumnName="CAR_PDM_PRODUCTSUBGROUP_DESC" />
+          <ScalarProperty Name="CAR_PDM_PRODUCTSUBGROUP_ID" ColumnName="CAR_PDM_PRODUCTSUBGROUP_ID" />
+          <ScalarProperty Name="CAR_PDM_PRODUCTGROUP_DESC" ColumnName="CAR_PDM_PRODUCTGROUP_DESC" />
+          <ScalarProperty Name="CAR_PDM_PRODUCTGROUP_ID" ColumnName="CAR_PDM_PRODUCTGROUP_ID" />
+          <ScalarProperty Name="CAR_SUBSCRIPTION_CARDTYPE" ColumnName="CAR_SUBSCRIPTION_CARDTYPE" />
+          <ScalarProperty Name="CAR_SUBSCRIPTION_CUSTYPE" ColumnName="CAR_SUBSCRIPTION_CUSTYPE" />
+          <ScalarProperty Name="CAR_SUBSCRIPTION_ID" ColumnName="CAR_SUBSCRIPTION_ID" />
+          <ScalarProperty Name="CAR_CHANNEL_ID" ColumnName="CAR_CHANNEL_ID" />
+          <ScalarProperty Name="CAR_REFERNCE_NO" ColumnName="CAR_REFERNCE_NO" />
+          <ScalarProperty Name="CAR_STATUS_DATETIME" ColumnName="CAR_STATUS_DATETIME" />
+          <ScalarProperty Name="CAR_TRAN_DATETIME" ColumnName="CAR_TRAN_DATETIME" />
+          <ScalarProperty Name="CAR_ID" ColumnName="CAR_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_STATUS_REFFERENCE">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_STATUS_REFFERENCE">
+        <MappingFragment StoreEntitySet="CAR_STATUS_REFFERENCE">
+          <ScalarProperty Name="CAR_SYSTEM_CODE" ColumnName="CAR_SYSTEM_CODE" />
+          <ScalarProperty Name="CAR_SYSTEM_ID" ColumnName="CAR_SYSTEM_ID" />
+          <ScalarProperty Name="CAR_ID" ColumnName="CAR_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_ACTIVITY_DETAIL">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_ACTIVITY_DETAIL">
+        <MappingFragment StoreEntitySet="CAS_ACTIVITY_DETAIL">
+          <ScalarProperty Name="JSON_ACTIVITY_INFO" ColumnName="JSON_ACTIVITY_INFO" />
+          <ScalarProperty Name="JSON_PRODUCT" ColumnName="JSON_PRODUCT" />
+          <ScalarProperty Name="JSON_CUSTOMER" ColumnName="JSON_CUSTOMER" />
+          <ScalarProperty Name="JSON_CONTRACT" ColumnName="JSON_CONTRACT" />
+          <ScalarProperty Name="JSON_OFFICER" ColumnName="JSON_OFFICER" />
+          <ScalarProperty Name="ACTIVITY_ID" ColumnName="ACTIVITY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_ACTIVITY_HEADER">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_ACTIVITY_HEADER">
+        <MappingFragment StoreEntitySet="CAS_ACTIVITY_HEADER">
+          <ScalarProperty Name="REFERENCE_APP_ID" ColumnName="REFERENCE_APP_ID" />
+          <ScalarProperty Name="PDM_CAMPAIGN_ID" ColumnName="PDM_CAMPAIGN_ID" />
+          <ScalarProperty Name="PDM_PRODUCT_ID" ColumnName="PDM_PRODUCT_ID" />
+          <ScalarProperty Name="PDM_PRODUCT_SUB_GROUP_ID" ColumnName="PDM_PRODUCT_SUB_GROUP_ID" />
+          <ScalarProperty Name="PDM_PRODUCT_GROUP_ID" ColumnName="PDM_PRODUCT_GROUP_ID" />
+          <ScalarProperty Name="ACTIVITY_TYPE_ID" ColumnName="ACTIVITY_TYPE_ID" />
+          <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+          <ScalarProperty Name="SUB_STATUS" ColumnName="SUB_STATUS" />
+          <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+          <ScalarProperty Name="NON_CUSTOMER_ID" ColumnName="NON_CUSTOMER_ID" />
+          <ScalarProperty Name="TRX_SEQ_ID" ColumnName="TRX_SEQ_ID" />
+          <ScalarProperty Name="KKCISID" ColumnName="KKCISID" />
+          <ScalarProperty Name="CISID" ColumnName="CISID" />
+          <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+          <ScalarProperty Name="CONTRACT_ID" ColumnName="CONTRACT_ID" />
+          <ScalarProperty Name="SR_ID" ColumnName="SR_ID" />
+          <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+          <ScalarProperty Name="LEAD_ID" ColumnName="LEAD_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+          <ScalarProperty Name="SUBAREA_ID" ColumnName="SUBAREA_ID" />
+          <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+          <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+          <ScalarProperty Name="CAMPAIGN_ID" ColumnName="CAMPAIGN_ID" />
+          <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+          <ScalarProperty Name="PRODUCT_GROUP_ID" ColumnName="PRODUCT_GROUP_ID" />
+          <ScalarProperty Name="ACTIVITY_RESPONSE_TIME" ColumnName="ACTIVITY_RESPONSE_TIME" />
+          <ScalarProperty Name="ACTIVITY_REQUEST_TIME" ColumnName="ACTIVITY_REQUEST_TIME" />
+          <ScalarProperty Name="ACTIVITY_TIME" ColumnName="ACTIVITY_TIME" />
+          <ScalarProperty Name="ACTIVITY_ID" ColumnName="ACTIVITY_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_ACTIVITY_TYPE">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_ACTIVITY_TYPE">
+        <MappingFragment StoreEntitySet="CAS_ACTIVITY_TYPE">
+          <ScalarProperty Name="ACTIVITY_TYPE_NAME" ColumnName="ACTIVITY_TYPE_NAME" />
+          <ScalarProperty Name="ACTIVITY_TYPE_ID" ColumnName="ACTIVITY_TYPE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_AREA">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_AREA">
+        <MappingFragment StoreEntitySet="CAS_AREA">
+          <ScalarProperty Name="AREA_NAME" ColumnName="AREA_NAME" />
+          <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_CAMPAIGN">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_CAMPAIGN">
+        <MappingFragment StoreEntitySet="CAS_CAMPAIGN">
+          <ScalarProperty Name="CAMPAIGN_NAME" ColumnName="CAMPAIGN_NAME" />
+          <ScalarProperty Name="CAMPAIGN_ID" ColumnName="CAMPAIGN_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_CHANNEL">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_CHANNEL">
+        <MappingFragment StoreEntitySet="CAS_CHANNEL">
+          <ScalarProperty Name="CHANNEL_NAME" ColumnName="CHANNEL_NAME" />
+          <ScalarProperty Name="CHANNEL_ID" ColumnName="CHANNEL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_PRODUCT">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_PRODUCT">
+        <MappingFragment StoreEntitySet="CAS_PRODUCT">
+          <ScalarProperty Name="PRODUCT_NAME" ColumnName="PRODUCT_NAME" />
+          <ScalarProperty Name="PRODUCT_ID" ColumnName="PRODUCT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_PRODUCT_GROUP">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_PRODUCT_GROUP">
+        <MappingFragment StoreEntitySet="CAS_PRODUCT_GROUP">
+          <ScalarProperty Name="PRODUCT_GROUP_NAME" ColumnName="PRODUCT_GROUP_NAME" />
+          <ScalarProperty Name="PRODUCT_GROUP_ID" ColumnName="PRODUCT_GROUP_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_ROLE">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_ROLE">
+        <MappingFragment StoreEntitySet="CAS_ROLE">
+          <ScalarProperty Name="CAS_SCOPE" ColumnName="CAS_SCOPE" />
+          <ScalarProperty Name="CAS_SERVICE" ColumnName="CAS_SERVICE" />
+          <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_CONTRACT">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_CONTRACT">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_CONTRACT">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="CONTRACT_ID" ColumnName="CONTRACT_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_LEAD">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_LEAD">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_LEAD">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="LEAD_ID" ColumnName="LEAD_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_NON_CUSTOMER">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_NON_CUSTOMER">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_NON_CUSTOMER">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="NON_CUSTOMER_ID" ColumnName="NON_CUSTOMER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_SR">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_SR">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_SR">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="SR_ID" ColumnName="SR_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_SUBSCRIPTION">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_SUBSCRIPTION">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_SUBSCRIPTION">
+          <ScalarProperty Name="CISID" ColumnName="CISID" />
+          <ScalarProperty Name="KKCISID" ColumnName="KKCISID" />
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SEARCH_TICKET">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SEARCH_TICKET">
+        <MappingFragment StoreEntitySet="CAS_SEARCH_TICKET">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+          <ScalarProperty Name="SUBSCRIPTION_ID" ColumnName="SUBSCRIPTION_ID" />
+          <ScalarProperty Name="TICKET_ID" ColumnName="TICKET_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SERVICE_ACTIVITYLOG">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SERVICE_ACTIVITYLOG">
+        <MappingFragment StoreEntitySet="CAS_SERVICE_ACTIVITYLOG">
+          <ScalarProperty Name="XML_RESPONSE" ColumnName="XML_RESPONSE" />
+          <ScalarProperty Name="XML_REQUEST" ColumnName="XML_REQUEST" />
+          <ScalarProperty Name="REFERENCE_NO" ColumnName="REFERENCE_NO" />
+          <ScalarProperty Name="REQUEST_IPADDRESS" ColumnName="REQUEST_IPADDRESS" />
+          <ScalarProperty Name="REQUEST_DATETIME" ColumnName="REQUEST_DATETIME" />
+          <ScalarProperty Name="REQUEST_URL" ColumnName="REQUEST_URL" />
+          <ScalarProperty Name="RESPONSE_MESSAGE" ColumnName="RESPONSE_MESSAGE" />
+          <ScalarProperty Name="RESPONSE_CODE" ColumnName="RESPONSE_CODE" />
+          <ScalarProperty Name="SYSTEM_CODE" ColumnName="SYSTEM_CODE" />
+          <ScalarProperty Name="SERVICE_NAME" ColumnName="SERVICE_NAME" />
+          <ScalarProperty Name="ACTIVITYLOG_ID" ColumnName="ACTIVITYLOG_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SUBAREA">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SUBAREA">
+        <MappingFragment StoreEntitySet="CAS_SUBAREA">
+          <ScalarProperty Name="SUBAREA_NAME" ColumnName="SUBAREA_NAME" />
+          <ScalarProperty Name="SUBAREA_ID" ColumnName="SUBAREA_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SUBSCRIPTION_TYPE">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SUBSCRIPTION_TYPE">
+        <MappingFragment StoreEntitySet="CAS_SUBSCRIPTION_TYPE">
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_NAME" ColumnName="SUBSCRIPTION_TYPE_NAME" />
+          <ScalarProperty Name="SUBSCRIPTION_TYPE_ID" ColumnName="SUBSCRIPTION_TYPE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SYSTEM">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SYSTEM">
+        <MappingFragment StoreEntitySet="CAS_SYSTEM">
+          <ScalarProperty Name="SYSTEM_SECURITY_KEY" ColumnName="SYSTEM_SECURITY_KEY" />
+          <ScalarProperty Name="SYSTEM_NAME" ColumnName="SYSTEM_NAME" />
+          <ScalarProperty Name="SYSTEM_ID" ColumnName="SYSTEM_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_TYPE">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_TYPE">
+        <MappingFragment StoreEntitySet="CAS_TYPE">
+          <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+          <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAS_SUBSCRIPTION_CARDTYPE">
+      <EntityTypeMapping TypeName="KKCARContext.CAS_SUBSCRIPTION_CARDTYPE">
+        <MappingFragment StoreEntitySet="CAS_SUBSCRIPTION_CARDTYPE">
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_SMA_CODE" ColumnName="SUBSCRIPTION_CARDTYPE_SMA_CODE" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_END_DATE" ColumnName="SUBSCRIPTION_CARDTYPE_END_DATE" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_START_DA" ColumnName="SUBSCRIPTION_CARDTYPE_START_DA" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_STATUS" ColumnName="SUBSCRIPTION_CARDTYPE_STATUS" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_GROUP" ColumnName="SUBSCRIPTION_CARDTYPE_GROUP" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_EN" ColumnName="SUBSCRIPTION_CARDTYPE_EN" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_TH" ColumnName="SUBSCRIPTION_CARDTYPE_TH" />
+          <ScalarProperty Name="SUBSCRIPTION_CARDTYPE_CODE" ColumnName="SUBSCRIPTION_CARDTYPE_CODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_SYS_STATUS_CBS_FILE">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_SYS_STATUS_CBS_FILE">
+        <MappingFragment StoreEntitySet="CAR_SYS_STATUS_CBS_FILE">
+          <ScalarProperty Name="CAR_PROCESS_ERROR_STEP" ColumnName="CAR_PROCESS_ERROR_STEP" />
+          <ScalarProperty Name="CAR_PROCESS_STATUS" ColumnName="CAR_PROCESS_STATUS" />
+          <ScalarProperty Name="CAR_FILE_PROCESS_TIME" ColumnName="CAR_FILE_PROCESS_TIME" />
+          <ScalarProperty Name="CAR_FILE_CREATE_DATE" ColumnName="CAR_FILE_CREATE_DATE" />
+          <ScalarProperty Name="CAR_FILEPATH" ColumnName="CAR_FILEPATH" />
+          <ScalarProperty Name="CAR_FILENAME" ColumnName="CAR_FILENAME" />
+          <ScalarProperty Name="CAR_SYS_STATUS_CBS_FILE_ID" ColumnName="CAR_SYS_STATUS_CBS_FILE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAR_SYS_STATUS_CBS_FILE_DATA">
+      <EntityTypeMapping TypeName="KKCARContext.CAR_SYS_STATUS_CBS_FILE_DATA">
+        <MappingFragment StoreEntitySet="CAR_SYS_STATUS_CBS_FILE_DATA">
+          <ScalarProperty Name="CAR_STATUS_NAME" ColumnName="CAR_STATUS_NAME" />
+          <ScalarProperty Name="CAR_STATUS" ColumnName="CAR_STATUS" />
+          <ScalarProperty Name="CAR_REF_SYSTEM_CODE" ColumnName="CAR_REF_SYSTEM_CODE" />
+          <ScalarProperty Name="CAR_REF_SYSTEM_ID" ColumnName="CAR_REF_SYSTEM_ID" />
+          <ScalarProperty Name="CAR_OWNER_SYSTEM_CODE" ColumnName="CAR_OWNER_SYSTEM_CODE" />
+          <ScalarProperty Name="CAR_OWNER_SYSTEM_ID" ColumnName="CAR_OWNER_SYSTEM_ID" />
+          <ScalarProperty Name="CAR_SUBSCRIPT_CARD_TYPE" ColumnName="CAR_SUBSCRIPT_CARD_TYPE" />
+          <ScalarProperty Name="CAR_SUBSCRIPT_CUS_TYPE" ColumnName="CAR_SUBSCRIPT_CUS_TYPE" />
+          <ScalarProperty Name="CAR_SUBSCRIPTION_ID" ColumnName="CAR_SUBSCRIPTION_ID" />
+          <ScalarProperty Name="CAR_STATUS_DATE_TIME" ColumnName="CAR_STATUS_DATE_TIME" />
+          <ScalarProperty Name="CAR_CHANNEL_ID" ColumnName="CAR_CHANNEL_ID" />
+          <ScalarProperty Name="CAR_REFERENCE_NO" ColumnName="CAR_REFERENCE_NO" />
+          <ScalarProperty Name="CAR_SYSTEM_CODE" ColumnName="CAR_SYSTEM_CODE" />
+          <ScalarProperty Name="CAR_TOTAL_RECORD" ColumnName="CAR_TOTAL_RECORD" />
+          <ScalarProperty Name="CAR_TOTAL_SEQUENCE" ColumnName="CAR_TOTAL_SEQUENCE" />
+          <ScalarProperty Name="CAR_CURRENT_SEQUENCE" ColumnName="CAR_CURRENT_SEQUENCE" />
+          <ScalarProperty Name="CAR_CREATE_DATE" ColumnName="CAR_CREATE_DATE" />
+          <ScalarProperty Name="CAR_FILE_NAME" ColumnName="CAR_FILE_NAME" />
+          <ScalarProperty Name="CAR_REFERENCE_CODE" ColumnName="CAR_REFERENCE_CODE" />
+          <ScalarProperty Name="CAR_SYS_STATUS_CBS_FILE_ID" ColumnName="CAR_SYS_STATUS_CBS_FILE_ID" />
+          <ScalarProperty Name="CAR_SYS_STATUS_CBS_FILE_DATAID" ColumnName="CAR_SYS_STATUS_CBS_FILE_DATAID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

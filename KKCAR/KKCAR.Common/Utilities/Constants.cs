@@ -1,0 +1,180 @@
+﻿///<summary>
+/// Class Name : Constants
+/// Purpose    : -
+/// Author     : Neda Peyrone
+///</summary>
+///<remarks>
+/// Change History:
+/// Date         Author           Description
+/// ----         ------           -----------
+///</remarks>
+namespace KKCAR.Common.Utilities
+{
+    public static class Constants
+    {
+        public const string BatchUrlPattern = "CARInsertStatus?system={0}&fileName={1}";
+        public const string NotifyUrlPattern = "BatchCARInsertStatus?system={0}&serviceName={1}&dataDate={2}&getResult={3}&path={4}";
+        public const string BatchResponseFilePattern = @"{0}\w*{1}.txt";
+        public const string IgnoreBatchRequestFilePattern = @"\w*response.txt/gi";
+
+        public static class CultureShortName
+        {
+            public const string EnglishUS = "EN";
+            public const string Thai = "TH";
+        }
+
+        public static class DateTimeFormat
+        {
+            public const string ShortTime = "HH:mm";
+            public const string FullTime = "HH:mm:ss";
+            public const string ShortDate = "dd MMM yyyy";
+            public const string FullDateTime = "dd MMM yyyy HH:mm:ss";
+            public const string DefaultShortDate = "dd/MM/yyyy";
+            public const string DefaultFullDateTime = "dd/MM/yyyy HH:mm:ss";
+            public const string CalendarShortDate = "dd-MM-yyyy";
+            public const string CalendarFullDateTime = "dd-MM-yyyy HH:mm:ss";
+            public const string StoreProcedureDate = "yyyy-MM-dd";
+            public const string StoreProcedureDateTime = "yyyy-MM-dd HH:mm:ss";
+            public const string FileName = "yyyyMMddhhmm";
+        }
+
+        public static class ErrorCode
+        {
+            public const string KKCAR_SUCCESS   = "CAR-I-000"; // Success
+            public const string KKCAR_ERR100    = "CAR-E-100"; // Exception
+            public const string KKCAR_ERR101    = "CAR-E-101"; // Required field
+            public const string KKCAR_ERR102    = "CAR-E-102"; // Bad Request, the body is not valid
+            public const string KKCAR_ERR103    = "CAR-E-103"; // Invalid Data
+            public const string KKCAR_ERR201    = "CAR-E-201"; // Invalid security key
+            public const string KKCAR_ERR202    = "CAR-E-202"; // No permission
+            public const string KKCAR_ERR203    = "CAR-E-203"; // Invalid Service Name
+            public const string KKCAR_ERR401    = "CAR-E-401"; // Invalid total record
+            public const string KKCAR_ERR402    = "CAR-E-402"; // Invalid JSON format
+        }
+
+        public static class KnownCulture
+        {
+            public const string EnglishUS = "en-US";
+            public const string Thai = "th-TH";
+        }
+
+        public static class MailSubject
+        {
+            public const string NotifyBatchInsertStatusFailed = "NotifyBatchInsertStatusFailed";
+        }
+
+        public static class MaxLength
+        {
+            public const int SubscriptionID = 100;
+            public const int SubscriptionCusType = 50;
+            public const int SubscriptionCardType = 50;
+            public const int PDMProductGroupID = 100;
+            public const int PDMProductGroupDesc = 100;
+            public const int PDMProductSubGroupID = 100;
+            public const int PDMProductSubGroupDesc = 100;
+            public const int PDMProductID = 100;
+            public const int PDMProductDesc = 100;
+            public const int PDMPCampaignID = 100;
+            public const int PDMPCampaignDesc = 100;
+            public const int CMTProductGroupID = 100;
+            public const int CMTProductGroupDesc = 200;
+            public const int CMTProductID = 100;
+            public const int CMTProductDesc = 200;
+            public const int CMTCampaignID = 100;
+            public const int CMTCampaignDesc = 200;
+            public const int OwnerSystemId = 100;
+            public const int OwnerSystemCode = 100;
+            public const int RefSystemId = 100;
+            public const int RefSystemCode = 100;
+            public const int Status = 20;
+            public const int StatusName = 100;
+            public const int SubStatus = 20;
+            public const int SubStatusName = 100;
+            public const int UpdatedBRANCH = 100;
+            public const int UpdatedTeam = 200;
+            public const int UpdatedID = 10;
+            public const int UpdatedName = 100;
+            public const int UpdatedPosition = 100;
+            public const int StatusNextBranch = 20;
+            public const int StatusNextTeam = 100;
+            public const int Remark = 4000;
+            public const int ChannelID = 25;
+            public const int RefNo = 50;
+        }
+
+        public static class MinLenght
+        {
+            public const int SearchTerm = 2;
+            public const int AutoComplete = 0;
+        }
+
+        public static class ServiceName
+        {
+            public const string InsertStatus = "CARInsertStatus";
+            public const string BatchInsertStatus = "BatchCARInsertStatus";
+            public const string BulkInsertStatus = "BulkCARInsertStatus";
+        }
+
+        public static class ServicesNamespace
+        {
+            public const string StatusService = "http://www.kiatnakinbank.com/services/KKCAR/KKCARStatusService";
+            public const string StatusRestService = "http://www.kiatnakinbank.com/services/KKCAR/KKCARStatusRestService";
+            public const string BatchStatusService = "http://www.kiatnakinbank.com/services/KKCAR/KKCARBatchStatusService";
+        }
+
+        public static class StackTraceError
+        {
+            public const string InnerException = "[Source={0}]<br>[Message={1}]<br>[Stack trace={2}]";
+            public const string Exception = "<font size='1.7'>Application Error<br>{0}</font>";
+        }
+        
+        public static class SystemName
+        {
+            public const string KKCAR = "KKCAR";
+        }
+
+        public static class Module
+        {
+            public const string WebService = "StatusService";
+        }
+
+        public static class AuditAction
+        {
+            public const string InsertStatus = "InsertStatus";
+        }
+
+        public static class SequenceName
+        {
+            public const string CarID = "SEQ_CAR_ID";
+            public const string CarSeqID = "SEQ_CAR_SEQ_ID";
+            public const string CarBatchLogID = "SEQ_CAR_BATCH_LOG_ID";
+            public const string CarBatchLogDetailID = "SEQ_CAR_BATCH_LOG_DETAIL_ID";
+            public const string CarSysStatusCbsFile = "SEQ_CAR_SYS_STATUS_CBS_FILE";
+            public const string CarSysStatusCbsFileData = "SEQ_CAR_SYS_STATUSCBSFILEDATA";
+        }
+
+        public static class StatusResponse
+        {
+            public const string Success = "SUCCESS";
+            public const string Failed = "FAILED";
+            public const string NotProcess = "NOTPROCESS";
+        }
+
+        public static class BatchCode
+        {
+            public const string BatchInsertStatus = "CAR_BATCH_002";
+            public const string BulkInsertStatus = "CAR_BATCH_003";
+        }
+
+        public class BatchCARInsertStatus
+        {
+            public const string TYPE_OF_DATA_HEAD = "H";
+            public const string TYPE_OF_DATA_DETAIL = "D";
+        }
+        public class BatchCARProcessStatus {
+            public const string InProcess = "0";
+            public const string Success = "1";
+            public const string Fail = "2";
+        }
+    }
+}

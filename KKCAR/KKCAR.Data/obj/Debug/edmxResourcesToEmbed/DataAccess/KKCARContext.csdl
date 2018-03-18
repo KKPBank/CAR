@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="KKCARContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="KKCARContextContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CAR_BATCH" EntityType="KKCARContext.CAR_BATCH" />
+    <EntitySet Name="CAR_BATCH_LOG" EntityType="KKCARContext.CAR_BATCH_LOG" />
+    <EntitySet Name="CAR_BATCH_LOG_DETAIL" EntityType="KKCARContext.CAR_BATCH_LOG_DETAIL" />
+    <EntitySet Name="CAR_BATCH_SYSTEM_MAPPING" EntityType="KKCARContext.CAR_BATCH_SYSTEM_MAPPING" />
+    <EntitySet Name="CAR_SEARCH_REFAPP" EntityType="KKCARContext.CAR_SEARCH_REFAPP" />
+    <!--<EntitySet Name="CAR_STATUS_DETAIL" EntityType="KKCARContext.CAR_STATUS_DETAIL" />-->
+    <EntitySet Name="CAR_STATUS_HISTORY" EntityType="KKCARContext.CAR_STATUS_HISTORY" />
+    <EntitySet Name="CAR_STATUS_MASTER" EntityType="KKCARContext.CAR_STATUS_MASTER" />
+    <EntitySet Name="CAR_STATUS_REFFERENCE" EntityType="KKCARContext.CAR_STATUS_REFFERENCE" />
+    <EntitySet Name="CAS_ACTIVITY_DETAIL" EntityType="KKCARContext.CAS_ACTIVITY_DETAIL" />
+    <EntitySet Name="CAS_ACTIVITY_HEADER" EntityType="KKCARContext.CAS_ACTIVITY_HEADER" />
+    <EntitySet Name="CAS_ACTIVITY_TYPE" EntityType="KKCARContext.CAS_ACTIVITY_TYPE" />
+    <EntitySet Name="CAS_AREA" EntityType="KKCARContext.CAS_AREA" />
+    <EntitySet Name="CAS_CAMPAIGN" EntityType="KKCARContext.CAS_CAMPAIGN" />
+    <EntitySet Name="CAS_CHANNEL" EntityType="KKCARContext.CAS_CHANNEL" />
+    <EntitySet Name="CAS_PRODUCT" EntityType="KKCARContext.CAS_PRODUCT" />
+    <EntitySet Name="CAS_PRODUCT_GROUP" EntityType="KKCARContext.CAS_PRODUCT_GROUP" />
+    <EntitySet Name="CAS_ROLE" EntityType="KKCARContext.CAS_ROLE" />
+    <EntitySet Name="CAS_SEARCH_CONTRACT" EntityType="KKCARContext.CAS_SEARCH_CONTRACT" />
+    <EntitySet Name="CAS_SEARCH_LEAD" EntityType="KKCARContext.CAS_SEARCH_LEAD" />
+    <EntitySet Name="CAS_SEARCH_NON_CUSTOMER" EntityType="KKCARContext.CAS_SEARCH_NON_CUSTOMER" />
+    <EntitySet Name="CAS_SEARCH_SR" EntityType="KKCARContext.CAS_SEARCH_SR" />
+    <EntitySet Name="CAS_SEARCH_SUBSCRIPTION" EntityType="KKCARContext.CAS_SEARCH_SUBSCRIPTION" />
+    <EntitySet Name="CAS_SEARCH_TICKET" EntityType="KKCARContext.CAS_SEARCH_TICKET" />
+    <EntitySet Name="CAS_SERVICE_ACTIVITYLOG" EntityType="KKCARContext.CAS_SERVICE_ACTIVITYLOG" />
+    <EntitySet Name="CAS_SUBAREA" EntityType="KKCARContext.CAS_SUBAREA" />
+    <EntitySet Name="CAS_SUBSCRIPTION_TYPE" EntityType="KKCARContext.CAS_SUBSCRIPTION_TYPE" />
+    <EntitySet Name="CAS_SYSTEM" EntityType="KKCARContext.CAS_SYSTEM" />
+    <EntitySet Name="CAS_TYPE" EntityType="KKCARContext.CAS_TYPE" />
+    <EntitySet Name="CAS_SUBSCRIPTION_CARDTYPE" EntityType="KKCARContext.CAS_SUBSCRIPTION_CARDTYPE" />
+    <AssociationSet Name="CAR_BATCH_LOG_FK" Association="KKCARContext.CAR_BATCH_LOG_FK">
+      <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+      <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+    </AssociationSet>
+    <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK2" Association="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK2">
+      <End Role="CAR_BATCH" EntitySet="CAR_BATCH" />
+      <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+    </AssociationSet>
+    <AssociationSet Name="CAR_BATCH_LOG_DETAIL_FK" Association="KKCARContext.CAR_BATCH_LOG_DETAIL_FK">
+      <End Role="CAR_BATCH_LOG" EntitySet="CAR_BATCH_LOG" />
+      <End Role="CAR_BATCH_LOG_DETAIL" EntitySet="CAR_BATCH_LOG_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="CAR_BATCH_SYSTEM_MAPPING_FK1" Association="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK1">
+      <End Role="CAS_SYSTEM" EntitySet="CAS_SYSTEM" />
+      <End Role="CAR_BATCH_SYSTEM_MAPPING" EntitySet="CAR_BATCH_SYSTEM_MAPPING" />
+    </AssociationSet>
+    <AssociationSet Name="CAR_SEARCH_REFAPP_FK" Association="KKCARContext.CAR_SEARCH_REFAPP_FK">
+      <End Role="CAS_SEARCH_SUBSCRIPTION" EntitySet="CAS_SEARCH_SUBSCRIPTION" />
+      <End Role="CAR_SEARCH_REFAPP" EntitySet="CAR_SEARCH_REFAPP" />
+    </AssociationSet>
+    <EntitySet Name="CAR_SYS_STATUS_CBS_FILE" EntityType="KKCARContext.CAR_SYS_STATUS_CBS_FILE" />
+    <EntitySet Name="CAR_SYS_STATUS_CBS_FILE_DATA" EntityType="KKCARContext.CAR_SYS_STATUS_CBS_FILE_DATA" />
+    <AssociationSet Name="FK_CAR_SYS__REFERENCE_CAR_SYS_" Association="KKCARContext.FK_CAR_SYS__REFERENCE_CAR_SYS_">
+      <End Role="CAR_SYS_STATUS_CBS_FILE" EntitySet="CAR_SYS_STATUS_CBS_FILE" />
+      <End Role="CAR_SYS_STATUS_CBS_FILE_DATA" EntitySet="CAR_SYS_STATUS_CBS_FILE_DATA" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CAR_BATCH">
+    <Key>
+      <PropertyRef Name="BATCH_ID" />
+    </Key>
+    <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="BATCH_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="START_TIME" Type="DateTime" />
+    <Property Name="END_TIME" Type="DateTime" />
+    <Property Name="STATUS" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DELETE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="IS_RERUN" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="MAIN_URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="MAIN_RERUN_URL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_BATCH_LOG" Relationship="KKCARContext.CAR_BATCH_LOG_FK" FromRole="CAR_BATCH" ToRole="CAR_BATCH_LOG" />
+    <NavigationProperty Name="CAR_BATCH_SYSTEM_MAPPING" Relationship="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK2" FromRole="CAR_BATCH" ToRole="CAR_BATCH_SYSTEM_MAPPING" />
+  </EntityType>
+  <EntityType Name="CAR_BATCH_LOG">
+    <Key>
+      <PropertyRef Name="BATCH_LOG_ID" />
+    </Key>
+    <Property Name="BATCH_LOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="BATCH_DATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_ROUND" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="SYSTEM_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SERVICE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="REFERENCE_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TRANSACTION_DATE" Type="DateTime" />
+    <Property Name="FILE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="START_TIME" Type="DateTime" Nullable="false" />
+    <Property Name="END_TIME" Type="DateTime" />
+    <Property Name="TOTAL_HEADER" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="TOTAL_DETAIL" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="TOTAL_COMPLETE" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="TOTAL_FAIL" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ERROR_DETAIL" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="RERUN_PATH" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_BATCH" Relationship="KKCARContext.CAR_BATCH_LOG_FK" FromRole="CAR_BATCH_LOG" ToRole="CAR_BATCH" />
+    <NavigationProperty Name="CAR_BATCH_LOG_DETAIL" Relationship="KKCARContext.CAR_BATCH_LOG_DETAIL_FK" FromRole="CAR_BATCH_LOG" ToRole="CAR_BATCH_LOG_DETAIL" />
+  </EntityType>
+  <EntityType Name="CAR_BATCH_LOG_DETAIL">
+    <Key>
+      <PropertyRef Name="BATCH_LOG_DETAIL_ID" />
+    </Key>
+    <Property Name="BATCH_LOG_DETAIL_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="BATCH_LOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="REFERENCE_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CHANNEL_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RESPONSE_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RESPONSE_MESSAGE" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_BATCH_LOG" Relationship="KKCARContext.CAR_BATCH_LOG_DETAIL_FK" FromRole="CAR_BATCH_LOG_DETAIL" ToRole="CAR_BATCH_LOG" />
+  </EntityType>
+  <EntityType Name="CAR_BATCH_SYSTEM_MAPPING">
+    <Key>
+      <PropertyRef Name="MAPPING_ID" />
+    </Key>
+    <Property Name="MAPPING_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="SYSTEM_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="BATCH_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="RESPONSE_URL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IS_BATCH_RESULT" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="CAR_BATCH" Relationship="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK2" FromRole="CAR_BATCH_SYSTEM_MAPPING" ToRole="CAR_BATCH" />
+    <NavigationProperty Name="CAS_SYSTEM" Relationship="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK1" FromRole="CAR_BATCH_SYSTEM_MAPPING" ToRole="CAS_SYSTEM" />
+  </EntityType>
+  <EntityType Name="CAR_SEARCH_REFAPP">
+    <Key>
+      <PropertyRef Name="REFERENCE_APP_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="REFERENCE_APP_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <NavigationProperty Name="CAS_SEARCH_SUBSCRIPTION" Relationship="KKCARContext.CAR_SEARCH_REFAPP_FK" FromRole="CAR_SEARCH_REFAPP" ToRole="CAS_SEARCH_SUBSCRIPTION" />
+  </EntityType>
+  <!--<EntityType Name="CAR_STATUS_DETAIL">
+          <Key>
+            <PropertyRef Name="CAR_ID" />
+          </Key>
+          <Property Name="CAR_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_CUSTOMER_LIST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_OFFICER_LIST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_APPLICATION_LIST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CAR_OTHER_LIST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>-->
+  <EntityType Name="CAR_STATUS_HISTORY">
+    <Key>
+      <PropertyRef Name="CAR_ID" />
+      <PropertyRef Name="CAR_SEQ_ID" />
+    </Key>
+    <Property Name="CAR_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SEQ_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_OWNERSYSTEM_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_OWNERSYSTEM_CODE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REFERENCESYSTEM_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REFERENCESYSTEM_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_DESC" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSTATUS_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSTATUS_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_BRANCH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_TEAM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_POSITION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REMARK" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_DATETIME" Type="DateTime" Precision="6" />
+    <Property Name="CAR_CREATE_DATETIME" Type="DateTime" Precision="6" />
+  </EntityType>
+  <EntityType Name="CAR_STATUS_MASTER">
+    <Key>
+      <PropertyRef Name="CAR_ID" />
+    </Key>
+    <Property Name="CAR_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_TRAN_DATETIME" Type="DateTime" Nullable="false" Precision="6" />
+    <Property Name="CAR_STATUS_DATETIME" Type="DateTime" Nullable="false" Precision="6" />
+    <Property Name="CAR_REFERNCE_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CHANNEL_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPTION_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPTION_CUSTYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPTION_CARDTYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCTGROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCTGROUP_DESC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCTSUBGROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCTSUBGROUP_DESC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCT_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_PRODUCT_DESC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_CAMPAIGN_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PDM_CAMPAIGN_DESC" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSTATUS_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSTATUS_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_BRANCH" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_TEAM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_UPDATED_POSITION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REMARK" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_PRODUCTGROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_PRODUCTGROUP_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_PRODUCT_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_PRODUCT_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_CAMPAIGN_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CMT_CAMPAIGN_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAR_STATUS_REFFERENCE">
+    <Key>
+      <PropertyRef Name="CAR_ID" />
+      <PropertyRef Name="CAR_SYSTEM_ID" />
+      <PropertyRef Name="CAR_SYSTEM_CODE" />
+    </Key>
+    <Property Name="CAR_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SYSTEM_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SYSTEM_CODE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_ACTIVITY_DETAIL">
+    <Key>
+      <PropertyRef Name="ACTIVITY_ID" />
+    </Key>
+    <Property Name="ACTIVITY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="JSON_OFFICER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JSON_CONTRACT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JSON_CUSTOMER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JSON_PRODUCT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JSON_ACTIVITY_INFO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_ACTIVITY_HEADER">
+    <Key>
+      <PropertyRef Name="ACTIVITY_ID" />
+    </Key>
+    <Property Name="ACTIVITY_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ACTIVITY_TIME" Type="DateTime" Precision="6" />
+    <Property Name="ACTIVITY_REQUEST_TIME" Type="DateTime" Precision="6" />
+    <Property Name="ACTIVITY_RESPONSE_TIME" Type="DateTime" Precision="6" />
+    <Property Name="PRODUCT_GROUP_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PRODUCT_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CAMPAIGN_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="AREA_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="SUBAREA_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="CHANNEL_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="LEAD_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TICKET_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SR_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CONTRACT_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SYSTEM_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="KKCISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="TRX_SEQ_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="NON_CUSTOMER_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="STATUS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="SUB_STATUS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="REFERENCE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ACTIVITY_TYPE_ID" Type="Decimal" Precision="38" Scale="0" />
+    <Property Name="PDM_PRODUCT_GROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PDM_PRODUCT_SUB_GROUP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PDM_PRODUCT_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PDM_CAMPAIGN_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="REFERENCE_APP_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_ACTIVITY_TYPE">
+    <Key>
+      <PropertyRef Name="ACTIVITY_TYPE_ID" />
+    </Key>
+    <Property Name="ACTIVITY_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="ACTIVITY_TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_AREA">
+    <Key>
+      <PropertyRef Name="AREA_ID" />
+    </Key>
+    <Property Name="AREA_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="AREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_CAMPAIGN">
+    <Key>
+      <PropertyRef Name="CAMPAIGN_ID" />
+    </Key>
+    <Property Name="CAMPAIGN_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CAMPAIGN_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_CHANNEL">
+    <Key>
+      <PropertyRef Name="CHANNEL_ID" />
+    </Key>
+    <Property Name="CHANNEL_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CHANNEL_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_PRODUCT">
+    <Key>
+      <PropertyRef Name="PRODUCT_ID" />
+    </Key>
+    <Property Name="PRODUCT_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PRODUCT_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_PRODUCT_GROUP">
+    <Key>
+      <PropertyRef Name="PRODUCT_GROUP_ID" />
+    </Key>
+    <Property Name="PRODUCT_GROUP_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="PRODUCT_GROUP_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_ROLE">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="SYSTEM_ID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CAS_SERVICE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CAS_SCOPE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_CONTRACT">
+    <Key>
+      <PropertyRef Name="CONTRACT_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="CONTRACT_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_LEAD">
+    <Key>
+      <PropertyRef Name="LEAD_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="LEAD_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_NON_CUSTOMER">
+    <Key>
+      <PropertyRef Name="NON_CUSTOMER_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="NON_CUSTOMER_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_SR">
+    <Key>
+      <PropertyRef Name="SR_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="SR_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_SUBSCRIPTION">
+    <Key>
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="KKCISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CISID" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_SEARCH_REFAPP" Relationship="KKCARContext.CAR_SEARCH_REFAPP_FK" FromRole="CAS_SEARCH_SUBSCRIPTION" ToRole="CAR_SEARCH_REFAPP" />
+  </EntityType>
+  <EntityType Name="CAS_SEARCH_TICKET">
+    <Key>
+      <PropertyRef Name="TICKET_ID" />
+      <PropertyRef Name="SUBSCRIPTION_ID" />
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="TICKET_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+  </EntityType>
+  <EntityType Name="CAS_SERVICE_ACTIVITYLOG">
+    <Key>
+      <PropertyRef Name="ACTIVITYLOG_ID" />
+    </Key>
+    <Property Name="ACTIVITYLOG_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SERVICE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SYSTEM_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RESPONSE_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="RESPONSE_MESSAGE" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="REQUEST_URL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="REQUEST_DATETIME" Type="DateTime" Precision="6" />
+    <Property Name="REQUEST_IPADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="REFERENCE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="XML_REQUEST" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="XML_RESPONSE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_SUBAREA">
+    <Key>
+      <PropertyRef Name="SUBAREA_ID" />
+    </Key>
+    <Property Name="SUBAREA_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="SUBAREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_SUBSCRIPTION_TYPE">
+    <Key>
+      <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+    </Key>
+    <Property Name="SUBSCRIPTION_TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="SUBSCRIPTION_TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_SYSTEM">
+    <Key>
+      <PropertyRef Name="SYSTEM_ID" />
+    </Key>
+    <Property Name="SYSTEM_ID" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="SYSTEM_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SYSTEM_SECURITY_KEY" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_BATCH_SYSTEM_MAPPING" Relationship="KKCARContext.CAR_BATCH_SYSTEM_MAPPING_FK1" FromRole="CAS_SYSTEM" ToRole="CAR_BATCH_SYSTEM_MAPPING" />
+  </EntityType>
+  <EntityType Name="CAS_TYPE">
+    <Key>
+      <PropertyRef Name="TYPE_ID" />
+    </Key>
+    <Property Name="TYPE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CAS_SUBSCRIPTION_CARDTYPE">
+    <Key>
+      <PropertyRef Name="SUBSCRIPTION_CARDTYPE_CODE" />
+    </Key>
+    <Property Name="SUBSCRIPTION_CARDTYPE_CODE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_TH" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_EN" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_GROUP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_START_DA" Type="DateTime" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_END_DATE" Type="DateTime" />
+    <Property Name="SUBSCRIPTION_CARDTYPE_SMA_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="CAR_BATCH_LOG_FK">
+    <End Type="KKCARContext.CAR_BATCH" Role="CAR_BATCH" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_BATCH_LOG" Role="CAR_BATCH_LOG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAR_BATCH">
+        <PropertyRef Name="BATCH_ID" />
+      </Principal>
+      <Dependent Role="CAR_BATCH_LOG">
+        <PropertyRef Name="BATCH_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK2">
+    <End Type="KKCARContext.CAR_BATCH" Role="CAR_BATCH" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_BATCH_SYSTEM_MAPPING" Role="CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAR_BATCH">
+        <PropertyRef Name="BATCH_ID" />
+      </Principal>
+      <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+        <PropertyRef Name="BATCH_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CAR_BATCH_LOG_DETAIL_FK">
+    <End Type="KKCARContext.CAR_BATCH_LOG" Role="CAR_BATCH_LOG" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_BATCH_LOG_DETAIL" Role="CAR_BATCH_LOG_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAR_BATCH_LOG">
+        <PropertyRef Name="BATCH_LOG_ID" />
+      </Principal>
+      <Dependent Role="CAR_BATCH_LOG_DETAIL">
+        <PropertyRef Name="BATCH_LOG_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CAR_BATCH_SYSTEM_MAPPING_FK1">
+    <End Type="KKCARContext.CAS_SYSTEM" Role="CAS_SYSTEM" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_BATCH_SYSTEM_MAPPING" Role="CAR_BATCH_SYSTEM_MAPPING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAS_SYSTEM">
+        <PropertyRef Name="SYSTEM_ID" />
+      </Principal>
+      <Dependent Role="CAR_BATCH_SYSTEM_MAPPING">
+        <PropertyRef Name="SYSTEM_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CAR_SEARCH_REFAPP_FK">
+    <End Type="KKCARContext.CAS_SEARCH_SUBSCRIPTION" Role="CAS_SEARCH_SUBSCRIPTION" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_SEARCH_REFAPP" Role="CAR_SEARCH_REFAPP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAS_SEARCH_SUBSCRIPTION">
+        <PropertyRef Name="SUBSCRIPTION_ID" />
+        <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+      </Principal>
+      <Dependent Role="CAR_SEARCH_REFAPP">
+        <PropertyRef Name="SUBSCRIPTION_ID" />
+        <PropertyRef Name="SUBSCRIPTION_TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CAR_SYS_STATUS_CBS_FILE">
+    <Key>
+      <PropertyRef Name="CAR_SYS_STATUS_CBS_FILE_ID" />
+    </Key>
+    <Property Name="CAR_SYS_STATUS_CBS_FILE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_FILENAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FILEPATH" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FILE_CREATE_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="CAR_FILE_PROCESS_TIME" Type="DateTime" Nullable="false" />
+    <Property Name="CAR_PROCESS_STATUS" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_PROCESS_ERROR_STEP" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_SYS_STATUS_CBS_FILE_DATA" Relationship="KKCARContext.FK_CAR_SYS__REFERENCE_CAR_SYS_" FromRole="CAR_SYS_STATUS_CBS_FILE" ToRole="CAR_SYS_STATUS_CBS_FILE_DATA" />
+  </EntityType>
+  <EntityType Name="CAR_SYS_STATUS_CBS_FILE_DATA">
+    <Key>
+      <PropertyRef Name="CAR_SYS_STATUS_CBS_FILE_DATAID" />
+    </Key>
+    <Property Name="CAR_SYS_STATUS_CBS_FILE_DATAID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_SYS_STATUS_CBS_FILE_ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_REFERENCE_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_FILE_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CREATE_DATE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CURRENT_SEQUENCE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_TOTAL_SEQUENCE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_TOTAL_RECORD" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+    <Property Name="CAR_SYSTEM_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REFERENCE_NO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_CHANNEL_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_DATE_TIME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPTION_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPT_CUS_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_SUBSCRIPT_CARD_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_OWNER_SYSTEM_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_OWNER_SYSTEM_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REF_SYSTEM_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_REF_SYSTEM_CODE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CAR_STATUS_NAME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CAR_SYS_STATUS_CBS_FILE" Relationship="KKCARContext.FK_CAR_SYS__REFERENCE_CAR_SYS_" FromRole="CAR_SYS_STATUS_CBS_FILE_DATA" ToRole="CAR_SYS_STATUS_CBS_FILE" />
+  </EntityType>
+  <Association Name="FK_CAR_SYS__REFERENCE_CAR_SYS_">
+    <End Type="KKCARContext.CAR_SYS_STATUS_CBS_FILE" Role="CAR_SYS_STATUS_CBS_FILE" Multiplicity="1" />
+    <End Type="KKCARContext.CAR_SYS_STATUS_CBS_FILE_DATA" Role="CAR_SYS_STATUS_CBS_FILE_DATA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CAR_SYS_STATUS_CBS_FILE">
+        <PropertyRef Name="CAR_SYS_STATUS_CBS_FILE_ID" />
+      </Principal>
+      <Dependent Role="CAR_SYS_STATUS_CBS_FILE_DATA">
+        <PropertyRef Name="CAR_SYS_STATUS_CBS_FILE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

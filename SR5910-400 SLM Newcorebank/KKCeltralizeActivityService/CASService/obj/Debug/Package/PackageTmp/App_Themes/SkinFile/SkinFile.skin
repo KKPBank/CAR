@@ -1,0 +1,8 @@
+﻿<asp:GridView SkinID="GeneralView" AutoGenerateColumns="False"
+                CellPadding="0" cellspacing="1" BorderWidth="0px" AllowSorting="false" 
+                runat="server" GridLines="None">    
+
+    <HeaderStyle CssClass="GridViewHeader" Font-Underline=false HorizontalAlign="Center" Height="30px" />    
+    <RowStyle CssClass="GridViewRowStyle" Height="22px" VerticalAlign="middle" />
+    <AlternatingRowStyle CssClass="GridViewAlternatingRowStyle" Height="22px" VerticalAlign="middle" /> 
+</asp:GridView>

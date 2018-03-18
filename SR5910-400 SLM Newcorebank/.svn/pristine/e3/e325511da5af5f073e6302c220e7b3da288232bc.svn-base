@@ -1,0 +1,525 @@
+﻿using System;
+using System.IO;
+using VB = Microsoft.VisualBasic;
+using KKCAR.Service.Messages;
+using KKCAR.Service.Messages.Batch;
+using KKCAR.Service.Messages.Common;
+using KKCAR.Common.Utilities;
+using log4net;
+using KKCAR.Data.DataAccess;
+using KKCAR.Entity;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Globalization;
+
+namespace KKCAR.Business
+{
+    public class BatchCARInstartStatusTextFacade : IBatchCARInstartStatusTextFacade
+    {
+        private KKCARContextContainer _context;
+        private LogMessageBuilder _logMsg = new LogMessageBuilder();
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(BatchCARInstartStatusTextFacade));
+        private IBatchCARInsetStatusTextDataAccess _batchAccess;
+
+        public BatchCARInstartStatusTextFacade()
+        {
+            _context = new KKCARContextContainer();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
+        }
+
+        public List<BatchCARInsertStatusTextFileEntity> GetFileHistoryList()
+        {
+            _batchAccess = new BatchCARInsetStatusTextDataAccess(_context);
+            return _batchAccess.GetFileHistoryList();
+        }
+
+        public ValidateTextfileEntity ValidateTextFileFormat(string filePath)
+        {
+            ValidateTextfileEntity ret = new ValidateTextfileEntity();
+            ret.IsValid = true;
+            try
+            {
+                using (var streamReader = new StreamReader(filePath))
+                {
+                    string line;
+                    int HeaderTotalRecord = 0;
+                    int DetailTotalRecord = 0;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        if (line.Trim() == "") continue;
+
+                        string[] tmp = line.Split('|');
+                        if (tmp.Length == 9)
+                        {  //Header Row Digit แรกต้องเป็นตัว H
+                            if (tmp[0] == Constants.BatchCARInsertStatus.TYPE_OF_DATA_HEAD)  //TYPE OF DATA
+                            {
+                                if (tmp[1].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "ReferenceCode is blank";
+                                    break;
+                                }
+
+
+                                if (tmp[2].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "FileName is blank";
+                                    break;
+                                }
+
+                                if (tmp[3].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "CreateDate is blank";
+                                    break;
+                                }
+
+                                if (tmp[4].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "CurrentSequence is blank";
+                                    break;
+                                }
+                                if (VB.Information.IsNumeric(tmp[4]) == false)
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "CurrentSequence is not numberic";
+                                    break;
+                                }
+
+                                if (tmp[5].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "TotalSequence is blank";
+                                    break;
+                                }
+                                if (VB.Information.IsNumeric(tmp[5]) == false)
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "TotalSequence is not numberic";
+                                    break;
+                                }
+
+                                if (tmp[6].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "TotalRecord is blank";
+                                    break;
+                                }
+                                if (VB.Information.IsNumeric(tmp[6]) == false)
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "TotalRecord is not numberic";
+                                    break;
+                                }
+
+                                if (tmp[7].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "SystemCode is blank";
+                                    break;
+                                }
+
+                                HeaderTotalRecord = Convert.ToInt16(tmp[6]);
+                            }
+                            else
+                            {
+                                ret.IsValid = false;
+                                ret.ErrorMessage = "Header row is invalid format";
+                                break;
+                            }
+                        }
+                        else if (tmp.Length == 13) //Data Row Digit แรกต้องเป็นตัว D
+                        {
+                            if (tmp[0] == Constants.BatchCARInsertStatus.TYPE_OF_DATA_DETAIL)
+                            {
+                                if (tmp[1] == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "ReferenceNo at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[2].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "ChannelID at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[3].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "StatusDateTime at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[7].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "OwnerSystemId at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[8].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "OwnerSystemCode at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[11].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "Status at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+
+                                if (tmp[12].Trim() == "")
+                                {
+                                    ret.IsValid = false;
+                                    ret.ErrorMessage = "StatusName at row " + DetailTotalRecord + " is blank";
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                ret.IsValid = false;
+                                ret.ErrorMessage = "Type of data row " + DetailTotalRecord.ToString() + " is invalid";
+                                break;
+                            }
+
+                            DetailTotalRecord += 1;
+                        }
+                        else
+                        {
+                            //Invalid File Format
+                            ret.IsValid = false;
+                            ret.ErrorMessage = "Detail row " + DetailTotalRecord.ToString() + " is invalid format";
+                            break;
+                        }
+                    }
+
+                    ret.TotalRecord = DetailTotalRecord;
+                    //if (ret.IsValid == true)
+                    //{
+                    //    if (HeaderTotalRecord != DetailTotalRecord)
+                    //    {
+                    //        //ถ้าข้อมูลจำนวน Record ใน Header กับจำนวน Record ใน Detail ไม่เท่ากัน
+                    //        ret.IsValid = false;
+                    //        ret.ErrorMessage = "Header total record not match with detail record";
+                    //    }
+                    //}
+
+                
+                }
+            }
+            catch (Exception ex)
+            {
+                ret.IsValid = false;
+                ret.ErrorMessage = "Exception : " + ex.Message.ToString();
+            }
+
+            return ret;
+        }
+
+        public void UpdateFileStatus(decimal? ExtSysStatusCbsFileID, string statusName, string errorMessage)
+        {
+            _batchAccess = new BatchCARInsetStatusTextDataAccess(_context);
+            _batchAccess.UpdateFileStatus(ExtSysStatusCbsFileID, statusName, errorMessage);
+        }
+
+
+        public TaskInsertStatusResult BatchCARInsertStatusText(BulkInsertStatusRequest reqBatch, IEnumerable<InsertStatusRequest> reqList, string dataDate)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            Logger.Info(_logMsg.Clear().SetPrefixMsg("Call KKBatchCARStatusService.BulkInsertStatus").ToInputLogString());
+            Logger.Debug("I:--START--:--KKCARStatusService.BulkInsertStatus--");
+
+            string logDetail = string.Empty;
+            DateTime startDateTime = DateTime.Now;
+            BulkInsertStatusResponse resBatch = null;
+            //string fileName = Path.GetFileName(filePath);
+            string logErrorCode = Constants.ErrorCode.KKCAR_SUCCESS;
+            int totalRecords = 0, numOfError = 0, numOfComplete = 0;
+            TaskInsertStatusResult taskResult = new TaskInsertStatusResult();
+
+            try
+            {
+                Logger.Info(_logMsg.Clear().SetPrefixMsg("Populate InsertStatusRequest")
+                    .Add("List Size", (reqList == null || !reqList.Any()) ? 0 : reqList.Count()).ToOutputLogString());
+
+                resBatch = new BulkInsertStatusResponse(reqBatch.Header);
+
+                if (reqList.Any())
+                {
+                    totalRecords = reqList.Count();
+                    resBatch.Body = new BatchResponseBody[totalRecords];
+
+                    StatusFacade sts = new StatusFacade();
+
+                    for (int i = 0; i < totalRecords; i++)
+                    {
+                        var req = reqList.ElementAt(i);
+                        var res = sts.InsertStatus(req, true);
+                        resBatch.Body[i] = new BatchResponseBody
+                        {
+                            ChannelId = res.Header.ChannelID,
+                            ReferenceNo = res.Header.ReferenceNo,
+                            ResponseStatus = new BatchResponseStatus
+                            {
+                                ResponseCode = res.ResponseStatus.ResponseCode,
+                                ResponseMessage = res.ResponseStatus.ResponseMessage
+                            }
+                        };
+                    }
+                }
+
+                numOfError = resBatch.Body.Count(x => !Constants.ErrorCode.KKCAR_SUCCESS.Equals(x.ResponseStatus.ResponseCode));
+                numOfComplete = resBatch.Body.Count(x => Constants.ErrorCode.KKCAR_SUCCESS.Equals(x.ResponseStatus.ResponseCode));
+
+                if (numOfError > 0)
+                {
+                    logDetail = "Invalid Data";
+                    logErrorCode = Constants.ErrorCode.KKCAR_ERR103;
+                }
+
+            Outer:
+                //taskResult.ExportFileName = exFileName;
+                taskResult.FileName = reqBatch.Header.Filename;
+                taskResult.NumOfError = numOfError;
+                taskResult.NumOfComplete = numOfComplete;
+                taskResult.TotalRecords = totalRecords;
+                taskResult.ResponseStatus.ResponseCode = logErrorCode;
+                taskResult.ResponseStatus.ResponseMessage = logDetail;
+                return taskResult;
+            }
+            finally
+            {
+                Logger.Info(_logMsg.Clear().SetPrefixMsg("Call KKCARStatusService.InsertStatus").Add("Results", taskResult.ToString()).ToOutputLogString());
+                Logger.DebugFormat("-- XMLResponse --\n{0}", taskResult.SerializeObject());
+                stopwatch.Stop();
+                Logger.DebugFormat("O:--Finish--:ElapsedMilliseconds/{0}", stopwatch.ElapsedMilliseconds);
+
+                #region "Save Batch Log"
+
+                var auditLog = new AuditLogEntity();
+                auditLog.BatchDate = dataDate;
+                auditLog.StartDateTime = startDateTime;
+                auditLog.EndDateTime = DateTime.Now;
+                auditLog.LogDetail = logDetail;
+                auditLog.NumOfTotal = taskResult.TotalRecords;
+                auditLog.NumOfComplete = taskResult.NumOfComplete;
+                auditLog.NumOfError = taskResult.NumOfError;
+                auditLog.BatchCode = Constants.BatchCode.BulkInsertStatus;
+                //auditLog.RerunPath = GetBatchUrl(sysCode, fileName);
+                auditLog.SystemCode = resBatch.Header.SystemCode;
+                auditLog.ServiceName = Constants.ServiceName.BulkInsertStatus;
+                auditLog.Status = taskResult.NumOfError == 0 ? LogStatus.Success : LogStatus.Fail;
+                auditLog.ReferenceCode = resBatch.Header.ReferenceNo;
+                auditLog.TransactionDate = resBatch.Header.CreateDate;
+
+                if (resBatch != null)
+                {
+                    if (resBatch.Body != null && resBatch.Body.Length > 0)
+                    {
+                        var logDetailList = new List<LogDetailEntity>();
+
+                        foreach (var result in resBatch.Body)
+                        {
+                            var auditLogDetail = new LogDetailEntity();
+                            auditLogDetail.ReferenceNo = result.ReferenceNo;
+                            auditLogDetail.ChannelId = result.ChannelId;
+                            auditLogDetail.LogCode = result.ResponseStatus.ResponseCode;
+                            auditLogDetail.LogDetail = result.ResponseStatus.ResponseMessage;
+                            logDetailList.Add(auditLogDetail);
+                        }
+
+                        auditLog.LogDetailList = logDetailList;
+                    }
+                }
+
+                AppLog.AuditLog(auditLog);
+
+                #endregion
+            }
+        }
+
+        public IEnumerable<InsertStatusRequest> PopulateBatchCARInsertStatusTextRequest(BulkInsertStatusRequest req)
+        {
+            var today = DateTime.Now;
+            var results = from rq in req.Body
+                          select new InsertStatusRequest
+                          {
+                              Header = new Service.Messages.Common.Header
+                              {
+                                  ChannelID = rq.ChannelId,
+                                  ReferenceNo = rq.ReferenceNo,
+                                  SecurityKey = req.Header.SecurityKey,
+                                  ServiceName = Constants.ServiceName.InsertStatus,
+                                  SystemCode = req.Header.SystemCode,
+                                  TransactionDateTime = today
+                              },
+                              OwnerSystemCode = rq.OwnerSystemCode,
+                              OwnerSystemId = rq.OwnerSystemId,
+                              RefSystemCode = rq.RefSystemCode,
+                              RefSystemId = rq.RefSystemId,
+                              Status = rq.Status,
+                              StatusDateTime = rq.StatusDateTime,
+                              StatusName = rq.StatusName,
+                              SubscriptionCardType = rq.SubscriptionCardType,
+                              SubscriptionCusType = rq.SubscriptionCusType,
+                              SubscriptionID = rq.SubscriptionId
+                          };
+
+            return results;
+        }
+
+        public BulkInsertStatusRequest LoadBatchCARInsertStatusTextData(string filePath, int totalRecord)
+        {
+            try
+            {
+                BulkInsertStatusRequest request = new BulkInsertStatusRequest();
+
+                using (var streamReader = new StreamReader(filePath))
+                {
+                    string line;
+                    int currRow = 0;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        if (line.Trim() == "") continue;
+
+                        string[] tmp = line.Split('|');
+                        if (tmp.Length == 9)
+                        {  //Header Row Digit แรกต้องเป็นตัว H
+                            if (tmp[0] == Constants.BatchCARInsertStatus.TYPE_OF_DATA_HEAD)  //TYPE OF DATA
+                            {
+                                request.Header = new BatchHeader
+                                {
+                                    ReferenceNo = tmp[1],
+                                    Filename = tmp[2],
+                                    CreateDate = CommonFacade.ConvertStringToDate(tmp[3]),
+                                    CurrentSequence = tmp[4],
+                                    TotalSequence = tmp[5],
+                                    TotalRecord = tmp[6],
+                                    SystemCode = tmp[7]
+                                };
+
+                                request.Body = new BatchRequestBody[totalRecord];
+                            }
+                        }
+                        else if (tmp.Length == 13) //Data Row Digit แรกต้องเป็นตัว D
+                        {
+                            if (tmp[0] == Constants.BatchCARInsertStatus.TYPE_OF_DATA_DETAIL)
+                            {
+                                request.Body[currRow] = new BatchRequestBody
+                                {
+                                    ReferenceNo = tmp[1],
+                                    ChannelId = tmp[2],
+                                    StatusDateTime = CommonFacade.ConvertStringToStatusDateTime(tmp[3]),   //Format yyyy-MM-dd-HH.mm.ss.ff   Ex. 2017-12-04-08.53.32.50
+                                    SubscriptionId = tmp[4],
+                                    SubscriptionCusType = tmp[5],
+                                    SubscriptionCardType = tmp[6],
+                                    OwnerSystemId = tmp[7],
+                                    OwnerSystemCode = tmp[8],
+                                    RefSystemId = tmp[9],
+                                    RefSystemCode = tmp[10],
+                                    Status = tmp[11],
+                                    StatusName = tmp[12]
+                                };
+                                currRow += 1;
+                            }
+                        }
+                    }
+                }
+
+                return request;
+            }
+            catch (Exception ex)
+            {
+                Logger.Debug("O:--FAILED--:Request Data--:Textfile/" + ex.Message);
+                throw ex;
+            }
+        }
+
+        public bool ArchiveExtSysStatusCbsFileData(List<CARInsertStatusTextfileDataList> dataList) {
+            bool IsSuccess = false;
+            int dataRow = 0;
+            try {
+                foreach (CARInsertStatusTextfileDataList list in dataList)
+                {
+                    foreach (BatchRequestBody itm in list.TextFileDataList.Body)
+                    {
+                        CAR_SYS_STATUS_CBS_FILE_DATA data = new CAR_SYS_STATUS_CBS_FILE_DATA
+                        {
+                            CAR_SYS_STATUS_CBS_FILE_DATAID = _batchAccess.GetNextSequenceValue("SEQ_CAR_SYS_STATUSCBSFILEDATA"),
+                            CAR_SYS_STATUS_CBS_FILE_ID = list.ExtSysStatusCbsFileId,
+                            CAR_REF_SYSTEM_CODE = list.TextFileDataList.Header.ReferenceNo,
+                            CAR_FILE_NAME = list.TextFileDataList.Header.Filename,
+                            CAR_CREATE_DATE = list.TextFileDataList.Header.CreateDate.ToString("dd/MM/yyyy"),
+                            CAR_CURRENT_SEQUENCE = Convert.ToInt16(list.TextFileDataList.Header.CurrentSequence),
+                            CAR_TOTAL_SEQUENCE = Convert.ToInt16(list.TextFileDataList.Header.TotalSequence),
+                            CAR_TOTAL_RECORD = Convert.ToInt16(list.TextFileDataList.Header.TotalRecord),
+                            CAR_SYSTEM_CODE = list.TextFileDataList.Header.SystemCode,
+                            CAR_REFERENCE_NO = itm.ReferenceNo,
+                            CAR_CHANNEL_ID = itm.ChannelId,
+                            CAR_STATUS_DATE_TIME = itm.StatusDateTime.ToString("dd/MM/yyyy"),
+                            CAR_SUBSCRIPTION_ID = itm.SubscriptionId,
+                            CAR_SUBSCRIPT_CUS_TYPE = itm.SubscriptionCusType,
+                            CAR_SUBSCRIPT_CARD_TYPE = itm.SubscriptionCardType,
+                            CAR_OWNER_SYSTEM_ID = itm.OwnerSystemId,
+                            CAR_OWNER_SYSTEM_CODE = itm.OwnerSystemCode,
+                            CAR_REF_SYSTEM_ID = itm.RefSystemId,
+                            CAR_REFERENCE_CODE = itm.RefSystemCode,
+                            CAR_STATUS = itm.Status,
+                            CAR_STATUS_NAME = itm.StatusName
+                        };
+
+                        dataRow += 1;
+
+                        _context.CAR_SYS_STATUS_CBS_FILE_DATA.Add(data);
+                        IsSuccess = (_context.SaveChanges() > 0);
+                        if (IsSuccess == false)
+                            break;
+                    }
+
+                    if (IsSuccess == false)
+                        break;
+                }
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+            
+            return IsSuccess;
+        }
+
+
+        #region "IDisposable"
+
+        private bool _disposed = false;
+
+        private void Dispose(bool disposing)
+        {
+            if (!this._disposed)
+            {
+                if (disposing)
+                {
+                    if (_context != null) { _context.Dispose(); }
+                }
+            }
+            this._disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+    }
+}

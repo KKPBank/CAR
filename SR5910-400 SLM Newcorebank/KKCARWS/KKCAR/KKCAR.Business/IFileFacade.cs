@@ -1,0 +1,31 @@
+﻿using KKCAR.Service.Messages;
+using KKCAR.Service.Messages.Batch;
+using System.Collections.Generic;
+
+///<summary>
+/// Class Name : IFileFacade
+/// Purpose    : -
+/// Author     : Neda Peyrone
+///</summary>
+///<remarks>
+/// Change History:
+/// Date         Author           Description
+/// ----         ------           -----------
+///</remarks>
+namespace KKCAR.Business
+{
+    public interface IFileFacade
+    {
+        IEnumerable<string> GetFileList(string localPath, string fiPrefix);
+        T LoadJsonObject<T>(string localPath);
+        
+        List<InsertStatusRequest> GetExampleData(string localPath);
+        bool ExportBatchResponse(string localPath, string fileName, string jsonString);
+        bool GenerateJsonRequest(string localPath);
+        bool DownloadFilesViaFTP(string localPath, string sysCode, string fiPrefix);
+        List<string> DownloadBatchFilesViaFTP(string localPath, string fiPrefix, int prefixLength);
+        bool DeleteFilesViaFTP(string sysCode, string fiPrefix);
+        bool UploadExportFilesViaFTP(string localPath, string sysCode, string fiPrefix, string fiSuffix);
+        bool MoveFileViaFTP(string sysCode, string fiPrefix);
+    }
+}

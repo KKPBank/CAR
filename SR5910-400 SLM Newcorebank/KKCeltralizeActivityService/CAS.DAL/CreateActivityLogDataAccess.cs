@@ -1,0 +1,469 @@
+﻿using Cas.Common;
+using Cas.Dal.BatchData;
+using Cas.Dal.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity.Core.Objects;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Web.Script.Serialization;
+
+[assembly: CLSCompliant(true)]
+namespace Cas.Dal
+{
+    public class CreateActivityLogDataAccess
+    {
+        public CreateActivityLogDataAccess()
+        {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture("en-US");
+        }
+        public List<string> CheckExistActivityLog(List<string> listReferenceNo, string systemCode)
+        {
+            List<string> lst;
+
+            using (KKCASModel db = new KKCASModel())
+            {
+                lst = db.CAS_ACTIVITY_HEADER.Where(x => listReferenceNo.Contains(x.REFERENCE_NO) && x.SYSTEM_ID == systemCode).Select(x => x.REFERENCE_NO).ToList();
+            }
+            return lst ?? new List<string>();
+        }
+        public decimal CreateActivityLog(CreateActivityLogData log, string systemCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                CAS_ACTIVITY_HEADER act = new CAS_ACTIVITY_HEADER();
+                //ถ้า ID <> 0 และ NAME='' ให้ เอา ID ไปหา Name จาก Master
+                if (log.AreaID != 0 && string.IsNullOrEmpty(log.AreaName))
+                {
+                    var area = db.CAS_AREA.Where(a => a.AREA_ID == log.AreaID).FirstOrDefault();
+                    if (area != null)
+                        log.AreaName = area.AREA_NAME;
+                }
+
+                if (log.SubAreaID != 0 && string.IsNullOrEmpty(log.SubAreaName))
+                {
+                    var sarea = db.CAS_SUBAREA.Where(s => s.SUBAREA_ID == log.SubAreaID).FirstOrDefault();
+                    if (sarea != null)
+                        log.SubAreaName = sarea.SUBAREA_NAME;
+                }
+
+                if (log.TypeID != 0 && string.IsNullOrEmpty(log.TypeName))
+                {
+                    var stype = db.CAS_TYPE.Where(t => t.TYPE_ID == log.TypeID).FirstOrDefault();
+                    if (stype != null)
+                        log.TypeName = stype.TYPE_NAME;
+                }
+
+                if (log.ActivityTypeID != 0 && string.IsNullOrEmpty(log.ActivityTypeName))
+                {
+                    var sact = db.CAS_ACTIVITY_TYPE.Where(a => a.ACTIVITY_TYPE_ID == log.ActivityTypeID).FirstOrDefault();
+                    if (sact != null)
+                        log.ActivityTypeName = sact.ACTIVITY_TYPE_NAME;
+                }
+
+                if (!String.IsNullOrEmpty(log.TicketID) && !String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var tik = db.CAS_SEARCH_TICKET.Where(t => t.TICKET_ID == log.TicketID && t.SUBSCRIPTION_ID == log.SubscriptionID && t.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (tik == null)
+                    {
+                        tik = new CAS_SEARCH_TICKET();
+                        tik.SUBSCRIPTION_ID = log.SubscriptionID;
+                        tik.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                        tik.TICKET_ID = log.TicketID;
+                        db.CAS_SEARCH_TICKET.Add(tik);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(log.ContractID) && !String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var ct = db.CAS_SEARCH_CONTRACT.Where(c => c.CONTRACT_ID == log.ContractID && c.SUBSCRIPTION_ID == log.SubscriptionID && c.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (ct == null)
+                    {
+                        ct = new CAS_SEARCH_CONTRACT();
+                        ct.SUBSCRIPTION_ID = log.SubscriptionID;
+                        ct.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                        ct.CONTRACT_ID = log.ContractID;
+                        db.CAS_SEARCH_CONTRACT.Add(ct);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(log.LeadID) && !String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var ld = db.CAS_SEARCH_LEAD.Where(l => l.LEAD_ID == log.LeadID && l.SUBSCRIPTION_ID == log.SubscriptionID && l.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (ld == null)
+                    {
+                        ld = new CAS_SEARCH_LEAD();
+                        ld.SUBSCRIPTION_ID = log.SubscriptionID;
+                        ld.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                        ld.LEAD_ID = log.LeadID;
+
+                        db.CAS_SEARCH_LEAD.Add(ld);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(log.NoncustomerID) && !String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var nc = db.CAS_SEARCH_NON_CUSTOMER.Where(n => n.NON_CUSTOMER_ID == log.NoncustomerID && n.SUBSCRIPTION_ID == log.SubscriptionID && n.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID.ToString()).FirstOrDefault();
+                    if (nc == null)
+                    {
+                        nc = new CAS_SEARCH_NON_CUSTOMER();
+                        nc.NON_CUSTOMER_ID = log.NoncustomerID;
+                        nc.SUBSCRIPTION_ID = log.SubscriptionID;
+                        nc.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+
+                        db.CAS_SEARCH_NON_CUSTOMER.Add(nc);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(log.SrID) && !String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var sr = db.CAS_SEARCH_SR.Where(s => s.SR_ID == log.SrID && s.SUBSCRIPTION_ID == log.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (sr == null)
+                    {
+                        sr = new CAS_SEARCH_SR();
+                        sr.SUBSCRIPTION_ID = log.SubscriptionID;
+                        sr.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                        sr.SR_ID = log.SrID;
+
+                        db.CAS_SEARCH_SR.Add(sr);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(log.ReferenceAppID) && !string.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var refapp = db.CAR_SEARCH_REFAPP.Where(x => x.REFERENCE_APP_ID == log.ReferenceAppID && x.SUBSCRIPTION_ID == log.SubscriptionID && x.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (refapp == null)
+                    {
+                        refapp = new CAR_SEARCH_REFAPP();
+                        refapp.REFERENCE_APP_ID = log.ReferenceAppID;
+                        refapp.SUBSCRIPTION_ID = log.SubscriptionID;
+                        refapp.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                        db.CAR_SEARCH_REFAPP.Add(refapp);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(log.SubscriptionID))
+                {
+                    var sub = db.CAS_SEARCH_SUBSCRIPTION.Where(s => s.SUBSCRIPTION_ID == log.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == log.SubscriptionTypeID).FirstOrDefault();
+                    if (sub != null)
+                    {
+                        if (!String.IsNullOrEmpty(log.KKCISID)) sub.KKCISID = log.KKCISID;
+                        if (!String.IsNullOrEmpty(log.CISID)) sub.CISID = log.CISID;
+                        if (!String.IsNullOrEmpty(log.SubscriptionTypeID)) sub.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                    }
+                    else
+                    {
+                        sub = new CAS_SEARCH_SUBSCRIPTION();
+                        sub.SUBSCRIPTION_ID = log.SubscriptionID;
+                        sub.KKCISID = log.KKCISID;
+                        sub.CISID = log.CISID;
+                        sub.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+
+                        db.CAS_SEARCH_SUBSCRIPTION.Add(sub);
+                    }
+                }
+
+                // save data
+                act.ACTIVITY_TIME = log.ActivityDateTime;
+                act.ACTIVITY_REQUEST_TIME = DateTime.Now;
+                act.PDM_PRODUCT_GROUP_ID = log.PDMProductGroupID;
+                act.PDM_PRODUCT_SUB_GROUP_ID = log.PDMProductSubGroupID;
+                act.PDM_PRODUCT_ID = log.PDMProductID;
+                act.PDM_CAMPAIGN_ID = log.PDMCampaignID;
+                act.PRODUCT_GROUP_ID = log.ProductGroupID;
+                act.PRODUCT_ID = log.ProductID;
+                act.CAMPAIGN_ID = log.CampaignID;
+                act.CHANNEL_ID = log.ChannelID;
+                act.SUBSCRIPTION_TYPE_ID = log.SubscriptionTypeID;
+                act.SUBSCRIPTION_ID = log.SubscriptionID;
+                act.LEAD_ID = log.LeadID;
+                act.TICKET_ID = log.TicketID;
+                act.SR_ID = log.SrID;
+                act.CONTRACT_ID = log.ContractID;
+                act.REFERENCE_APP_ID = log.ReferenceAppID;
+                act.SYSTEM_ID = systemCode;
+                act.KKCISID = log.KKCISID;
+                act.CISID = log.CISID;
+                act.TRX_SEQ_ID = log.TrxSeqID; // header.ReferenceNo;
+                act.NON_CUSTOMER_ID = log.NoncustomerID;
+                act.STATUS = log.Status;
+                act.SUB_STATUS = log.SubStatus;
+                act.REFERENCE_NO = log.ReferenceNo;
+
+                //Kug 2017-11-10 SR6007-323 Type Area SubArea
+                act.TYPE_ID = log.TypeID;
+                act.TYPE_NAME = log.TypeName;
+                act.AREA_ID = log.AreaID;
+                act.AREA_NAME = log.AreaName;
+                act.SUBAREA_ID = log.SubAreaID;
+                act.SUBAREA_NAME = log.SubAreaName;
+                act.ACTIVITY_TYPE_ID = log.ActivityTypeID;
+                act.ACTIVITY_TYPE_NAME = log.ActivityTypeName;
+                
+                db.CAS_ACTIVITY_HEADER.Add(act);
+                act.ACTIVITY_RESPONSE_TIME = DateTime.Now;
+                db.SaveChanges();
+
+                var actd = new CAS_ACTIVITY_DETAIL();
+                actd.ACTIVITY_ID = act.ACTIVITY_ID;
+
+                var jss = new JavaScriptSerializer();
+                actd.JSON_ACTIVITY_INFO = jss.Serialize(log.ActivityInfoList ?? new List<DataItem>());
+                actd.JSON_CONTRACT = jss.Serialize(log.ContractInfoList ?? new List<DataItem>());
+                actd.JSON_CUSTOMER = jss.Serialize(log.CustomerInfoList ?? new List<DataItem>());
+                actd.JSON_OFFICER = jss.Serialize(log.OfficerInfoList ?? new List<DataItem>());
+                actd.JSON_PRODUCT = jss.Serialize(log.ProductInfoList ?? new List<DataItem>());
+
+                db.CAS_ACTIVITY_DETAIL.Add(actd);
+                db.SaveChanges();
+
+                return act.ACTIVITY_ID;
+            }
+        }
+        public bool CheckExistingSystemCode(string systemCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+               return db.CAS_SYSTEM.Where(x => x.SYSTEM_ID == systemCode).Count() > 0;
+            }
+        }
+        public List<CAS_SYSTEM> LoadAllSystemCode()
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAS_SYSTEM.ToList();
+            }
+        }
+        public CAS_SYSTEM LoadSystemCodeById(string systemCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAS_SYSTEM.Where(x => x.SYSTEM_ID == systemCode).FirstOrDefault();
+            }
+        }
+        public decimal SetBatchStartProcess(string batchCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                var batchMs = db.CAR_BATCH.Where(x => x.BATCH_CODE == batchCode && x.IS_DELETE == 0).FirstOrDefault();
+                if(batchMs != null)
+                {
+                    batchMs.START_TIME = DateTime.Now;
+                    batchMs.END_TIME = null;
+                    batchMs.STATUS = BatchStatus.Processing;
+                    db.SaveChanges();
+                    return batchMs.BATCH_ID;
+                }
+                else
+                {
+                    throw new ArgumentException(string.Format("Batch Code {0} not found", batchCode));
+                }
+            }
+        }
+        public void SetBatchEndProcess(string batchCode, string batchStatus)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                var batchMs = db.CAR_BATCH.Where(x => x.BATCH_CODE == batchCode && x.IS_DELETE == 0).FirstOrDefault();
+                if (batchMs != null)
+                {
+                    batchMs.END_TIME = DateTime.Now;
+                    batchMs.STATUS = batchStatus;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    throw new ArgumentException(string.Format("Batch Code {0} not found", batchCode));
+                }
+            }
+        }
+        public decimal SetBatchLogStartProcess(decimal batchId, string systemCode, string serviceName, string fileName, string reRunURL)
+        {
+            DateTime txnDate = DateTime.Now;
+            string strBatchDate = txnDate.ToString("yyyyMMdd");
+            CAR_BATCH_LOG log = new CAR_BATCH_LOG();
+            using (KKCASModel db = new KKCASModel())
+            {
+                var tbL = db.CAR_BATCH_LOG.Where(x => x.CAR_BATCH.BATCH_ID == batchId && x.BATCH_DATE == strBatchDate && x.SYSTEM_CODE == systemCode).ToList();
+                log.BATCH_LOG_ID = GetSEQbatchLogId();
+                log.BATCH_ID = batchId;                
+                log.SYSTEM_CODE = systemCode;
+                log.SERVICE_NAME = serviceName;
+                log.START_TIME = DateTime.Now;
+                log.STATUS = BatchStatus.Processing;
+                log.FILE_NAME = fileName;
+                log.RERUN_PATH = reRunURL;
+                log.TRANSACTION_DATE = txnDate;
+                log.BATCH_DATE = strBatchDate;                
+                log.BATCH_ROUND = (tbL ?? new List<CAR_BATCH_LOG>()).Count() + 1;
+                db.CAR_BATCH_LOG.Add(log);
+                db.SaveChanges();
+            }
+            return log.BATCH_LOG_ID;
+        }
+        public void SetBatchLogEndProcess(decimal batchId, decimal batchLogId, string systemCode, string referenceCode, DateTime? transactionDate, string batchDate, string errorDetail, decimal? totalHeader, decimal? totalDetail, decimal? totalComplete, decimal? totalFail)
+        {
+            string newBatchDate = batchDate;
+            if (transactionDate.HasValue)
+            {
+                newBatchDate = transactionDate.Value.ToString("yyyyMMdd");
+            }
+            using (KKCASModel db = new KKCASModel())
+            {
+                var tbL = db.CAR_BATCH_LOG.Where(x => x.CAR_BATCH.BATCH_ID == batchId && x.BATCH_DATE == newBatchDate && x.SYSTEM_CODE == systemCode && x.BATCH_LOG_ID != batchLogId).ToList();
+                var tb = db.CAR_BATCH_LOG.Where(x => x.BATCH_LOG_ID == batchLogId).FirstOrDefault();
+                tb.END_TIME = DateTime.Now;
+                tb.TRANSACTION_DATE = transactionDate;
+                tb.REFERENCE_CODE = referenceCode;
+                tb.BATCH_DATE = newBatchDate;
+                tb.BATCH_ROUND = (tbL ?? new List<CAR_BATCH_LOG>()).Count() + 1;
+                tb.ERROR_DETAIL = errorDetail;
+                tb.TOTAL_HEADER = totalHeader;
+                tb.TOTAL_DETAIL = totalDetail;
+                tb.TOTAL_COMPLETE = totalComplete;
+                tb.TOTAL_FAIL = totalFail;
+                if(string.IsNullOrEmpty(errorDetail))
+                {
+                    if(totalComplete > 0 && totalFail == 0)
+                    {
+                        tb.STATUS = BatchStatus.Success;
+                    }
+                    else if (totalComplete > 0 && totalFail > 0)
+                    {
+                        tb.STATUS = BatchStatus.SemiSuccess;
+                    }
+                    else
+                    {
+                        tb.STATUS = BatchStatus.Fail;
+                    }
+                }
+                else
+                {
+                    tb.STATUS = BatchStatus.Fail;
+                }
+                db.SaveChanges();
+            }
+        }
+        public void SaveBatchLogDetail(decimal batchLogId, string referenceNo, string channelID, string responseCode, string responseMessage)
+        {
+            CAR_BATCH_LOG_DETAIL log = new CAR_BATCH_LOG_DETAIL();
+            log.BATCH_LOG_DETAIL_ID = GetSEQBatchLogDetailID();
+            log.BATCH_LOG_ID = batchLogId;
+            log.REFERENCE_NO = referenceNo;
+            log.CHANNEL_ID = channelID;
+            log.RESPONSE_CODE = responseCode;
+            log.RESPONSE_MESSAGE = responseMessage;
+            using (KKCASModel db = new KKCASModel())
+            {
+                db.CAR_BATCH_LOG_DETAIL.Add(log);
+                db.SaveChanges();
+            }
+        }
+        public CAR_BATCH LoadBatchMasterByCode(string batchCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAR_BATCH.Where(x => x.BATCH_CODE == batchCode).FirstOrDefault();
+            }
+        }
+        public CAR_BATCH LoadBatchMasterById(decimal batchId)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAR_BATCH.Where(x => x.BATCH_ID == batchId).FirstOrDefault();
+            }
+        }
+        public CAR_BATCH_LOG LoadBatchLogByID(decimal batchLogId)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAR_BATCH_LOG.Where(x => x.BATCH_LOG_ID == batchLogId).FirstOrDefault();
+            }
+        }
+        public CAR_BATCH_LOG CreateActivityLogResultHeader(string batchCode, string systemCode, string dataDate, string referenceNo)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAR_BATCH_LOG.Where(x => x.SYSTEM_CODE == systemCode &&
+                                              x.BATCH_DATE == dataDate &&
+                                              //x.SERVICE_NAME == SystemName.HttpCreateActivityLog &&
+                                              x.CAR_BATCH.BATCH_CODE == batchCode &&
+                                              x.REFERENCE_CODE == referenceNo
+                                             ).OrderByDescending(x => x.BATCH_ROUND).FirstOrDefault();
+            }
+        }
+        public List<BatchCreateActivityLogBody> CreateActivityLogResultDetail(decimal batchLogId)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return (from l in db.CAR_BATCH_LOG_DETAIL.Where(x => x.BATCH_LOG_ID == batchLogId)
+                        select new BatchCreateActivityLogBody
+                        {
+                            ReferenceNo = l.REFERENCE_NO,
+                            ChannelId = l.CHANNEL_ID,
+                            ResponseStatus = new BatchResponseData
+                            {
+                                ResponseCode = l.RESPONSE_CODE,
+                                ResponseMessage = l.RESPONSE_MESSAGE
+                            }
+                        }
+                       ).ToList();
+            }
+        }        
+        public CAR_BATCH_SYSTEM_MAPPING LoadBatchSystemMapping(string systemCode, string batchCode)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return db.CAR_BATCH_SYSTEM_MAPPING.Where(x => x.CAR_BATCH.BATCH_CODE == batchCode && x.SYSTEM_ID == systemCode).FirstOrDefault();
+            }
+        }
+
+        #region For CAR BatchMonitoring
+        public DataTable LoadAllBatchMaster()
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return DataUtil.ToDataTable(db.CAR_BATCH.Where(x => x.IS_DELETE == 0).ToList());
+            }
+        }
+        public DataTable LoadBatchLog(decimal batchId, string batchDate)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return DataUtil.ToDataTable(db.CAR_BATCH_LOG.Where(x => x.BATCH_ID == batchId && x.BATCH_DATE == batchDate).OrderByDescending(x => x.BATCH_ROUND).ThenBy(x => x.SYSTEM_CODE).ToList());
+            }
+        }
+        public DataTable LoadBatchLogDetail(decimal batchLogId)
+        {
+            using (KKCASModel db = new KKCASModel())
+            {
+                return DataUtil.ToDataTable(db.CAR_BATCH_LOG_DETAIL.Where(x => x.BATCH_LOG_ID == batchLogId).OrderBy(x => x.REFERENCE_NO).ToList());
+            }
+        }
+        #endregion
+
+        #region Private Method
+        private decimal GetSEQbatchLogId()
+        {
+            ObjectParameter OUTSEQ = new ObjectParameter("OUTSEQ", typeof(int));
+            using (KKCASModel db = new KKCASModel())
+            {
+                db.SP_SEQ_CAR_BATCH_LOG_ID(OUTSEQ);
+            }
+            return Convert.ToDecimal(OUTSEQ.Value);
+        }
+        private Decimal GetSEQBatchLogDetailID()
+        {
+            ObjectParameter OUTSEQ = new ObjectParameter("OUTSEQ", typeof(int));
+            using (KKCASModel db = new KKCASModel())
+            {
+                db.SP_SEQ_CAR_BATCH_LOG_DETAIL_ID(OUTSEQ);
+            }
+            return Convert.ToDecimal(OUTSEQ.Value);
+        }  
+        #endregion
+    }
+}

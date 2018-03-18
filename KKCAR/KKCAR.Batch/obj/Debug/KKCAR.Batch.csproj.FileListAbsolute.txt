@@ -1,0 +1,16 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\KKCAR.Batch.exe.config
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\KKCAR.Batch.exe
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\KKCAR.Batch.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\Newtonsoft.Json.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\Newtonsoft.Json.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\obj\Debug\KKCAR.Batch.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\obj\Debug\KKCAR.Batch.exe
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\obj\Debug\KKCAR.Batch.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\EntityFramework.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\EntityFramework.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\EntityFramework.SqlServer.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\KKCAR\KKCAR.Batch\bin\Debug\EntityFramework.SqlServer.xml

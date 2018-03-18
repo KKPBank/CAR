@@ -1,0 +1,11 @@
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\KKCAR.UnitTest.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\KKCAR.UnitTest.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\KKCAR.Common.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\log4net.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\KKCAR.Common.pdb
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\bin\Debug\log4net.xml
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\obj\Debug\KKCAR.UnitTest.csprojResolveAssemblyReference.cache
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\obj\Debug\KKCAR.UnitTest.dll
+D:\MyProject\KiatnakinBank\CAR\SourceCode\SR5910-400 SLM Newcorebank\KKCARWS\KKCAR\KKCAR.UnitTest\obj\Debug\KKCAR.UnitTest.pdb

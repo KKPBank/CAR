@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="KKCAR.WCFService.KKCARBatchStatusService" CodeBehind="KKCARBatchStatusService.svc.cs" %>

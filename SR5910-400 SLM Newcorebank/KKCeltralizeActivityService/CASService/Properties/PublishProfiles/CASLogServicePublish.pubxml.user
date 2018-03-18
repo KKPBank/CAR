@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Application\CARLogService</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="ActivityDetail.aspx">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="ActivityLogin.aspx">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="App_Themes/SkinFile/SkinFile.skin">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="BatchActivityLog.aspx">
+      <publishTime>10/06/2016 20:28:18</publishTime>
+    </File>
+    <File Include="bin/AjaxControlToolkit.dll">
+      <publishTime>01/23/2018 10:01:35</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>02/13/2018 11:58:14</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>02/13/2018 11:58:14</publishTime>
+    </File>
+    <File Include="bin/CAS.Biz.dll">
+      <publishTime>02/12/2018 16:59:46</publishTime>
+    </File>
+    <File Include="bin/Cas.Biz.pdb">
+      <publishTime>02/12/2018 16:59:46</publishTime>
+    </File>
+    <File Include="bin/CAS.Common.dll">
+      <publishTime>01/23/2018 14:52:27</publishTime>
+    </File>
+    <File Include="bin/Cas.Common.pdb">
+      <publishTime>01/23/2018 14:52:27</publishTime>
+    </File>
+    <File Include="bin/CAS.DAL.dll">
+      <publishTime>02/12/2018 16:59:45</publishTime>
+    </File>
+    <File Include="bin/Cas.Dal.pdb">
+      <publishTime>02/12/2018 16:59:45</publishTime>
+    </File>
+    <File Include="bin/Cas.LogService.dll">
+      <publishTime>02/12/2018 16:59:50</publishTime>
+    </File>
+    <File Include="bin/Cas.LogService.pdb">
+      <publishTime>02/12/2018 16:59:50</publishTime>
+    </File>
+    <File Include="bin/CASLogService.dll">
+      <publishTime>02/01/2017 15:22:24</publishTime>
+    </File>
+    <File Include="bin/DiffieHellman.dll">
+      <publishTime>01/18/2017 15:38:14</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>01/23/2018 10:01:39</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>01/23/2018 10:01:39</publishTime>
+    </File>
+    <File Include="bin/LinqKit.dll">
+      <publishTime>01/23/2018 10:01:44</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>11/23/2013 10:04:16</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>01/19/2017 20:03:54</publishTime>
+    </File>
+    <File Include="bin/Oracle.ManagedDataAccess.dll">
+      <publishTime>01/23/2018 10:01:42</publishTime>
+    </File>
+    <File Include="bin/Oracle.ManagedDataAccess.EntityFramework.dll">
+      <publishTime>01/23/2018 10:01:44</publishTime>
+    </File>
+    <File Include="bin/Org.Mentalis.Security.dll">
+      <publishTime>01/18/2017 15:38:14</publishTime>
+    </File>
+    <File Include="bin/Renci.SshNet.dll">
+      <publishTime>08/03/2016 11:11:38</publishTime>
+    </File>
+    <File Include="bin/roslyn/csc.exe">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.Build.Tasks.CodeAnalysis.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.CSharp.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CodeAnalysis.VisualBasic.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.CSharp.Core.targets">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/Microsoft.VisualBasic.Core.targets">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Collections.Immutable.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/System.Reflection.Metadata.dll">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/vbc.exe">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/roslyn/VBCSCompiler.exe.config">
+      <publishTime>01/23/2018 10:01:41</publishTime>
+    </File>
+    <File Include="bin/Tamir.SharpSSH.dll">
+      <publishTime>01/18/2017 15:38:14</publishTime>
+    </File>
+    <File Include="bin/Template/Mail/BatchCreateActivityLogEmailTemplate.html">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="CARLogService.svc">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="CAR_BatchMonitoring.aspx">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="CASLog.config">
+      <publishTime>10/06/2016 20:28:18</publishTime>
+    </File>
+    <File Include="CASLogService.asmx">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="Controls/GridviewPageController.ascx">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="Controls/TextDateMask.ascx">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="css/CASStyle.css">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="images/BGGridViewHeader.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/btnLogin.gif">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/btnSearch.gif">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/calendar.gif">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/favicon.ico">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/hSearchCriteria.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/hSearchResult.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/minus_log.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/minus_logdetail.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/plus_log.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/plus_logdetail.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/Processing.gif">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/run.png">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="images/wait.gif">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="js/jquery.min.js">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="Log.config">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>01/23/2018 10:01:33</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>02/13/2018 11:58:09</publishTime>
+    </File>
+    <File Include="Template/Mail/BatchCreateActivityLogEmailTemplate.html">
+      <publishTime>01/23/2018 10:01:34</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>01/23/2018 14:53:16</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,436 @@
+﻿using Cas.Common;
+using Cas.Dal;
+using Cas.Dal.Data;
+using LinqKit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Script.Serialization;
+
+namespace Cas.Biz
+{
+    public class ServiceLogBiz : IDisposable
+    {
+        #region Member
+        string _error = "";
+        private CreateActivityLogDataAccess _db = null;
+        #endregion
+
+        #region Properties
+        public string ErrorMessage { get { return _error; } }
+        private CreateActivityLogDataAccess Database
+        {
+            get
+            {
+                _db = _db ?? new CreateActivityLogDataAccess();
+                return _db;
+            }
+        }
+        #endregion
+
+        public bool CreateLog(KKCASModel kdc, CreateActivityLogData log, LogServiceHeader header, out string errorCode, out decimal refid)
+        {
+            errorCode = "";
+            bool ret = true;
+            
+            // check required field
+            if (header == null || String.IsNullOrEmpty(header.ReferenceNo)) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Reference No"); }
+            if (log.ActivityDateTime.Year == 1) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Activity Date Time"); }
+            if (String.IsNullOrEmpty(log.ChannelID)) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Channel ID"); }
+            if (!String.IsNullOrEmpty(log.SubscriptionID) && log.SubscriptionTypeID == 0) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Subscription Type ID"); }
+
+            // get scope
+            var abz = new AuthenBiz();
+            var scope = abz.GetScope(kdc, header.SystemCode, "CreateActivityLog");
+            if (scope == null) { errorCode = "CAS-E-202"; throw new ArgumentException("No permission"); }
+            if (scope[0] != "" && !scope.Contains(header.SystemCode)) { errorCode = "CAS-E-202"; throw new ArgumentException("No permission"); }
+
+            // check required once
+            if (string.IsNullOrEmpty(log.SubscriptionID)
+                && string.IsNullOrEmpty(log.LeadID)
+                && string.IsNullOrEmpty(log.TicketID)
+                && string.IsNullOrEmpty(log.SrID)
+                && string.IsNullOrEmpty(log.ContractID)
+                && string.IsNullOrEmpty(log.ReferenceAppID))
+            {
+                errorCode = "CAS-E-102";
+                throw new ArgumentException("One of these data required: Subscription ID, Lead ID, Ticket ID, SrID, Contract ID, Reference App ID");
+            }
+
+            // check invalid data
+            if (kdc == null || kdc.CAS_CHANNEL.Where(c => c.CHANNEL_ID == log.ChannelID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Channel ID"); }
+            if (!String.IsNullOrEmpty(log.ProductID) && kdc.CAS_PRODUCT.Where(p => p.PRODUCT_ID == log.ProductID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Product ID"); }
+            if (!String.IsNullOrEmpty(log.ProductGroupID) && kdc.CAS_PRODUCT_GROUP.Where(g => g.PRODUCT_GROUP_ID == log.ProductGroupID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Product Group ID"); }
+
+            //if (log.TypeID != 0 && kdc.CAS_TYPE.Where(t => t.TYPE_ID == log.TypeID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Type ID"); }
+            //if (log.AreaID != 0 && kdc.CAS_AREA.Where(a => a.AREA_ID == log.AreaID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Area ID"); }
+            //if (log.SubAreaID != 0 && kdc.CAS_SUBAREA.Where(a => a.SUBAREA_ID == log.SubAreaID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : SubArea ID"); }
+            //if (log.ActivityTypeID != 0 && kdc.CAS_ACTIVITY_TYPE.Where(a => a.ACTIVITY_TYPE_ID == log.ActivityTypeID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Activity Type ID"); }
+
+            //if (log.TypeID == 0 && log.TypeName != null && !String.IsNullOrEmpty(log.TypeName.Trim()) && kdc.CAS_TYPE.Where(t => t.TYPE_NAME == log.TypeName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Type Name"); }
+            //if (log.AreaID == 0 && log.AreaName != null && !String.IsNullOrEmpty(log.AreaName.Trim()) && kdc.CAS_AREA.Where(a => a.AREA_NAME == log.AreaName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Area Name"); }
+            //if (log.SubAreaID == 0 && log.SubAreaName != null && !String.IsNullOrEmpty(log.SubAreaName.Trim()) && kdc.CAS_SUBAREA.Where(s => s.SUBAREA_NAME == log.SubAreaName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Sub Area Name"); }
+            //if (log.ActivityTypeID == 0 && log.ActivityTypeName != null && !string.IsNullOrEmpty(log.ActivityTypeName.Trim()) && kdc.CAS_ACTIVITY_TYPE.Where(a => a.ACTIVITY_TYPE_NAME == log.ActivityTypeName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Activity Type Name"); }
+
+            refid = Database.CreateActivityLog(log, header.SystemCode);
+            return ret;
+        }
+        public bool CreateLog(CreateActivityLogData log, LogServiceHeader header, out string errorCode, out decimal refid)
+        {
+            errorCode = "";
+            bool ret = true;
+            try
+            {
+                using (KKCASModel kdc = new KKCASModel())
+                {
+                    ret = CreateLog(kdc, log, header, out errorCode, out refid);
+                }
+            }
+            catch (Exception ex)
+            {
+                refid = 0;
+                if (errorCode == "") errorCode = "CAS-E-100";
+                _error = ExceptionService.GetMessage(ex);
+                ret = false;
+            }
+            return ret;
+        }
+        public bool InquiryLog(InquiryActivityLogData inq, LogServiceHeader header, out string errorCode, out List<ActivityDataItem> dataLst, bool filter = false)
+        {
+            bool ret = true;
+            errorCode = "";
+            try
+            {
+                // check required field
+                if (String.IsNullOrEmpty(header.SystemCode)) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: System Code"); }
+                if (String.IsNullOrEmpty(header.ReferenceNo)) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Reference No"); }
+                if (header == null || header.TransactionDateTime == null || header.TransactionDateTime.Year == 1) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Transaction Date Time"); }
+                if (inq.ActivityStartDateTime.Year == 1) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Activity Start Date Time"); }
+                if (inq.ActivityEndDateTime.Year == 1) { errorCode = "CAS-E-101"; throw new ArgumentException("Data required: Activity End Date Time"); }
+
+                // check required once
+                if (string.IsNullOrEmpty(inq.SubscriptionID)
+                    && string.IsNullOrEmpty(inq.LeadID)
+                    && string.IsNullOrEmpty(inq.TicketID)
+                    && string.IsNullOrEmpty(inq.SrID)
+                    && string.IsNullOrEmpty(inq.ContractID)
+                    && string.IsNullOrEmpty(inq.ReferenceAppID))
+                {
+                    errorCode = "CAS-E-102";
+                    throw new ArgumentException("One of these data required: Subscription ID, Lead ID, Ticket ID, SrID, Contract ID, Reference App ID");
+                }
+
+                List<string> scope = null;
+                using (KKCASModel kdc = new KKCASModel())
+                {
+                    // check scope
+                    var abz = new AuthenBiz();
+                    scope = abz.GetScope(kdc, header.SystemCode, "InquiryActivityLog");
+                    if (scope == null) { errorCode = "CAS-E-202"; throw new ArgumentException("No permission"); }
+
+                    // check invalid data
+                    if (!String.IsNullOrEmpty(inq.ChannelID) && kdc.CAS_CHANNEL.Where(c => c.CHANNEL_ID == inq.ChannelID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Channel ID"); }
+                    if (!String.IsNullOrEmpty(inq.ProductID) && kdc.CAS_PRODUCT.Where(p => p.PRODUCT_ID == inq.ProductID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Product ID"); }
+                    if (!String.IsNullOrEmpty(inq.ProductGroupID) && kdc.CAS_PRODUCT_GROUP.Where(g => g.PRODUCT_GROUP_ID == inq.ProductGroupID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Product Group ID"); }
+
+                    //if (inq.TypeID != 0 && kdc.CAS_TYPE.Where(t => t.TYPE_ID == inq.TypeID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Type ID"); }
+                    //if (inq.AreaID != 0 && kdc.CAS_AREA.Where(a => a.AREA_ID == inq.AreaID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Area ID"); }
+                    //if (inq.SubAreaID != 0 && kdc.CAS_SUBAREA.Where(a => a.SUBAREA_ID == inq.SubAreaID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Sub Area ID"); }
+                    //if (inq.ActivityTypeID != 0 && kdc.CAS_ACTIVITY_TYPE.Where(a => a.ACTIVITY_TYPE_ID == inq.ActivityTypeID).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Activity Type ID"); }
+
+                    //if (inq.TypeID == 0 && inq.TypeName != null && !String.IsNullOrEmpty(inq.TypeName.Trim()) && kdc.CAS_TYPE.Where(t => t.TYPE_NAME == inq.TypeName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Type Name"); }
+                    //if (inq.AreaID == 0 && inq.AreaName != null && !String.IsNullOrEmpty(inq.AreaName.Trim()) && kdc.CAS_AREA.Where(a => a.AREA_NAME == inq.AreaName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Area Name"); }
+                    //if (inq.SubAreaID == 0 && inq.SubAreaName != null && !String.IsNullOrEmpty(inq.SubAreaName.Trim()) && kdc.CAS_SUBAREA.Where(s => s.SUBAREA_NAME == inq.SubAreaName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Sub Area Name"); }
+                    //if (inq.ActivityTypeID == 0 && inq.ActivityTypeName != null && !string.IsNullOrEmpty(inq.ActivityTypeName.Trim()) && kdc.CAS_ACTIVITY_TYPE.Where(a => a.ACTIVITY_TYPE_NAME == inq.ActivityTypeName.Trim()).Count() == 0) { errorCode = "CAS-E-103"; throw new ArgumentException("Invalid Data : Activity Type Name"); }
+                }
+
+                // start search
+                dataLst = SearchActivity(inq, scope, filter);
+                if (dataLst.Count == 0) { errorCode = "CAS-E-300"; throw new ArgumentException("No Data Found"); }
+            }
+            catch (Exception ex)
+            {
+                dataLst = null;
+                _error = ex.Message;
+                ret = false;
+            }
+            return ret;
+        }
+        public List<ActivityDataItem> SearchActivity(InquiryActivityLogData inq, List<string> scope)
+        {
+            return SearchActivity(inq, scope, false);
+        }
+        public List<ActivityDataItem> SearchActivity(InquiryActivityLogData inq, List<string> scope, bool filterperson = false)
+        {
+            var dataLst = new List<ActivityDataItem>();
+            DateTime dto = inq.ActivityEndDateTime.AddDays(1);
+            using (KKCASModel kdc = new KKCASModel())
+            {
+                // search subscription
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.TicketID))
+                {
+                    var tk = kdc.CAS_SEARCH_TICKET.Where(t => t.TICKET_ID == inq.TicketID).FirstOrDefault();
+                    if (tk != null)
+                    {
+                        inq.SubscriptionID = tk.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = tk.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.LeadID))
+                {
+                    var ss = kdc.CAS_SEARCH_LEAD.Where(t => t.LEAD_ID == inq.LeadID).FirstOrDefault();
+                    if (ss != null)
+                    {
+                        inq.SubscriptionID = ss.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = ss.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.ContractID))
+                {
+                    var ss = kdc.CAS_SEARCH_CONTRACT.Where(t => t.CONTRACT_ID == inq.ContractID).FirstOrDefault();
+                    if (ss != null)
+                    {
+                        inq.SubscriptionID = ss.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = ss.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.SrID))
+                {
+                    var ss = kdc.CAS_SEARCH_SR.Where(t => t.SR_ID == inq.SrID).FirstOrDefault();
+                    if (ss != null)
+                    {
+                        inq.SubscriptionID = ss.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = ss.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.NoncustomerID))
+                {
+                    var ss = kdc.CAS_SEARCH_NON_CUSTOMER.Where(t => t.NON_CUSTOMER_ID == inq.NoncustomerID).FirstOrDefault();
+                    if (ss != null)
+                    {
+                        inq.SubscriptionID = ss.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = ss.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                if (String.IsNullOrEmpty(inq.SubscriptionID) && !String.IsNullOrEmpty(inq.ReferenceAppID))
+                {
+                    var ss = kdc.CAR_SEARCH_REFAPP.Where(t => t.REFERENCE_APP_ID == inq.ReferenceAppID).FirstOrDefault();
+                    if (ss != null)
+                    {
+                        inq.SubscriptionID = ss.SUBSCRIPTION_ID;
+                        inq.SubscriptionTypeID = ss.SUBSCRIPTION_TYPE_ID;
+                    }
+                }
+                
+                var whr = PredicateBuilder.True<CAS_ACTIVITY_HEADER>();
+                var whr2 = PredicateBuilder.False<CAS_ACTIVITY_HEADER>();
+
+                // get data from search table
+                var ticketlst = kdc.CAS_SEARCH_TICKET.Where(t => t.SUBSCRIPTION_ID == inq.SubscriptionID && t.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.TICKET_ID).ToList();
+                var leadlst = kdc.CAS_SEARCH_LEAD.Where(s => s.SUBSCRIPTION_ID == inq.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.LEAD_ID).ToList();
+                var srlst = kdc.CAS_SEARCH_SR.Where(s => s.SUBSCRIPTION_ID == inq.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.SR_ID).ToList();
+                var ctlst = kdc.CAS_SEARCH_CONTRACT.Where(s => s.SUBSCRIPTION_ID == inq.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.CONTRACT_ID).ToList();
+                var noncuslst = kdc.CAS_SEARCH_NON_CUSTOMER.Where(s => s.SUBSCRIPTION_ID == inq.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.NON_CUSTOMER_ID).ToList();
+                var refapp = kdc.CAR_SEARCH_REFAPP.Where(s => s.SUBSCRIPTION_ID == inq.SubscriptionID && s.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID).Select(s => s.REFERENCE_APP_ID).ToList();
+                
+                if (!String.IsNullOrEmpty(inq.SubscriptionID)) { whr2 = whr2.Or(a => (a.SUBSCRIPTION_ID == inq.SubscriptionID && a.SUBSCRIPTION_TYPE_ID == inq.SubscriptionTypeID)); }
+                if (!String.IsNullOrEmpty(inq.LeadID)) { whr2 = whr2.Or(a => a.LEAD_ID == inq.LeadID); }
+                if (!String.IsNullOrEmpty(inq.TicketID)) { whr2 = whr2.Or(a => a.TICKET_ID == inq.TicketID); }
+                if (!String.IsNullOrEmpty(inq.SrID)) { whr2 = whr2.Or(a => a.SR_ID == inq.SrID); }
+                if (!String.IsNullOrEmpty(inq.ContractID)) { whr2 = whr2.Or(a => a.CONTRACT_ID == inq.ContractID); }
+                if (!String.IsNullOrEmpty(inq.NoncustomerID)) { whr2 = whr2.Or(a => a.NON_CUSTOMER_ID == inq.NoncustomerID); }
+                if (!String.IsNullOrEmpty(inq.ReferenceAppID)) { whr2 = whr2.Or(a => a.REFERENCE_APP_ID == inq.ReferenceAppID); }
+
+                if (ticketlst.Count > 0) whr2 = whr2.Or(a => ticketlst.Contains(a.TICKET_ID));
+                if (leadlst.Count > 0) whr2 = whr2.Or(a => leadlst.Contains(a.LEAD_ID));
+                if (srlst.Count > 0) whr2 = whr2.Or(a => srlst.Contains(a.SR_ID));
+                if (ctlst.Count > 0) whr2 = whr2.Or(a => ctlst.Contains(a.CONTRACT_ID));
+                if (noncuslst.Count > 0) whr2 = whr2.Or(a => noncuslst.Contains(a.NON_CUSTOMER_ID));
+                if (refapp.Count > 0) whr2 = whr2.Or(a => refapp.Contains(a.REFERENCE_APP_ID));
+
+                if (inq.ActivityStartDateTime.Year != 1) whr = whr.And(a => a.ACTIVITY_TIME >= inq.ActivityStartDateTime);
+                if (inq.ActivityEndDateTime.Year != 1) whr = whr.And(a => a.ACTIVITY_TIME < dto);
+                if (!string.IsNullOrEmpty(inq.PDMProductGroupID)) whr = whr.And(a => a.PDM_PRODUCT_GROUP_ID == inq.PDMProductGroupID);
+                if (!string.IsNullOrEmpty(inq.PDMProductSubGroupID)) whr = whr.And(a => a.PDM_PRODUCT_SUB_GROUP_ID == inq.PDMProductSubGroupID);
+                if (!string.IsNullOrEmpty(inq.PDMProductID)) whr = whr.And(a => a.PDM_PRODUCT_ID == inq.PDMProductID);
+                if (!string.IsNullOrEmpty(inq.PDMCampaignID)) whr = whr.And(a => a.PDM_CAMPAIGN_ID == inq.PDMCampaignID);
+                if (!String.IsNullOrEmpty(inq.ChannelID)) whr = whr.And(a => a.CHANNEL_ID == inq.ChannelID);
+                if (!String.IsNullOrEmpty(inq.ProductGroupID)) whr = whr.And(a => a.PRODUCT_GROUP_ID == inq.ProductGroupID);
+                if (!String.IsNullOrEmpty(inq.ProductID)) whr = whr.And(a => a.PRODUCT_ID == inq.ProductID);
+                if (!String.IsNullOrEmpty(inq.CampaignID)) whr = whr.And(a => a.CAMPAIGN_ID == inq.CampaignID);
+
+                //Kug SR6007-323 Type Area SubArea 2017-11-10
+                if (!string.IsNullOrEmpty(inq.TypeName)) whr = whr.And(a => a.TYPE_NAME == inq.TypeName);
+                if (!string.IsNullOrEmpty(inq.AreaName)) whr = whr.And(a => a.AREA_NAME == inq.AreaName);
+                if (!string.IsNullOrEmpty(inq.SubAreaName)) whr = whr.And(a => a.SUBAREA_NAME == inq.SubAreaName);
+                if (!string.IsNullOrEmpty(inq.ActivityTypeName)) whr = whr.And(a => a.ACTIVITY_TYPE_NAME == inq.ActivityTypeName);
+                //if (inq.TypeID != 0) whr = whr.And(a => a.TYPE_ID == inq.TypeID);
+                //if (inq.AreaID != 0) whr = whr.And(a => a.AREA_ID == inq.AreaID);
+                //if (inq.SubAreaID != 0) whr = whr.And(a => a.SUBAREA_ID == inq.SubAreaID);
+                //if (inq.ActivityTypeID != 0) whr = whr.And(a => a.ACTIVITY_TYPE_ID == inq.ActivityTypeID);
+                //##########################################################################################
+
+                if (!String.IsNullOrEmpty(inq.KKCISID)) whr = whr.And(a => a.KKCISID == inq.KKCISID);
+                if (!String.IsNullOrEmpty(inq.CISID)) whr = whr.And(a => a.CISID == inq.CISID);
+                if (!String.IsNullOrEmpty(inq.TrxSeqID)) whr = whr.And(a => a.TRX_SEQ_ID == inq.TrxSeqID);
+                if (!String.IsNullOrEmpty(inq.Status)) whr = whr.And(a => a.STATUS == inq.Status);
+                if (!String.IsNullOrEmpty(inq.SubStatus)) whr = whr.And(a => a.SUB_STATUS == inq.SubStatus);
+                if (!String.IsNullOrEmpty(inq.SystemID)) whr = whr.And(a => a.SYSTEM_ID == inq.SystemID);
+                if (scope[0] != "") whr = whr.And(a => scope.Contains(a.SYSTEM_ID));
+
+                if (filterperson)
+                {
+                    if (!String.IsNullOrEmpty(inq.LeadID) && inq.LeadID != "0") whr = whr.And(a => a.LEAD_ID == inq.LeadID);
+                    if (!String.IsNullOrEmpty(inq.TicketID) && inq.TicketID != "0") whr = whr.And(a => a.TICKET_ID == inq.TicketID);
+                    if (!String.IsNullOrEmpty(inq.SrID) && inq.SrID != "0") whr = whr.And(a => a.SR_ID == inq.SrID);
+                    if (!String.IsNullOrEmpty(inq.ContractID) && inq.ContractID != "0") whr = whr.And(a => a.CONTRACT_ID == inq.ContractID);
+                    if (!String.IsNullOrEmpty(inq.NoncustomerID) && inq.NoncustomerID != "0") whr = whr.And(a => a.NON_CUSTOMER_ID == inq.NoncustomerID);
+                    if (!String.IsNullOrEmpty(inq.ReferenceAppID) && inq.ReferenceAppID != "0") whr = whr.And(a => a.REFERENCE_APP_ID == inq.ReferenceAppID);
+                }
+
+                var jss = new JavaScriptSerializer();
+                foreach (var itm in from act in kdc.CAS_ACTIVITY_HEADER.AsExpandable().Where(whr2).Where(whr)
+                                    join actd in kdc.CAS_ACTIVITY_DETAIL on act.ACTIVITY_ID equals actd.ACTIVITY_ID
+                                    //join typ in kdc.CAS_TYPE on act.TYPE_ID equals typ.TYPE_ID into r1
+                                    //from typ in r1.DefaultIfEmpty()
+                                    //let M_TYPE_NAME = typ.TYPE_NAME
+                                    //join area in kdc.CAS_AREA on act.AREA_ID equals area.AREA_ID into r2
+                                    //from area in r2.DefaultIfEmpty()
+                                    //let M_AREA_NAME = area.AREA_NAME
+                                    //join sarea in kdc.CAS_SUBAREA on act.SUBAREA_ID equals sarea.SUBAREA_ID into r3
+                                    //from sarea in r3.DefaultIfEmpty()
+                                    //let M_SUBAREA_NAME = sarea.SUBAREA_NAME
+                                    join cmp in kdc.CAS_CAMPAIGN on act.CAMPAIGN_ID equals cmp.CAMPAIGN_ID into r4
+                                    from cmp in r4.DefaultIfEmpty()
+                                    join chn in kdc.CAS_CHANNEL on act.CHANNEL_ID equals chn.CHANNEL_ID into r5
+                                    from chn in r5.DefaultIfEmpty()
+                                    join pd in kdc.CAS_PRODUCT on act.PRODUCT_ID equals pd.PRODUCT_ID into r6
+                                    from pd in r6.DefaultIfEmpty()
+                                    join pdg in kdc.CAS_PRODUCT_GROUP on act.PRODUCT_GROUP_ID equals pdg.PRODUCT_GROUP_ID into r7
+                                    from pdg in r7.DefaultIfEmpty()
+                                    join subt in kdc.CAS_SUBSCRIPTION_TYPE on act.SUBSCRIPTION_TYPE_ID equals subt.SUBSCRIPTION_TYPE_ID into r8
+                                    from subt in r8.DefaultIfEmpty()
+                                    join sys in kdc.CAS_SYSTEM on act.SYSTEM_ID equals sys.SYSTEM_ID into r9
+                                    from sys in r9.DefaultIfEmpty()
+                                    //join actt in kdc.CAS_ACTIVITY_TYPE on act.ACTIVITY_TYPE_ID equals actt.ACTIVITY_TYPE_ID into r10
+                                    //from actt in r10.DefaultIfEmpty()
+                                    //let M_ACTIVITY_TYPE_NAME = actt.ACTIVITY_TYPE_NAME
+                                    select new
+                                    {
+                                        act.ACTIVITY_ID,
+                                        act.CISID,
+                                        act.PDM_PRODUCT_GROUP_ID,
+                                        act.PDM_PRODUCT_SUB_GROUP_ID,
+                                        act.PDM_PRODUCT_ID,
+                                        act.PDM_CAMPAIGN_ID,
+                                        act.PRODUCT_GROUP_ID,
+                                        act.PRODUCT_ID,
+                                        act.CAMPAIGN_ID,
+                                        act.TYPE_ID,
+                                        act.AREA_ID,
+                                        act.SUBAREA_ID,
+                                        act.CHANNEL_ID,
+                                        act.SUBSCRIPTION_TYPE_ID,
+                                        act.ACTIVITY_TYPE_ID,
+                                        pdg.PRODUCT_GROUP_NAME,
+                                        pd.PRODUCT_NAME,
+                                        cmp.CAMPAIGN_NAME,
+                                        act.TYPE_NAME,
+                                        act.AREA_NAME,
+                                        act.SUBAREA_NAME,
+                                        act.ACTIVITY_TYPE_NAME,
+                                        chn.CHANNEL_NAME,
+                                        subt.SUBSCRIPTION_TYPE_NAME,
+                                        act.SYSTEM_ID,
+                                        sys.SYSTEM_NAME,
+                                        act.SUBSCRIPTION_ID,
+                                        act.LEAD_ID,
+                                        act.TICKET_ID,
+                                        act.SR_ID,
+                                        act.CONTRACT_ID,
+                                        act.KKCISID,
+                                        act.TRX_SEQ_ID,
+                                        act.NON_CUSTOMER_ID,
+                                        act.REFERENCE_APP_ID,
+                                        act.STATUS,
+                                        act.SUB_STATUS,
+                                        act.ACTIVITY_TIME,
+                                        actd.JSON_OFFICER,
+                                        actd.JSON_CONTRACT,
+                                        actd.JSON_CUSTOMER,
+                                        actd.JSON_PRODUCT,
+                                        actd.JSON_ACTIVITY_INFO,
+                                    })
+
+                {
+                    dataLst.Add(new ActivityDataItem()
+                    {
+                        ActivityID = itm.ACTIVITY_ID,
+                        CISID = itm.CISID,
+                        PDMProductGroupID = itm.PDM_PRODUCT_GROUP_ID,
+                        PDMProductSubGroupID = itm.PDM_PRODUCT_SUB_GROUP_ID,
+                        PDMProductID = itm.PDM_PRODUCT_ID,
+                        PDMCampaignID = itm.PDM_CAMPAIGN_ID,
+                        ProductGroupID = itm.PRODUCT_GROUP_ID,
+                        ProductID = itm.PRODUCT_ID,
+                        ActivityDateTime = itm.ACTIVITY_TIME.Value,
+                        CampaignID = itm.CAMPAIGN_ID,
+                        TypeID = itm.TYPE_ID == null ? 0 : itm.TYPE_ID.Value,
+                        AreaID = itm.AREA_ID == null ? 0 : itm.AREA_ID.Value,
+                        SubAreaID = itm.SUBAREA_ID == null ? 0 : itm.SUBAREA_ID.Value,
+                        ActivityTypeID = itm.ACTIVITY_TYPE_ID == null ? 0 : itm.ACTIVITY_TYPE_ID.Value,
+                        ChannelID = itm.CHANNEL_ID,
+                        SubscriptionTypeID = itm.SUBSCRIPTION_TYPE_ID == null ? 0 : itm.SUBSCRIPTION_TYPE_ID.Value,
+                        ProductGroupName = itm.PRODUCT_GROUP_NAME,
+                        ProductName = itm.PRODUCT_NAME,
+                        CampaignName = itm.CAMPAIGN_NAME,
+                        TypeName = itm.TYPE_NAME,
+                        AreaName = itm.AREA_NAME,
+                        SubAreaName = itm.SUBAREA_NAME,
+                        ChannelName = itm.CHANNEL_NAME,
+                        SubscriptionTypeName = itm.SUBSCRIPTION_TYPE_NAME,
+                        ActivityTypeName = itm.ACTIVITY_TYPE_NAME,
+                        SubscriptonID = itm.SUBSCRIPTION_ID,
+                        LeadID = itm.LEAD_ID,
+                        TicketID = itm.TICKET_ID,
+                        SrID = itm.SR_ID,
+                        ContractID = itm.CONTRACT_ID,
+                        KKCISID = itm.KKCISID,
+                        TrxSeqID = itm.TRX_SEQ_ID,
+                        NoneCustomerID = itm.NON_CUSTOMER_ID,
+                        ReferenceAppID = itm.REFERENCE_APP_ID,
+                        SystemID = itm.SYSTEM_ID,
+                        SystemName = itm.SYSTEM_NAME,
+                        Status = itm.STATUS,
+                        SubStatus = itm.SUB_STATUS,
+                        OfficerInfoList = jss.Deserialize<List<DataItem>>(itm.JSON_OFFICER),
+                        ContractInfoList = jss.Deserialize<List<DataItem>>(itm.JSON_CONTRACT),
+                        ProductInfoList = jss.Deserialize<List<DataItem>>(itm.JSON_PRODUCT),
+                        CustomerInfoList = jss.Deserialize<List<DataItem>>(itm.JSON_CUSTOMER),
+                        ActivityInfoList = jss.Deserialize<List<DataItem>>(itm.JSON_ACTIVITY_INFO)
+                    });
+
+                }
+            }
+            return dataLst;
+        }
+
+        #region "IDisposable"
+        private bool _disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this._disposed && disposing)
+            {
+                _db = null;
+            }
+            this._disposed = true;
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+
+    }
+}

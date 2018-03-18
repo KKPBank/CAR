@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <section name="entityFramework"
+      type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      requirePermission="false"/>
+    <section name="oracle.manageddataaccess.client"
+      type="OracleInternal.Common.ODPMSectionHandler, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>
+  </configSections>
+  <appSettings>
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="true"/>
+    <add key="log4net.Config" value="Log.config"/>
+    <add key="TotalCountToProcess" value="10"/>
+    <add key="ServiceRetryInterval" value="1"/>
+    <add key="ServiceRetryNo" value="0"/>
+    <add key="NumberOfObjectsPerPage" value="1"/>
+    <add key="TestDataFile" value="~/App_Data/example_data.xlsx"/>
+    <!-- Mail Server -->
+    <add key="MailEnable" value="false"/>
+    <add key="MailAuthenMethod" value="default"/>
+    <add key="MailAuthenUser" value=""/>
+    <add key="MailAuthenPassword" value=""/>
+    <add key="MailSenderName" value="kk-crm@kiatnakin.co.th"/>
+    <add key="MailSenderEmail" value="kk-crm@kiatnakin.co.th"/>
+    <add key="FixDestinationMail" value="traininguser1@kiatnakin.co.th"/>
+    <add key="Email-Server" value="10.202.100.62"/>
+    <add key="Email-Server-Port" value="25"/>
+    <add key="MailUseSsl" value="False"/>
+    <!-- Please use ';' for separate each email address -->
+    <add key="EmailToAddress" value="traininguser2@kiatnakin.co.th;traininguser3@kiatnakin.co.th"/>
+    <!-- Scheduled Task/ Web -->
+    <add key="TaskUsername" value="schedtask"/>
+    <add key="TaskPassword" value="gdupi9bok8bo"/>
+    <!-- Batch Path -->
+    <add key="BatchPathImport" value="D:\_DevTools\Attachment\KKCARPath\Import"/>
+    <add key="BatchPathExport" value="D:\_DevTools\Attachment\KKCARPath\Export"/>
+    <add key="BatchPathSource" value="D:\_DevTools\Attachment\KKCARPath\Source"/>
+    <!-- Batch SFTP -->
+    <add key="SkipSFTP" value="false"/>
+    <add key="Batch-File-Prefix" value=""/>
+    <add key="Batch-Request-Suffix" value="Request"/>
+    <add key="Batch-Response-Suffix" value="Response"/>
+    <add key="Batch-SSH-Server" value="10.202.192.191"/>
+    <add key="Batch-SSH-Port" value="22"/>
+    <add key="Batch-SSH-Username" value="administrator"/>
+    <add key="Batch-SSH-Password" value="password"/>
+    <add key="Batch-SSH-RemoteDir" value="/E/Sftp/CAR/Status"/>
+
+    <!-- BatchCARInsertStatus Path -->
+    <add key="BatchCARInsertStatus_PathImport" value="D:\SLMCARPath\BatchCARInsertStatus\Import"/>
+    <add key="BatchCARInsertStatus_PathArchives" value="D:\SLMCARPath\BatchCARInsertStatus\Archives"/>
+    <!-- BatchCARInsertStatus SFTP -->
+    <add key="BatchCARInsertStatus_IntervalDay" value="0"/>
+    <add key="BatchCARInsertStatus_File_Prefix" value="BchCARInsertSts_"/>
+    <add key="BatchCARInsertStatus_SSH_Server" value="10.202.211.162"/>
+    <add key="BatchCARInsertStatus_SSH_Port" value="22"/>
+    <add key="BatchCARInsertStatus_SSH_Username" value="LGCSFTPVIT"/>
+    <add key="BatchCARInsertStatus_SSH_Password" value="P@ssw0rd"/>
+    <add key="BatchCARInsertStatus_SSH_RemoteDir" value="/V/SLM/OUT"/>
+    <!-- BatchCARInsertStatus MailConfig -->
+    <add key="BatchCARInsertStatus_EmailDisplayName" value="KK SLM BatchCARInsertStatus Service"/>
+    <add key="BatchCARInsertStatus_EmailFromAddress" value="KKSlmService@kiatnakin.co.th"/>
+    <add key="BatchCARInsertStatus_EmailToAddress" value="traininguser1@kiatnakin.co.th"/>
+    <!-- Please use ';' for separate each email address  -->
+    <add key="BatchCARInsertStatus_EmailFromPassword" value=""/>
+    <add key="BatchCARInsertStatus_EmailHostIP" value="10.3.100.62"/>
+    <add key="BatchCARInsertStatus_EmailPort" value="25"/>
+  </appSettings>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.6.1" />
+      </system.Web>
+  -->
+  <system.web>
+    <compilation debug="true" targetFramework="4.6.1"/>
+    <httpRuntime targetFramework="4.6.1"/>
+  </system.web>
+  <system.serviceModel>
+    <services>
+      <service name="KKCAR.WCFService.KKCARStatusRestService" behaviorConfiguration="serviceBehavior">
+        <endpoint address="" binding="webHttpBinding" contract="KKCAR.WCFService.IKKCARStatusRestService" behaviorConfiguration="restBehavior"></endpoint>
+      </service>
+      <service name="KKCAR.WCFService.KKCARBatchStatusService" behaviorConfiguration="serviceBehavior">
+        <endpoint address="" binding="webHttpBinding" contract="KKCAR.WCFService.IKKCARBatchStatusService" behaviorConfiguration="restBehavior"/>
+      </service>
+      <service behaviorConfiguration="serviceBehavior" name="KKCAR.WCFService.KKCARStatusService">
+        <endpoint address="soap" binding="basicHttpBinding" contract="KKCAR.WCFService.IKKCARStatusService"/>
+      </service>
+    </services>
+    <bindings>
+      <basicHttpBinding></basicHttpBinding>
+    </bindings>
+    <client></client>
+    <behaviors>
+      <endpointBehaviors>
+        <behavior name="restBehavior">
+          <webHttp/>
+        </behavior>
+      </endpointBehaviors>
+      <serviceBehaviors>
+        <behavior name="serviceBehavior">
+          <serviceMetadata httpGetEnabled="true"/>
+          <serviceDebug includeExceptionDetailInFaults="false"/>
+        </behavior>
+        <behavior name="">
+          <serviceMetadata httpGetEnabled="true" httpsGetEnabled="true"/>
+          <serviceDebug includeExceptionDetailInFaults="false"/>
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+    <protocolMapping>
+      <add binding="basicHttpsBinding" scheme="https"/>
+    </protocolMapping>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true" multipleSiteBindingsEnabled="true"/>
+  </system.serviceModel>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true"/>
+    <!--
+        To browse web app root directory during debugging, set the value below to true.
+        Set to false before deployment to avoid disclosing web app folder information.
+      -->
+    <directoryBrowse enabled="true"/>
+    <httpProtocol>
+      <customHeaders>
+        <add name="Access-Control-Allow-Methods" value="GET, POST"/>
+      </customHeaders>
+    </httpProtocol>
+  </system.webServer>
+  <oracle.manageddataaccess.client>
+    <version number="*">
+      <dataSources>
+        <dataSource alias="CARDB01D" descriptor="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=10.202.104.224)(PORT=1651))(CONNECT_DATA=(SERVICE_NAME=CARDB01D))) "/>
+        <dataSource alias="SampleDataSource" descriptor="(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL))) "/>
+      </dataSources>
+      <edmMappings>
+        <edmMapping dataType="number">
+          <add name="bool" precision="1"/>
+        </edmMapping>
+      </edmMappings>
+    </version>
+  </oracle.manageddataaccess.client>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v12.0"/>
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer"/>
+      <provider invariantName="Oracle.ManagedDataAccess.Client"
+        type="Oracle.ManagedDataAccess.EntityFramework.EFOracleProviderServices, Oracle.ManagedDataAccess.EntityFramework, Version=6.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>
+    </providers>
+  </entityFramework>
+  <connectionStrings>
+    <add name="KKCARContextContainer"
+      connectionString="metadata=res://*/DataAccess.KKCARContext.csdl|res://*/DataAccess.KKCARContext.ssdl|res://*/DataAccess.KKCARContext.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=CARDB01D;PASSWORD=password;USER ID=CAR&quot;"
+      providerName="System.Data.EntityClient"/>
+    <add name="OracleDbContext" providerName="Oracle.ManagedDataAccess.Client"
+      connectionString="User Id=oracle_user;Password=oracle_user_password;Data Source=oracle"/>
+  </connectionStrings>
+  <system.net>
+    <defaultProxy>
+      <proxy usesystemdefault="False"/>
+    </defaultProxy>
+  </system.net>
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="Oracle.ManagedDataAccess.Client"/>
+      <add name="ODP.NET, Managed Driver" invariant="Oracle.ManagedDataAccess.Client" description="Oracle Data Provider for .NET, Managed Driver"
+        type="Oracle.ManagedDataAccess.Client.OracleClientFactory, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>
+    </DbProviderFactories>
+  </system.data>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <publisherPolicy apply="no"/>
+        <assemblyIdentity name="Oracle.ManagedDataAccess" publicKeyToken="89b483f429c47342" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-4.122.1.0" newVersion="4.122.1.0"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+</configuration>
